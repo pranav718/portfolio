@@ -2,68 +2,70 @@
 
 import GitHubContributions from '@/components/GitHubContributions';
 import Header from '@/components/Header';
-import LightBulb from '@/components/LightBulb';
+// import LightBulb from '@/components/LightBulb';
 import ProjectCard from '@/components/ProjectCard';
 import SocialLinks from '@/components/SocialLinks';
-import SpotlightOverlay from '@/components/SpotlightOverlay';
+// import SpotlightOverlay from '@/components/SpotlightOverlay';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+// import { useState } from 'react';
 
 export default function Home() {
-  const [isLightOn, setIsLightOn] = useState(true);
+  // const [isLightOn, setIsLightOn] = useState(true);
 
   return (
     <>
       <Header />
 
+      {/* LightBulb temporarily disabled
       <LightBulb
         initialOn={true}
         onToggle={(on) => setIsLightOn(on)}
       />
 
       <SpotlightOverlay isLightOn={isLightOn} />
+      */}
 
-      <main className="content-wrapper">
-        <section className="hero-section">
+      <main className="max-w-[900px] mx-auto px-8 pt-20 pb-8">
+        <section className="pt-8">
           <motion.div
-            className="hero-content"
+            className="w-full text-left"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <div className="hero-intro">
+            <div className="flex items-start gap-6 mb-6 flex-col md:flex-row">
               <motion.div
-                className="hero-pfp"
+                className="shrink-0"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
               >
-                <div className="pfp-placeholder">
+                <div className="w-20 h-20 rounded-xl border-2 border-text bg-bg-card flex items-center justify-center text-[2.5rem] text-text">
                   <span className="font-death-note">P</span>
                 </div>
               </motion.div>
 
-              <div className="hero-text">
-                <h1 className="hero-title">
+              <div className="w-full">
+                <h1 className="m-0 mb-2 font-death-note text-[clamp(2rem,4vw,3rem)] leading-tight">
                   i&apos;m pranav
                 </h1>
-                <p className="hero-subtitle">
-                  a <span className="highlight">19 y/o fullstack developer</span>
+                <p className="text-[0.95rem] leading-relaxed text-text-dim m-0">
+                  a <span className="text-text font-semibold">19 y/o fullstack developer</span>
                   <br />
-                  currently pursuing cs <span className="highlight">@muj</span>
+                  currently pursuing cs <span className="text-text font-semibold">@muj</span>
                 </p>
               </div>
             </div>
 
             <motion.div
-              className="hero-description"
+              className="text-sm leading-loose text-text-dim"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.7 }}
             >
-              <p>
+              <p className="mb-3">
                 i have experience working with{' '}
-                <span className="tech-stack">[react, next.js, node, python, typescript]</span>
+                <span className="text-bulb-warm font-medium">[react, next.js, node, python, typescript]</span>
                 <br />
                 stacks and have made some good projects with them
               </p>
@@ -76,9 +78,9 @@ export default function Home() {
           </motion.div>
         </section>
 
-        <section id="projects" className="section projects-section">
+        <section id="projects" className="py-16">
           <motion.h2
-            className="section-title"
+            className="text-[1.8rem] mb-8 relative inline-block after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-[60%] after:h-[3px] after:bg-bulb-glow"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -87,7 +89,7 @@ export default function Home() {
             projects
           </motion.h2>
 
-          <div className="projects-grid">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6 mb-6">
             {[
               {
                 title: "Portfolio v2",
@@ -127,16 +129,16 @@ export default function Home() {
 
           <motion.a
             href="/projects"
-            className="show-all-link"
+            className="inline-block text-[0.85rem] text-text border border-text px-4 py-2 rounded transition-all hover:bg-text hover:text-bg-dark"
             whileHover={{ x: 5 }}
           >
             show all →
           </motion.a>
         </section>
 
-        <section className="section github-section">
+        <section className="py-16">
           <motion.h2
-            className="section-title"
+            className="text-[1.8rem] mb-8 relative inline-block after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-[60%] after:h-[3px] after:bg-bulb-glow"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -154,261 +156,15 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="mt-8"
           >
-            <h3 className="orgs-title">orgs i&apos;ve contributed to:</h3>
-            <div className="orgs-logos">
-              <div className="org-logo-placeholder">
+            <h3 className="text-[1.1rem] mb-4 font-mono font-normal">orgs i&apos;ve contributed to:</h3>
+            <div className="flex gap-4 flex-wrap">
+              <div className="w-[60px] h-[60px] border border-dashed border-[#2c2416]/30 rounded-lg flex items-center justify-center text-[0.65rem] text-text-muted text-center">
                 <span>org logo</span>
               </div>
             </div>
           </motion.div>
         </section>
       </main>
-
-      <style jsx>{`
-        .content-wrapper {
-          max-width: 900px;
-          margin: 0 auto;
-          padding: 100px 2rem 2rem;
-        }
-
-        /* Hero Section */
-        .hero-section {
-          min-height: calc(100vh - 100px);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .hero-content {
-          width: 100%;
-          text-align: left;
-        }
-
-        .hero-intro {
-          display: flex;
-          align-items: flex-start;
-          gap: 1.5rem;
-          margin-bottom: 1.5rem;
-        }
-
-        .hero-pfp {
-          flex-shrink: 0;
-        }
-
-        .pfp-placeholder {
-          width: 80px;
-          height: 80px;
-          border-radius: 12px;
-          border: 2px solid var(--color-text);
-          background: var(--color-bg-card);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 2.5rem;
-          color: var(--color-text);
-        }
-
-        .hero-title {
-          margin: 0 0 0.5rem 0;
-          font-size: clamp(2rem, 4vw, 3rem);
-        }
-
-        .hero-subtitle {
-          font-size: 0.95rem;
-          line-height: 1.6;
-          color: var(--color-text-dim);
-          margin: 0;
-        }
-
-        .highlight {
-          color: var(--color-text);
-          font-weight: 600;
-        }
-
-        .hero-description {
-          font-size: 0.9rem;
-          line-height: 1.8;
-          color: var(--color-text-dim);
-        }
-
-        .hero-description p {
-          margin: 0 0 0.75rem 0;
-        }
-
-        .tech-stack {
-          color: var(--color-bulb-warm);
-          font-weight: 500;
-        }
-
-        /* Sections */
-        .section {
-          padding: 4rem 0;
-        }
-
-        .section-title {
-          font-size: 1.8rem;
-          margin: 0 0 2rem 0;
-          position: relative;
-          display: inline-block;
-        }
-
-        .section-title::after {
-          content: '';
-          position: absolute;
-          bottom: -8px;
-          left: 0;
-          width: 60%;
-          height: 3px;
-          background: var(--color-bulb-glow);
-        }
-
-        /* Projects */
-        .projects-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 1.5rem;
-          margin-bottom: 1.5rem;
-        }
-
-        .project-card {
-          background: rgba(255, 255, 255, 0.6);
-          border: 1px solid rgba(44, 36, 22, 0.15);
-          border-radius: 12px;
-          overflow: hidden;
-          transition: box-shadow 0.2s ease;
-        }
-
-        .project-card:hover {
-          box-shadow: var(--shadow-soft);
-        }
-
-        .project-banner {
-          height: 140px;
-          background: linear-gradient(135deg, var(--color-paper-warm), #e8e0cc);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-bottom: 1px solid rgba(44, 36, 22, 0.1);
-        }
-
-        .placeholder-text {
-          color: var(--color-ink-light);
-          font-size: 0.85rem;
-          opacity: 0.7;
-        }
-
-        .project-info {
-          padding: 1.25rem;
-        }
-
-        .project-info h3 {
-          font-size: 1.2rem;
-          margin: 0 0 0.5rem 0;
-        }
-
-        .project-info p {
-          font-size: 0.85rem;
-          color: var(--color-ink-light);
-          margin: 0 0 1rem 0;
-          line-height: 1.5;
-        }
-
-        .project-links {
-          display: flex;
-          gap: 1rem;
-        }
-
-        .project-link {
-          font-size: 0.8rem;
-          color: var(--color-ink);
-          text-decoration: none !important;
-          padding: 0.35rem 0.75rem;
-          border: 1px solid var(--color-ink);
-          border-radius: 4px;
-          transition: all 0.2s ease;
-        }
-
-        .project-link:hover {
-          background: var(--color-ink);
-          color: var(--color-paper);
-        }
-
-        .show-all-link {
-          display: inline-block;
-          font-size: 0.85rem;
-          color: var(--color-ink);
-          text-decoration: none !important;
-          border: 1px solid var(--color-ink);
-          padding: 0.5rem 1rem;
-          border-radius: 4px;
-          transition: all 0.2s ease;
-        }
-
-        .show-all-link:hover {
-          background: var(--color-ink);
-          color: var(--color-paper);
-        }
-
-        /* GitHub Section */
-        .github-graph-placeholder {
-          background: rgba(255, 255, 255, 0.5);
-          border: 1px dashed rgba(44, 36, 22, 0.3);
-          border-radius: 8px;
-          padding: 3rem;
-          text-align: center;
-          margin-bottom: 2rem;
-        }
-
-        .placeholder-hint {
-          font-size: 0.75rem;
-          color: var(--color-ink-light);
-          opacity: 0.7;
-          margin-top: 0.5rem;
-        }
-
-        .orgs-title {
-          font-size: 1.1rem;
-          margin: 0 0 1rem 0;
-          font-family: 'JetBrains Mono', monospace;
-          font-weight: normal;
-        }
-
-        .orgs-logos {
-          display: flex;
-          gap: 1rem;
-          flex-wrap: wrap;
-        }
-
-        .org-logo-placeholder {
-          width: 60px;
-          height: 60px;
-          border: 1px dashed rgba(44, 36, 22, 0.3);
-          border-radius: 8px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 0.65rem;
-          color: var(--color-ink-light);
-          text-align: center;
-        }
-
-        @media (max-width: 768px) {
-          .hero-intro {
-            flex-direction: column;
-            align-items: flex-start;
-          }
-
-          .pfp-placeholder {
-            width: 60px;
-            height: 60px;
-            font-size: 2rem;
-          }
-
-          .section {
-            padding: 3rem 0;
-          }
-        }
-      `}</style>
     </>
   );
 }

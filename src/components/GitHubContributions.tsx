@@ -12,24 +12,24 @@ const generateMockData = () => {
 };
 
 const contributionLevels = [
-  'transparent', 
+  'transparent',
   'rgba(44, 36, 22, 0.1)',
-  'rgba(44, 36, 22, 0.3)', 
-  'rgba(44, 36, 22, 0.5)', 
-  'rgba(44, 36, 22, 0.8)', 
+  'rgba(44, 36, 22, 0.3)',
+  'rgba(44, 36, 22, 0.5)',
+  'rgba(44, 36, 22, 0.8)',
 ];
 
 export default function GitHubContributions() {
   const contributions = generateMockData();
 
   return (
-    <div className="github-contributions">
-      <div className="graph-container">
-        <div className="graph-grid">
+    <div className="p-6 border border-[#2c2416]/20 rounded-lg bg-white/30 relative before:content-[''] before:absolute before:-inset-[2px] before:border before:border-[#2c2416]/10 before:rounded-[9px] before:pointer-events-none before:rotate-[0.5deg]">
+      <div className="overflow-x-auto mb-4">
+        <div className="grid grid-rows-[repeat(7,10px)] grid-flow-col gap-[3px] w-fit">
           {contributions.map((level, i) => (
             <motion.div
               key={i}
-              className="contribution-cell"
+              className="w-[10px] h-[10px] rounded-[2px] border border-[#2c2416]/10"
               initial={{ opacity: 0, scale: 0.5 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -41,71 +41,13 @@ export default function GitHubContributions() {
         </div>
       </div>
 
-      <div className="contribution-legend">
+      <div className="flex items-center justify-end gap-1 text-xs text-text-dim font-mono">
         <span>less</span>
         {contributionLevels.map((color, i) => (
-          <div key={i} className="legend-cell" style={{ backgroundColor: color }} />
+          <div key={i} className="w-[10px] h-[10px] rounded-[2px] border border-[#2c2416]/10" style={{ backgroundColor: color }} />
         ))}
         <span>more</span>
       </div>
-
-      <style jsx>{`
-        .github-contributions {
-          padding: 1.5rem;
-          border: 1px solid rgba(44, 36, 22, 0.2);
-          border-radius: 8px;
-          background: rgba(255, 255, 255, 0.3);
-          position: relative;
-        }
-        
-        /* Sketchy border effect */
-        .github-contributions::before {
-          content: '';
-          position: absolute;
-          inset: -2px;
-          border: 1px solid rgba(44, 36, 22, 0.1);
-          border-radius: 9px;
-          pointer-events: none;
-          transform: rotate(0.5deg);
-        }
-
-        .graph-container {
-          overflow-x: auto;
-          margin-bottom: 1rem;
-        }
-
-        .graph-grid {
-          display: grid;
-          grid-template-rows: repeat(7, 10px);
-          grid-auto-flow: column;
-          gap: 3px;
-          width: fit-content;
-        }
-
-        .contribution-cell {
-          width: 10px;
-          height: 10px;
-          border-radius: 2px;
-          border: 1px solid rgba(44, 36, 22, 0.1);
-        }
-
-        .contribution-legend {
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          gap: 4px;
-          font-size: 0.75rem;
-          color: var(--color-text-dim);
-          font-family: 'JetBrains Mono', monospace;
-        }
-
-        .legend-cell {
-          width: 10px;
-          height: 10px;
-          border-radius: 2px;
-          border: 1px solid rgba(44, 36, 22, 0.1);
-        }
-      `}</style>
     </div>
   );
 }
