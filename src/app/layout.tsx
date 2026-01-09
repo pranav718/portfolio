@@ -1,21 +1,14 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "Pranav Ray | Developer & OSS Contributor",
-  description: "Welcome to my portfolio. I'm a 19 y/o fullstack developer building projects and contributing to open source.",
-  keywords: ["developer", "portfolio", "open source", "software engineer", "fullstack"],
+  title: "Pranav Ray | Interactive 3D Portfolio",
+  description: "Explore my portfolio through an immersive 3D desk experience. Pull the lamp string to begin your journey.",
+  keywords: ["developer", "portfolio", "3D", "interactive", "three.js", "react", "open source"],
   authors: [{ name: "Pranav Ray" }],
   openGraph: {
-    title: "Pranav Ray | Developer & OSS Contributor",
-    description: "Welcome to my portfolio. I build projects and work on open source software.",
+    title: "Pranav Ray | Interactive 3D Portfolio",
+    description: "An immersive 3D desk portfolio experience built with Three.js and React Three Fiber.",
     type: "website",
   },
 };
@@ -27,8 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${jetbrainsMono.variable} antialiased`}>
-        <div className="notebook-bg" aria-hidden="true" />
+      <body className="antialiased overflow-hidden">
         {children}
       </body>
     </html>

@@ -1,31 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
+  /* Original colors */
   --color-bg-dark: #0a0a0a;
   --color-bg-darker: #050505;
   --color-bg-card: #1a1a1a;
   --color-text: #f5f5f5;
   --color-text-dim: #c0c0c0;
   --color-text-muted: #888888;
-  --color-bulb-glow: #ffd93d;
-  --color-bulb-warm: #ffb84d;
 
-  --font-death-note: "Death Note", cursive;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  /* Warm palette for 3D scene */
+  --color-warm-yellow: #F4D03F;
+  --color-cream: #FFF8E7;
+  --color-warm-brown: #8B4513;
+  --color-soft-orange: #FFB347;
+  --color-deep-brown: #3E2723;
+  --color-soft-blue: #E3F2FD;
+  --color-gold: #FFD700;
+  --color-dark-gray: #2C2C2C;
+
+  /* Fonts */
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 
   --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 60px rgba(255, 217, 61, 0.4);
-}
-
-/* ========================================
-   FONTS
-   ======================================== */
-@font-face {
-  font-family: 'Death Note';
-  src: url('/fonts/death-note/Death Note.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+  --shadow-glow: 0 0 60px rgba(244, 208, 63, 0.4);
 }
 
 /* ========================================
@@ -44,13 +45,16 @@
   }
 
   body {
-    @apply font-mono bg-bg-dark text-text leading-relaxed min-h-screen relative overflow-x-hidden;
+    @apply font-sans bg-bg-dark text-text leading-relaxed min-h-screen relative overflow-hidden;
   }
 
   h1,
   h2,
-  h3 {
-    @apply font-death-note font-normal text-text;
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif font-normal text-text;
   }
 
   h1 {
@@ -69,45 +73,73 @@
   }
 
   p,
-  span,
-  a {
+  span {
+    @apply font-sans;
+  }
+
+  code,
+  pre {
     @apply font-mono;
   }
 
-  /* Links */
+  /* Links - clean for 3D experience */
   a {
-    @apply text-text underline decoration-wavy decoration-bulb-glow underline-offset-4 transition-all duration-200 ease-out;
+    @apply text-text-dim transition-colors duration-200 no-underline;
   }
 
   a:hover {
-    @apply text-bulb-warm decoration-text-dim;
+    @apply text-warm-yellow;
   }
 
   /* Selection */
   ::selection {
-    @apply bg-bulb-glow text-bg-dark;
+    @apply bg-warm-yellow text-bg-dark;
   }
 
-  /* Scrollbar */
+  /* Hide scrollbar for immersive experience */
   ::-webkit-scrollbar {
-    width: 8px;
+    display: none;
   }
 
-  ::-webkit-scrollbar-track {
-    @apply bg-bg-darker;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-text-muted rounded;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-text-dim;
+  body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
-/* Dark background gradient */
-.notebook-bg {
-  @apply fixed inset-0 -z-10 opacity-100;
-  background: linear-gradient(135deg, var(--color-bg-dark) 0%, var(--color-bg-darker) 50%, var(--color-bg-dark) 100%);
+/* ========================================
+   CANVAS STYLES
+   ======================================== */
+.canvas-container {
+  @apply fixed inset-0 w-full h-full;
+}
+
+.canvas-container canvas {
+  @apply w-full h-full;
+  touch-action: none;
+}
+
+/* ========================================
+   BOOK PAGE STYLES (for HTML to canvas)
+   ======================================== */
+.book-page {
+  @apply bg-cream p-8;
+  font-family: 'Inter', sans-serif;
+  color: var(--color-deep-brown);
+}
+
+.book-page h1 {
+  font-family: 'Playfair Display', serif;
+  @apply text-deep-brown;
+}
+
+.book-page h2,
+.book-page h3 {
+  font-family: 'Playfair Display', serif;
+  @apply text-warm-brown;
+}
+
+.book-page code {
+  font-family: 'JetBrains Mono', monospace;
+  @apply bg-warm-brown/10 px-1 py-0.5 rounded text-sm;
 }
