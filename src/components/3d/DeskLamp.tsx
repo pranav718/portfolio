@@ -93,7 +93,7 @@ export default function DeskLamp({ onPull, lampOn }: DeskLampProps) {
             </mesh>
 
             {!lampOn && (
-                <Html position={[0, 0.9, 0.2]} center>
+                <Html position={[0, 0.4, 0.2]} center>
                     <div
                         className={`bg-black/95 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none transition-all duration-200 border shadow-xl ${hovered ? 'border-yellow-400 bg-yellow-900/70 scale-110' : 'border-white/10'}`}
                     >
