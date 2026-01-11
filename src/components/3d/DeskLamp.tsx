@@ -97,7 +97,7 @@ export default function DeskLamp({ onPull, lampOn }: DeskLampProps) {
                     <div
                         className={`bg-black/95 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none transition-all duration-200 border shadow-xl ${hovered ? 'border-yellow-400 bg-yellow-900/70 scale-110' : 'border-white/10'}`}
                     >
-                        {hovered ? '👆 Click!' : '💡 Click lamp'}
+                        {hovered ? 'Click!' : 'Click lamp'}
                     </div>
                 </Html>
             )}
