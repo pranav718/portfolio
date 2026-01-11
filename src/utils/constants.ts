@@ -1,8 +1,8 @@
 
 export const SCENE_POSITIONS = {
     desk: [0, 0, 0] as [number, number, number],
-    notebook: [0, 0.52, 0.1] as [number, number, number],
-    lamp: [0.9, 0.51, -0.1] as [number, number, number],
+    notebook: [-0.2, 0.52, 0.2] as [number, number, number],
+    lamp: [0.7, 0.51, 0.1] as [number, number, number],
     vinylPlayer: [-1.0, 0.52, 0.3] as [number, number, number],
     bookshelf: [0, 0, -2.5] as [number, number, number],
     coffeeMug: [1.3, 0.52, 0.5] as [number, number, number],

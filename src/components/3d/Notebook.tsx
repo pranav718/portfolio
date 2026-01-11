@@ -20,7 +20,7 @@ function NotebookModel() {
 
     useEffect(() => {
         scene.traverse((child) => {
-            if(child instanceof THREE.Mesh) {
+            if (child instanceof THREE.Mesh) {
                 child.castShadow = true;
                 child.receiveShadow = true;
             }
@@ -31,7 +31,7 @@ function NotebookModel() {
         <primitive
             ref={modelRef}
             object={scene}
-            scale={0.5}
+            scale={0.25}
             position={[0, 0, 0]}
             rotation={[0, 0, 0]}
         />
