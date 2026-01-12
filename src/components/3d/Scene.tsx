@@ -55,7 +55,7 @@ export default function Scene({
                 lampOn={lampOn}
                 currentPage={currentPage}
             />
-            <VinylPlayer isPlaying={isPlaying} onToggle={onMusicToggle} />
+            <VinylPlayer isPlaying={isPlaying} onToggle={onMusicToggle} lampOn={lampOn} />
             <Bookshelf />
             <Props />
         </>

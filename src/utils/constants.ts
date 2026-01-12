@@ -1,9 +1,9 @@
 
 export const SCENE_POSITIONS = {
     desk: [0, 0, 0] as [number, number, number],
-    notebook: [-0.3, 0.75, 0.1] as [number, number, number],
-    lamp: [0.5, 1.0, -0.2] as [number, number, number],
-    vinylPlayer: [-0.6, 0.75, 0] as [number, number, number],
+    notebook: [-0.3, 0.85, 0.1] as [number, number, number],
+    lamp: [0.5, 0.85, -0.2] as [number, number, number],
+    vinylPlayer: [-0.7, 0.85, -0.1] as [number, number, number],
     bookshelf: [0, 0, -2.5] as [number, number, number],
     coffeeMug: [0.8, 0.75, 0.2] as [number, number, number],
     pen: [-0.3, 0.75, 0.3] as [number, number, number],

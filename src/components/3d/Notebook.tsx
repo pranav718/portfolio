@@ -31,7 +31,7 @@ function NotebookModel() {
         <primitive
             ref={modelRef}
             object={scene}
-            scale={0.25}
+            scale={0.3}
             position={[0, 0, 0]}
             rotation={[0, 0, 0]}
         />
