@@ -35,7 +35,7 @@ function VinylModel({ isPlaying }: { isPlaying: boolean }) {
         <primitive
             ref={modelRef}
             object={scene}
-            scale={0.35}
+            scale={1.0}
             position={[0, 0, 0]}
             rotation={[0, 0, 0]}
         />

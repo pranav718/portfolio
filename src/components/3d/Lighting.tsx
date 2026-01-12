@@ -52,7 +52,7 @@ export default function Lighting({ lampOn }: LightingProps) {
             
             <pointLight
                 ref={pointRef}
-                position={[0.5, 1.4, -0.2]}
+                position={[0.52, 1.35, -0.4]}
                 intensity={0}
                 color={COLORS.warmYellow}
                 distance={5}
@@ -66,8 +66,8 @@ export default function Lighting({ lampOn }: LightingProps) {
             
             <spotLight
                 ref={spotRef}
-                position={[0.5, 1.6, -0.2]}
-                target-position={[0, 0.5, 0.2]}
+                position={[0.52, 1.5, -0.4]}
+                target-position={[-0.05, 0.8, 0.1]}
                 angle={0.6}
                 penumbra={0.5}
                 intensity={0}
