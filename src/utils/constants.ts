@@ -1,19 +1,19 @@
 
 export const SCENE_POSITIONS = {
-    desk: [0, 0, 0] as [number, number, number],
-    notebook: [-0.05, 1.08, 0.1] as [number, number, number],
-    lamp: [0.52, 1.0, -0.4] as [number, number, number],
-    vinylPlayer: [-0.65, 1.0, 0.1] as [number, number, number],
-    bookshelf: [0, 0, -2.5] as [number, number, number],
-    coffeeMug: [0.8, 0.75, 0.2] as [number, number, number],
-    pen: [-0.3, 0.75, 0.3] as [number, number, number],
+    desk: [0, 0, 0.5] as [number, number, number],
+    notebook: [-0.05, 1.08, 0.6] as [number, number, number],
+    lamp: [0.52, 1.0, 0.1] as [number, number, number],
+    vinylPlayer: [-0.65, 1.0, 0.6] as [number, number, number],
+    bookshelf: [0, 0, -0.9] as [number, number, number],
+    coffeeMug: [0.8, 0.75, 0.7] as [number, number, number],
+    pen: [-0.3, 0.75, 0.8] as [number, number, number],
 };
 
 export const CAMERA = {
-    initialPosition: [0, 2.5, 3.5] as [number, number, number],
-    zoomedPosition: [0, 2.0, 2.5] as [number, number, number],
-    lookAt: [0, 0.5, 0] as [number, number, number],
-    fov: 50,
+    initialPosition: [0, 1.6, 2.0] as [number, number, number],
+    zoomedPosition: [0, 1.4, 1.5] as [number, number, number],
+    lookAt: [0, 0.6, 0.5] as [number, number, number],
+    fov: 55,
 };
 
 export const COLORS = {

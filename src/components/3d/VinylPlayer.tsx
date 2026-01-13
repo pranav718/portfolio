@@ -27,7 +27,6 @@ function VinylModel({ isPlaying }: { isPlaying: boolean }) {
 
     useFrame(() => {
         if (modelRef.current && isPlaying) {
-            // If there's a disc/record in the model, we can animate it
         }
     });
 
@@ -35,7 +34,7 @@ function VinylModel({ isPlaying }: { isPlaying: boolean }) {
         <primitive
             ref={modelRef}
             object={scene}
-            scale={1.0}
+            scale={0.6}
             position={[0, 0, 0]}
             rotation={[0, 0, 0]}
         />

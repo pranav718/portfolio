@@ -111,11 +111,6 @@ export default function Home() {
         isMuted={isMuted}
         onMuteToggle={() => setIsMuted(!isMuted)}
       />
-
-      
-      <div className="fixed bottom-4 right-4 text-xs text-[#444] font-mono">
-        Built with Three.js & React Three Fiber
-      </div>
     </main>
   );
 }

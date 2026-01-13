@@ -42,17 +42,17 @@ export default function Lighting({ lampOn }: LightingProps) {
 
     return (
         <>
-            
+
             <ambientLight
                 ref={ambientRef}
                 intensity={LIGHTING.lampOff.ambientIntensity}
                 color={COLORS.softBlue}
             />
 
-            
+
             <pointLight
                 ref={pointRef}
-                position={[0.52, 1.35, -0.4]}
+                position={[0.52, 1.35, 0.1]}
                 intensity={0}
                 color={COLORS.warmYellow}
                 distance={5}
@@ -63,11 +63,11 @@ export default function Lighting({ lampOn }: LightingProps) {
                 shadow-bias={-0.0001}
             />
 
-            
+
             <spotLight
                 ref={spotRef}
-                position={[0.52, 1.5, -0.4]}
-                target-position={[-0.05, 0.8, 0.1]}
+                position={[0.52, 1.5, 0.1]}
+                target-position={[-0.05, 0.8, 0.6]}
                 angle={0.6}
                 penumbra={0.5}
                 intensity={0}
@@ -75,7 +75,7 @@ export default function Lighting({ lampOn }: LightingProps) {
                 castShadow
             />
 
-            
+
             <directionalLight
                 position={[-5, 3, -5]}
                 intensity={0.1}

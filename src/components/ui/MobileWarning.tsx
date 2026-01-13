@@ -64,11 +64,6 @@ export default function MobileWarning() {
                         Connect on LinkedIn
                     </a>
                 </div>
-
-                
-                <p className="mt-8 text-xs text-[#555]">
-                    Built with Next.js, Three.js & React Three Fiber
-                </p>
             </div>
         </div>
     );
