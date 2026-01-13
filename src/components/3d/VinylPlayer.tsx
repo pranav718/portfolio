@@ -83,12 +83,15 @@ export default function VinylPlayer({ isPlaying, onToggle, lampOn }: VinylPlayer
                 <meshBasicMaterial transparent opacity={0} />
             </mesh>
 
-            {lampOn && (
+            {lampOn && hovered && (
                 <Html position={[0, 0.3, 0.15]} center>
                     <div
-                        className={`bg-black/95 text-white px-3 py-1 rounded-lg text-xs whitespace-nowrap pointer-events-none transition-all duration-200 border shadow-xl ${hovered ? 'border-yellow-400 bg-yellow-900/70 scale-110' : 'border-white/10'}`}
+                        className="bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none border border-yellow-400/50 shadow-xl"
+                        style={{
+                            animation: 'fadeIn 0.2s ease-out forwards',
+                        }}
                     >
-                        {isPlaying ? '⏸ Pause' : '▶ Play'}
+                        {isPlaying ? '⏸ Pause Music' : '🎵 Play Music'}
                     </div>
                 </Html>
             )}

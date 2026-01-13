@@ -102,12 +102,15 @@ export default function Notebook({ isOpen, onOpen, lampOn, currentPage }: Notebo
                 <meshBasicMaterial transparent opacity={0} />
             </mesh>
 
-            {lampOn && !isOpen && (
+            {lampOn && !isOpen && hovered && (
                 <Html position={[0, 0.25, 0]} center>
                     <div
-                        className={`bg-black/95 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none transition-all duration-200 border shadow-xl ${hovered ? 'border-yellow-400 bg-yellow-900/70 scale-110' : 'border-white/10'}`}
+                        className="bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none border border-yellow-400/50 shadow-xl animate-fade-in"
+                        style={{
+                            animation: 'fadeIn 0.2s ease-out forwards',
+                        }}
                     >
-                        {hovered ? ' Click to open!' : ' My Journal'}
+                        📖 Open
                     </div>
                 </Html>
             )}
