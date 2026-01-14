@@ -91,7 +91,7 @@ export default function VinylPlayer({ isPlaying, onToggle, lampOn }: VinylPlayer
                             animation: 'fadeIn 0.2s ease-out forwards',
                         }}
                     >
-                        {isPlaying ? '⏸ Pause Music' : '🎵 Play Music'}
+                        {isPlaying ? '⏸ Pause Music' : 'Play Music'}
                     </div>
                 </Html>
             )}

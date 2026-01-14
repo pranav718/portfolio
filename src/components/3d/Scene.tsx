@@ -1,6 +1,7 @@
 'use client';
 
 import Bookshelf from './Bookshelf';
+import CameraController from './CameraController';
 import Desk from './Desk';
 import DeskLamp from './DeskLamp';
 import Effects from './Effects';
@@ -30,7 +31,8 @@ export default function Scene({
 }: SceneProps) {
     return (
         <>
-            
+            <CameraController isJournalOpen={notebookOpen} />
+
             <Lighting lampOn={lampOn} />
 
             

@@ -5,8 +5,7 @@ import AudioControls from '@/components/ui/AudioControls';
 import HelpOverlay from '@/components/ui/HelpOverlay';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import MobileWarning from '@/components/ui/MobileWarning';
-import PageNavigator from '@/components/ui/PageNavigator';
-import { CAMERA, PAGES } from '@/utils/constants';
+import { CAMERA } from '@/utils/constants';
 import { Canvas } from '@react-three/fiber';
 import { Suspense, useEffect, useState } from 'react';
 
@@ -46,6 +45,11 @@ export default function Home() {
 
   const handleNotebookOpen = () => {
     setNotebookOpen(true);
+  };
+
+  const handleNotebookClose = () => {
+    setNotebookOpen(false);
+    setCurrentPage(0);
   };
 
   const handleMusicToggle = () => {
@@ -95,11 +99,35 @@ export default function Home() {
 
       
       {lampOn && notebookOpen && (
-        <PageNavigator
-          currentPage={currentPage}
-          totalPages={PAGES.total}
-          onPageChange={setCurrentPage}
-        />
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 flex items-center gap-4 bg-black/60 backdrop-blur-md rounded-full px-6 py-3">
+          <button
+            onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
+            disabled={currentPage === 0}
+            className="p-2 text-white/80 hover:text-white disabled:text-white/30 transition-colors"
+          >
+            ← Prev
+          </button>
+          <span className="text-white/70 text-sm min-w-[80px] text-center">
+            {currentPage === 0 && 'About'}
+            {currentPage === 1 && 'Projects'}
+            {currentPage === 2 && 'Skills'}
+            {currentPage === 3 && 'Contact'}
+          </span>
+          <button
+            onClick={() => setCurrentPage(Math.min(3, currentPage + 1))}
+            disabled={currentPage === 3}
+            className="p-2 text-white/80 hover:text-white disabled:text-white/30 transition-colors"
+          >
+            Next →
+          </button>
+          <div className="w-px h-6 bg-white/20" />
+          <button
+            onClick={handleNotebookClose}
+            className="px-3 py-1 text-sm text-white/60 hover:text-white transition-colors"
+          >
+            ✕ Close
+          </button>
+        </div>
       )}
 
       

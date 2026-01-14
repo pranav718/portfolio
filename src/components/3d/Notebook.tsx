@@ -1,7 +1,9 @@
 'use client';
 
+import { about, contact, skills } from '@/content';
+import { projects } from '@/content/projects';
 import { COLORS, SCENE_POSITIONS } from '@/utils/constants';
-import { Html, useGLTF } from '@react-three/drei';
+import { Html, Text, useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import gsap from 'gsap';
 import { Suspense, useEffect, useRef, useState } from 'react';
@@ -36,6 +38,107 @@ function NotebookModel() {
             rotation={[0, 0, 0]}
         />
     );
+}
+
+function JournalText({
+    children,
+    position,
+    fontSize = 0.015,
+    color = '#3E2723',
+    maxWidth = 0.25
+}: {
+    children: string;
+    position: [number, number, number];
+    fontSize?: number;
+    color?: string;
+    maxWidth?: number;
+}) {
+    return (
+        <Text
+            position={position}
+            rotation={[-Math.PI / 2, 0, 0]}
+            fontSize={fontSize}
+            color={color}
+            anchorX="center"
+            anchorY="top"
+            maxWidth={maxWidth}
+            lineHeight={1.5}
+        >
+            {children}
+        </Text>
+    );
+}
+
+function JournalPageContent({ currentPage }: { currentPage: number }) {
+    const pageContents = [
+        <group key="about">
+            <JournalText position={[0, 0.001, 0.08]} fontSize={0.025} color="#3E2723">
+                Pranav Ray
+            </JournalText>
+            <JournalText position={[0, 0.001, 0.04]} fontSize={0.012} color="#6D4C41">
+                19 y/o Developer
+            </JournalText>
+            <JournalText position={[0, 0.001, -0.02]} fontSize={0.009} color="#5D4037" maxWidth={0.28}>
+                {about.intro}
+            </JournalText>
+            <JournalText position={[0, 0.001, -0.12]} fontSize={0.008} color="#8D6E63">
+                {about.interests.slice(0, 3).join(' • ')}
+            </JournalText>
+        </group>,
+
+        <group key="projects">
+            <JournalText position={[0, 0.001, 0.08]} fontSize={0.02} color="#3E2723">
+                Projects
+            </JournalText>
+            <JournalText position={[0, 0.001, 0.03]} fontSize={0.012} color="#4E342E">
+                {projects[0]?.title || 'Portfolio v2'}
+            </JournalText>
+            <JournalText position={[0, 0.001, 0]} fontSize={0.008} color="#5D4037" maxWidth={0.28}>
+                {projects[0]?.description || 'Immersive 3D portfolio'}
+            </JournalText>
+            <JournalText position={[0, 0.001, -0.06]} fontSize={0.012} color="#4E342E">
+                {projects[1]?.title || 'AlgoVisualizer'}
+            </JournalText>
+            <JournalText position={[0, 0.001, -0.1]} fontSize={0.008} color="#5D4037" maxWidth={0.28}>
+                {projects[1]?.description || 'Algorithm visualization tool'}
+            </JournalText>
+        </group>,
+
+        <group key="skills">
+            <JournalText position={[0, 0.001, 0.08]} fontSize={0.02} color="#3E2723">
+                Skills
+            </JournalText>
+            <JournalText position={[0, 0.001, 0.03]} fontSize={0.01} color="#6D4C41">
+                Frontend
+            </JournalText>
+            <JournalText position={[0, 0.001, 0]} fontSize={0.007} color="#5D4037" maxWidth={0.28}>
+                {skills.filter(s => s.category === 'frontend').map(s => s.name).join(' • ')}
+            </JournalText>
+            <JournalText position={[0, 0.001, -0.06]} fontSize={0.01} color="#6D4C41">
+                Backend
+            </JournalText>
+            <JournalText position={[0, 0.001, -0.1]} fontSize={0.007} color="#5D4037" maxWidth={0.28}>
+                {skills.filter(s => s.category === 'backend').map(s => s.name).join(' • ')}
+            </JournalText>
+        </group>,
+
+        <group key="contact">
+            <JournalText position={[0, 0.001, 0.06]} fontSize={0.018} color="#3E2723">
+                Let's Connect
+            </JournalText>
+            <JournalText position={[0, 0.001, 0]} fontSize={0.01} color="#5D4037">
+                {contact.email}
+            </JournalText>
+            <JournalText position={[0, 0.001, -0.05]} fontSize={0.008} color="#6D4C41">
+                GitHub • LinkedIn
+            </JournalText>
+            <JournalText position={[0, 0.001, -0.12]} fontSize={0.007} color="#8D6E63">
+                "Building beautiful experiences"
+            </JournalText>
+        </group>,
+    ];
+
+    return pageContents[currentPage] || pageContents[0];
 }
 
 export default function Notebook({ isOpen, onOpen, lampOn, currentPage }: NotebookProps) {
@@ -110,22 +213,15 @@ export default function Notebook({ isOpen, onOpen, lampOn, currentPage }: Notebo
                             animation: 'fadeIn 0.2s ease-out forwards',
                         }}
                     >
-                        📖 Open
+                        Open
                     </div>
                 </Html>
             )}
 
             {isOpen && (
-                <Html position={[0, 0.3, 0]} center transform occlude>
-                    <div className="w-[400px] h-[300px] bg-[#FFF8E7] rounded-lg shadow-2xl p-6 overflow-auto">
-                        <h2 className="text-xl font-serif text-[#3E2723] mb-4">
-                            Page {currentPage + 1}
-                        </h2>
-                        <p className="text-[#5D4037] text-sm leading-relaxed">
-                            Welcome to my portfolio journal. Navigate through the pages to explore my work.
-                        </p>
-                    </div>
-                </Html>
+                <group position={[0.05, 0.06, 0]}>
+                    <JournalPageContent currentPage={currentPage} />
+                </group>
             )}
         </group>
     );
