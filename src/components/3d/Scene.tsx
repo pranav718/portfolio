@@ -58,7 +58,7 @@ export default function Scene({
                 lampOn={lampOn}
                 currentPage={currentPage}
             />
-            <GlowingStars visible={lampOn && !notebookOpen} />
+            <GlowingStars visible={!notebookOpen} />
             <VinylPlayer isPlaying={isPlaying} onToggle={onMusicToggle} lampOn={lampOn} />
             <Bookshelf />
             <Props />

@@ -55,12 +55,9 @@ function LampModel({ lampOn }: { lampOn: boolean }) {
 export default function DeskLamp({ onPull, lampOn }: DeskLampProps) {
     const groupRef = useRef<THREE.Group>(null);
     const [hovered, setHovered] = useState(false);
-    const [pulled, setPulled] = useState(false);
 
     const handleClick = () => {
-        if (pulled || lampOn) return;
-        setPulled(true);
-        setTimeout(() => onPull(), 80);
+        onPull();
     };
 
     return (
@@ -77,10 +74,8 @@ export default function DeskLamp({ onPull, lampOn }: DeskLampProps) {
             <mesh
                 position={[0, 0.4, 0]}
                 onPointerEnter={() => {
-                    if (!lampOn) {
-                        setHovered(true);
-                        document.body.style.cursor = 'pointer';
-                    }
+                    setHovered(true);
+                    document.body.style.cursor = 'pointer';
                 }}
                 onPointerLeave={() => {
                     setHovered(false);
@@ -92,15 +87,15 @@ export default function DeskLamp({ onPull, lampOn }: DeskLampProps) {
                 <meshBasicMaterial transparent opacity={0} />
             </mesh>
 
-            {!lampOn && (
-                <Html position={[0, 0.4, 0.2]} center>
-                    <div
-                        className={`bg-black/95 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none transition-all duration-200 border shadow-xl ${hovered ? 'border-yellow-400 bg-yellow-900/70 scale-110' : 'border-white/10'}`}
-                    >
-                        {hovered ? 'Click!' : 'Click lamp'}
-                    </div>
-                </Html>
-            )}
+            <Html position={[0, 0.4, 0.2]} center>
+                <div
+                    className={`bg-black/95 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none transition-all duration-200 border shadow-xl ${hovered ? (lampOn ? 'border-red-400 bg-red-900/70' : 'border-yellow-400 bg-yellow-900/70') + ' scale-110' : 'border-white/10'}`}
+                >
+                    {hovered
+                        ? (lampOn ? 'Turn Off' : 'Turn On')
+                        : (lampOn ? 'Click to turn off' : 'Click lamp')}
+                </div>
+            </Html>
         </group>
     );
 }

@@ -38,9 +38,15 @@ export default function Home() {
   }, []);
 
   const handleLampPull = () => {
-    setLampOn(true);
-    localStorage.setItem('portfolio-visited', 'true');
-    setShowHelp(false);
+    setLampOn(!lampOn);
+    if (!lampOn) {
+      localStorage.setItem('portfolio-visited', 'true');
+      setShowHelp(false);
+    }
+    if (lampOn) {
+      setNotebookOpen(false);
+      setCurrentPage(0);
+    }
   };
 
   const handleNotebookOpen = () => {

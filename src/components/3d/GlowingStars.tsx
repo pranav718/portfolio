@@ -9,124 +9,161 @@ interface GlowingStarsProps {
     visible: boolean;
 }
 
-interface StarData {
-    position: THREE.Vector3;
-    baseY: number;
-    phase: number;
-    speed: number;
-    scale: number;
+function createStarShape(): THREE.Shape {
+    const shape = new THREE.Shape();
+    const outerRadius = 1;
+    const innerRadius = 0.25;
+    const points = 4;
+
+    for (let i = 0; i < points * 2; i++) {
+        const radius = i % 2 === 0 ? outerRadius : innerRadius;
+        const angle = (i / (points * 2)) * Math.PI * 2 - Math.PI / 2;
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
+
+        if (i === 0) {
+            shape.moveTo(x, y);
+        } else {
+            shape.lineTo(x, y);
+        }
+    }
+    shape.closePath();
+    return shape;
 }
 
-function Star({ position, phase, speed, scale }: { position: THREE.Vector3; phase: number; speed: number; scale: number }) {
-    const meshRef = useRef<THREE.Mesh>(null);
-    const glowRef = useRef<THREE.PointLight>(null);
+interface StarData {
+    position: THREE.Vector3;
+    scale: number;
+    phase: number;
+    speed: number;
+    rotation: number;
+    brightness: number;
+}
+
+function SparkleStars({ count, spread, height, baseScale, visible }: {
+    count: number;
+    spread: number;
+    height: number;
+    baseScale: number;
+    visible: boolean;
+}) {
+    const meshRef = useRef<THREE.InstancedMesh>(null);
+    const starShape = useMemo(() => createStarShape(), []);
+    const starGeometry = useMemo(() => new THREE.ShapeGeometry(starShape), [starShape]);
+
+    const stars = useMemo<StarData[]>(() => {
+        const data: StarData[] = [];
+        for (let i = 0; i < count; i++) {
+            const t = Math.random();
+            const angle = Math.random() * Math.PI * 2;
+            const radiusAtHeight = spread * t * 0.8;
+            const y = height * t;
+
+            data.push({
+                position: new THREE.Vector3(
+                    Math.cos(angle) * radiusAtHeight * (0.5 + Math.random() * 0.5),
+                    y,
+                    Math.sin(angle) * radiusAtHeight * (0.5 + Math.random() * 0.5)
+                ),
+                scale: baseScale * (0.3 + Math.random() * 0.7) * (1 - t * 0.3),
+                phase: Math.random() * Math.PI * 2,
+                speed: 1.5 + Math.random() * 2,
+                rotation: Math.random() * Math.PI,
+                brightness: 0.5 + Math.random() * 0.5,
+            });
+        }
+        return data;
+    }, [count, spread, height, baseScale]);
+
+    const dummy = useMemo(() => new THREE.Object3D(), []);
+    const opacities = useRef(new Float32Array(count).fill(1));
 
     useFrame((state) => {
-        if (meshRef.current) {
-            const time = state.clock.getElapsedTime();
-            meshRef.current.position.y = position.y + Math.sin(time * speed + phase) * 0.02;
+        if (!meshRef.current) return;
 
-            const twinkle = 0.7 + Math.sin(time * 3 + phase) * 0.3;
-            (meshRef.current.material as THREE.MeshBasicMaterial).opacity = twinkle;
+        const time = state.clock.getElapsedTime();
 
-            meshRef.current.rotation.z = time * 0.5 + phase;
+        stars.forEach((star, i) => {
+            dummy.position.copy(star.position);
 
-            if (glowRef.current) {
-                glowRef.current.intensity = 0.15 + Math.sin(time * 2 + phase) * 0.1;
-            }
-        }
+            const twinkle = 0.4 + Math.sin(time * star.speed + star.phase) * 0.6;
+            const currentScale = star.scale * twinkle * (visible ? 1 : 0);
+            dummy.scale.setScalar(currentScale);
+
+            dummy.rotation.set(0, 0, star.rotation + time * 0.2);
+
+            dummy.updateMatrix();
+            meshRef.current!.setMatrixAt(i, dummy.matrix);
+
+            opacities.current[i] = star.brightness * twinkle;
+        });
+
+        meshRef.current.instanceMatrix.needsUpdate = true;
     });
 
     return (
-        <group position={position}>
-            <mesh ref={meshRef} scale={scale}>
-                <octahedronGeometry args={[0.015, 0]} />
-                <meshBasicMaterial
-                    color="#FFD700"
-                    transparent
-                    opacity={0.9}
-                />
-            </mesh>
-
-            <pointLight
-                ref={glowRef}
-                color="#FFE066"
-                intensity={0.2}
-                distance={0.3}
+        <instancedMesh
+            ref={meshRef}
+            args={[starGeometry, undefined, count]}
+        >
+            <meshBasicMaterial
+                color="#FFE57F"
+                transparent
+                opacity={0.9}
+                side={THREE.DoubleSide}
+                depthWrite={false}
+                blending={THREE.AdditiveBlending}
             />
-
-            <mesh scale={scale * 1.5}>
-                <ringGeometry args={[0.02, 0.025, 4]} />
-                <meshBasicMaterial
-                    color="#FFD700"
-                    transparent
-                    opacity={0.3}
-                    side={THREE.DoubleSide}
-                />
-            </mesh>
-        </group>
+        </instancedMesh>
     );
 }
 
 export default function GlowingStars({ visible }: GlowingStarsProps) {
     const groupRef = useRef<THREE.Group>(null);
     const notebookPos = SCENE_POSITIONS.notebook;
-
-    const stars = useMemo<StarData[]>(() => {
-        const starData: StarData[] = [];
-        const count = 5;
-
-        for (let i = 0; i < count; i++) {
-            const angle = (i / count) * Math.PI * 2;
-            const radius = 0.15 + Math.random() * 0.1;
-            const height = 0.25 + Math.random() * 0.1;
-
-            starData.push({
-                position: new THREE.Vector3(
-                    Math.cos(angle) * radius,
-                    height,
-                    Math.sin(angle) * radius
-                ),
-                baseY: height,
-                phase: (i / count) * Math.PI * 2,
-                speed: 1 + Math.random() * 0.5,
-                scale: 0.8 + Math.random() * 0.4,
-            });
-        }
-
-        return starData;
-    }, []);
+    const currentScale = useRef(1);
 
     useFrame(() => {
         if (groupRef.current) {
-            const targetOpacity = visible ? 1 : 0;
-            groupRef.current.visible = visible || groupRef.current.scale.x > 0.01;
-
-            const currentScale = groupRef.current.scale.x;
-            const newScale = THREE.MathUtils.lerp(currentScale, targetOpacity, 0.05);
-            groupRef.current.scale.setScalar(newScale);
+            const targetScale = visible ? 1 : 0;
+            currentScale.current = THREE.MathUtils.lerp(currentScale.current, targetScale, 0.05);
+            groupRef.current.scale.setScalar(currentScale.current);
+            groupRef.current.visible = currentScale.current > 0.01;
         }
     });
 
     return (
         <group
             ref={groupRef}
-            position={[notebookPos[0], notebookPos[1], notebookPos[2]]}
+            position={[notebookPos[0], notebookPos[1] + 0.05, notebookPos[2]]}
         >
-            {stars.map((star, i) => (
-                <Star
-                    key={i}
-                    position={star.position}
-                    phase={star.phase}
-                    speed={star.speed}
-                    scale={star.scale}
-                />
-            ))}
+            <SparkleStars
+                count={60}
+                spread={0.35}
+                height={0.15}
+                baseScale={0.01}
+                visible={visible}
+            />
+            <SparkleStars
+                count={25}
+                spread={0.45}
+                height={0.2}
+                baseScale={0.015}
+                visible={visible}
+            />
+
+            <SparkleStars
+                count={40}
+                spread={0.4}
+                height={0.12}
+                baseScale={0.005}
+                visible={visible}
+            />
 
             <pointLight
-                position={[0, 0.3, 0]}
+                position={[0, 0.1, 0]}
                 color="#FFE066"
-                intensity={0.3}
+                intensity={0.4}
                 distance={1}
             />
         </group>
