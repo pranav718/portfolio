@@ -5,6 +5,7 @@ import CameraController from './CameraController';
 import Desk from './Desk';
 import DeskLamp from './DeskLamp';
 import Effects from './Effects';
+import GlowingStars from './GlowingStars';
 import Lighting from './Lighting';
 import Notebook from './Notebook';
 import Props from './Props';
@@ -57,6 +58,7 @@ export default function Scene({
                 lampOn={lampOn}
                 currentPage={currentPage}
             />
+            <GlowingStars visible={lampOn && !notebookOpen} />
             <VinylPlayer isPlaying={isPlaying} onToggle={onMusicToggle} lampOn={lampOn} />
             <Bookshelf />
             <Props />

@@ -213,7 +213,7 @@ export default function Notebook({ isOpen, onOpen, lampOn, currentPage }: Notebo
                             animation: 'fadeIn 0.2s ease-out forwards',
                         }}
                     >
-                        Open
+                        View Portfolio
                     </div>
                 </Html>
             )}
