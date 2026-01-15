@@ -17,8 +17,8 @@ export default function CameraController({ isJournalOpen }: CameraControllerProp
             const journalPos = SCENE_POSITIONS.notebook;
             gsap.to(camera.position, {
                 x: journalPos[0],
-                y: 1.8,
-                z: journalPos[2] + 0.6,
+                y: 1.88,
+                z: journalPos[2] + 0.4,
                 duration: 1.2,
                 ease: 'power2.inOut',
             });
