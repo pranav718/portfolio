@@ -11,7 +11,7 @@ const FAREWELL_TEXT = "I hope you enjoyed my space";
 
 export default function InkBleedTransition({ isActive }: InkBleedTransitionProps) {
     const router = useRouter();
-    const [phase, setPhase] = useState<'idle' | 'text' | 'ink' | 'complete'>('idle');
+    const [phase, setPhase] = useState<'idle' | 'text' | 'zoom' | 'fade' | 'complete'>('idle');
     const [displayedText, setDisplayedText] = useState('');
 
     const words = useMemo(() => FAREWELL_TEXT.split(' '), []);
@@ -34,7 +34,7 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
         if (phase !== 'text') return;
 
         let wordIndex = 0;
-        setDisplayedText(''); 
+        setDisplayedText('');
 
         const interval = setInterval(() => {
             wordIndex++;
@@ -42,84 +42,63 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
                 setDisplayedText(words.slice(0, wordIndex).join(' '));
             } else {
                 clearInterval(interval);
-                setTimeout(() => setPhase('ink'), 800);
+                setTimeout(() => setPhase('zoom'), 600);
             }
-        }, 300);
+        }, 280);
 
         return () => clearInterval(interval);
     }, [phase, words]);
 
     useEffect(() => {
-        if (phase !== 'ink') return;
+        if (phase !== 'zoom') return;
+        const timer = setTimeout(() => setPhase('fade'), 1200);
+        return () => clearTimeout(timer);
+    }, [phase]);
 
-        const navTimer = setTimeout(() => {
+    useEffect(() => {
+        if (phase !== 'fade') return;
+        const timer = setTimeout(() => {
             setPhase('complete');
             router.push('/portfolio');
-        }, 1500);
-
-        return () => clearTimeout(navTimer);
+        }, 800);
+        return () => clearTimeout(timer);
     }, [phase, router]);
 
     if (!isActive && phase === 'idle') return null;
 
-    return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-auto">
-            <div
-                className={`absolute inset-0 bg-[#FFF8E7]/90 transition-opacity duration-500 ${phase !== 'idle' ? 'opacity-100' : 'opacity-0'
-                    }`}
-            />
-            <div
-                className={`absolute inset-0 bg-[#1a1108] transition-all ease-out ${phase === 'ink' || phase === 'complete'
-                        ? 'opacity-100 scale-100 duration-[1200ms]'
-                        : 'opacity-0 scale-0 duration-300'
-                    }`}
-                style={{
-                    borderRadius: phase === 'ink' || phase === 'complete' ? '0%' : '100%',
-                    transformOrigin: 'center center',
-                }}
-            />
+    const isZooming = phase === 'zoom' || phase === 'fade' || phase === 'complete';
 
+    return (
+        <div
+            className={`fixed inset-0 z-[100] flex items-center justify-center pointer-events-auto overflow-hidden transition-colors duration-700 ${isZooming ? 'animate-shake' : ''
+                } ${phase === 'fade' || phase === 'complete' ? 'bg-[#0a0a0a]' : 'bg-[#FFF8E7]'
+                }`}
+        >
             <div
-                className={`relative z-10 text-center px-8 transition-all duration-500 ${phase === 'ink' || phase === 'complete'
-                        ? 'opacity-0 scale-95'
-                        : 'opacity-100 scale-100'
+                className={`relative flex items-center justify-center w-full h-full transition-all duration-1000 ${isZooming ? 'scale-[3] blur-sm opacity-0' : 'scale-100 blur-0 opacity-100'
                     }`}
             >
-                <p
-                    className="text-4xl md:text-5xl lg:text-6xl leading-relaxed"
-                    style={{
-                        fontFamily: "'Caveat', cursive",
-                        color: '#2a1f0f',
-                        textShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                    }}
-                >
-                    {displayedText}
-                    {phase === 'text' && (
-                        <span
-                            className="inline-block w-[3px] h-[0.8em] bg-[#2a1f0f] ml-1 align-middle"
-                            style={{ animation: 'pulse 1s ease-in-out infinite' }}
-                        />
-                    )}
-                </p>
+                <div className="text-center px-8">
+                    <p
+                        className="text-4xl md:text-5xl lg:text-6xl leading-relaxed"
+                        style={{
+                            fontFamily: "'Caveat', cursive",
+                            color: '#2a1f0f',
+                            textShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                        }}
+                    >
+                        {displayedText}
+                        {phase === 'text' && (
+                            <span className="inline-block w-[3px] h-[0.8em] bg-[#2a1f0f] ml-1 align-middle animate-pulse" />
+                        )}
+                    </p>
+                </div>
             </div>
 
-            {phase === 'ink' && (
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    {[...Array(8)].map((_, i) => (
-                        <div
-                            key={i}
-                            className="absolute rounded-full bg-[#1a1108]"
-                            style={{
-                                width: `${30 + Math.random() * 50}px`,
-                                height: `${30 + Math.random() * 50}px`,
-                                left: `${10 + Math.random() * 80}%`,
-                                top: `${10 + Math.random() * 80}%`,
-                                animation: `ping 0.6s ease-out ${i * 0.1}s forwards`,
-                            }}
-                        />
-                    ))}
-                </div>
-            )}
+            <div
+                className={`absolute inset-0 bg-[#0a0a0a] pointer-events-none transition-opacity duration-700 ${phase === 'fade' || phase === 'complete' ? 'opacity-100' : 'opacity-0'
+                    }`}
+            />
         </div>
     );
 }
