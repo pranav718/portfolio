@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -29,9 +29,7 @@
   --shadow-glow: 0 0 60px rgba(244, 208, 63, 0.4);
 }
 
-/* ========================================
-   BASE STYLES
-   ======================================== */
+/*base styles*/
 @layer base {
 
   *,
@@ -107,9 +105,7 @@
   }
 }
 
-/* ========================================
-   CANVAS STYLES
-   ======================================== */
+/*canvas styles */
 .canvas-container {
   @apply fixed inset-0 w-full h-full;
 }
@@ -119,9 +115,7 @@
   touch-action: none;
 }
 
-/* ========================================
-   BOOK PAGE STYLES (for HTML to canvas)
-   ======================================== */
+/*book page styles*/
 .book-page {
   @apply bg-cream p-8;
   font-family: 'Inter', sans-serif;
@@ -144,9 +138,7 @@
   @apply bg-warm-brown/10 px-1 py-0.5 rounded text-sm;
 }
 
-/* ========================================
-   TOOLTIP ANIMATIONS
-   ======================================== */
+/* tooltip animations*/
 @keyframes fadeIn {
   from {
     opacity: 0;
