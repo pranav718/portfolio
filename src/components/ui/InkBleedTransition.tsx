@@ -11,9 +11,10 @@ const FAREWELL_TEXT = "I hope you enjoyed my space";
 
 export default function InkBleedTransition({ isActive }: InkBleedTransitionProps) {
     const router = useRouter();
-    const [phase, setPhase] = useState<'idle' | 'text' | 'gate' | 'darkness' | 'complete'>('idle');
+    const [phase, setPhase] = useState<'idle' | 'expand' | 'text' | 'gate' | 'darkness' | 'complete'>('idle');
     const [displayedText, setDisplayedText] = useState('');
     const [gateOpen, setGateOpen] = useState(0);
+    const [circleSize, setCircleSize] = useState(0);
 
     const words = useMemo(() => FAREWELL_TEXT.split(' '), []);
 
@@ -22,15 +23,44 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
             setPhase('idle');
             setDisplayedText('');
             setGateOpen(0);
+            setCircleSize(0);
             return;
         }
 
-        const textTimer = setTimeout(() => {
-            setPhase('text');
-        }, 300);
-
-        return () => clearTimeout(textTimer);
+        setPhase('expand');
     }, [isActive]);
+
+    useEffect(() => {
+        if (phase !== 'expand') return;
+
+        let startTime: number | null = null;
+        let animationId: number;
+
+        const animate = (timestamp: number) => {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            const duration = 1800;
+            const progress = Math.min(elapsed / duration, 1);
+
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const size = eased * 250;
+
+            setCircleSize(size);
+
+            if (progress < 1) {
+                animationId = requestAnimationFrame(animate);
+            }
+        };
+
+        animationId = requestAnimationFrame(animate);
+
+        const timer = setTimeout(() => setPhase('text'), 1900);
+
+        return () => {
+            cancelAnimationFrame(animationId);
+            clearTimeout(timer);
+        };
+    }, [phase]);
 
     useEffect(() => {
         if (phase !== 'text') return;
@@ -54,21 +84,32 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
     useEffect(() => {
         if (phase !== 'gate') return;
 
-        const gateInterval = setInterval(() => {
-            setGateOpen(prev => {
-                const next = prev + 2;
-                if (next >= 100) {
-                    clearInterval(gateInterval);
-                    return 100;
-                }
-                return next;
-            });
-        }, 20);
+        let startTime: number | null = null;
+        let animationId: number;
 
-        const timer = setTimeout(() => setPhase('darkness'), 1200);
+        const animate = (timestamp: number) => {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            const duration = 1400;
+            const progress = Math.min(elapsed / duration, 1);
+
+            const eased = progress < 0.5
+                ? 4 * progress * progress * progress
+                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+            setGateOpen(eased * 100);
+
+            if (progress < 1) {
+                animationId = requestAnimationFrame(animate);
+            }
+        };
+
+        animationId = requestAnimationFrame(animate);
+
+        const timer = setTimeout(() => setPhase('darkness'), 1500);
 
         return () => {
-            clearInterval(gateInterval);
+            cancelAnimationFrame(animationId);
             clearTimeout(timer);
         };
     }, [phase]);
@@ -79,21 +120,40 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
         const timer = setTimeout(() => {
             setPhase('complete');
             router.push('/portfolio');
-        }, 600);
+        }, 400);
 
         return () => clearTimeout(timer);
     }, [phase, router]);
 
     if (!isActive && phase === 'idle') return null;
 
+    const isExpanding = phase === 'expand';
     const isGateOpening = phase === 'gate' || phase === 'darkness' || phase === 'complete';
-    const isDark = phase === 'darkness' || phase === 'complete';
+    const showFullScreen = phase === 'text';
 
     return (
         <div className="fixed inset-0 z-[100] pointer-events-auto overflow-hidden">
-            <div className="absolute inset-0 bg-[#0a0a0a]" />
+            {isGateOpening && (
+                <div className="absolute inset-0 bg-[#0a0a0a]" />
+            )}
 
-            {!isGateOpening && (
+            {isExpanding && (
+                <div
+                    className="absolute rounded-full bg-[#FFF8E7]"
+                    style={{
+                        width: `${circleSize}vmax`,
+                        height: `${circleSize}vmax`,
+                        left: '50%',
+                        top: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        boxShadow: circleSize > 10
+                            ? '0 0 80px rgba(255, 248, 231, 0.6), 0 0 120px rgba(255, 248, 231, 0.3)'
+                            : '0 0 20px rgba(255, 248, 231, 0.8)',
+                    }}
+                />
+            )}
+
+            {showFullScreen && (
                 <div className="absolute inset-0 bg-[#FFF8E7] flex items-center justify-center">
                     <p
                         className="text-4xl md:text-5xl lg:text-6xl leading-relaxed text-center px-8"
@@ -118,7 +178,6 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
                         style={{
                             width: `calc(50% - ${gateOpen / 2}%)`,
                             boxShadow: gateOpen > 0 ? '10px 0 40px rgba(0,0,0,0.5)' : 'none',
-                            transition: 'width 0.05s linear',
                         }}
                     />
 
@@ -127,7 +186,6 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
                         style={{
                             width: `calc(50% - ${gateOpen / 2}%)`,
                             boxShadow: gateOpen > 0 ? '-10px 0 40px rgba(0,0,0,0.5)' : 'none',
-                            transition: 'width 0.05s linear',
                         }}
                     />
 

@@ -19,14 +19,14 @@ export default function CameraController({ isJournalOpen }: CameraControllerProp
                 x: journalPos[0],
                 y: 1.88,
                 z: journalPos[2] + 0.4,
-                duration: 1.2,
+                duration: 1.8,
                 ease: 'power2.inOut',
             });
             gsap.to(camera.rotation, {
                 x: -Math.PI / 2.8,
                 y: 0,
                 z: 0,
-                duration: 1.2,
+                duration: 1.8,
                 ease: 'power2.inOut',
             });
         } else {

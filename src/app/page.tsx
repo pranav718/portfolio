@@ -61,7 +61,7 @@ export default function Home() {
     setNotebookOpen(true);
     setTimeout(() => {
       setIsTransitioning(true);
-    }, 1200);
+    }, 1800);
   };
 
   const handleMusicToggle = () => {
@@ -86,7 +86,7 @@ export default function Home() {
           alpha: false,
           powerPreference: 'high-performance',
         }}
-        dpr={[1, 2]} 
+        dpr={[1, 2]}
       >
         <Suspense fallback={null}>
           <Scene
