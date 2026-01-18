@@ -43,7 +43,7 @@
   }
 
   body {
-    @apply font-sans bg-bg-dark text-text leading-relaxed min-h-screen relative overflow-hidden;
+    @apply font-sans bg-bg-dark text-text leading-relaxed min-h-screen relative;
   }
 
   h1,
