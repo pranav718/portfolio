@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 export default function PortfolioPage() {
-    const [activeNav, setActiveNav] = useState('work');
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
@@ -12,8 +11,11 @@ export default function PortfolioPage() {
         return () => clearTimeout(timer);
     }, []);
 
+    const deathNoteFont = { fontFamily: "'Death Note', serif" };
+    const jetbrainsFont = { fontFamily: "var(--font-jetbrains), 'JetBrains Mono', monospace" };
+
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-white overflow-y-auto overflow-x-hidden">
+        <div className="min-h-screen bg-[#0a0a0a] text-[#f5f5f5] overflow-y-auto overflow-x-hidden" style={jetbrainsFont}>
             <main
                 className="relative transition-all duration-700 ease-out"
                 style={{
@@ -36,13 +38,6 @@ export default function PortfolioPage() {
                         filter: 'blur(80px)',
                     }}
                 />
-                <div
-                    className="fixed top-[40%] left-[-20%] w-[500px] h-[500px] rounded-full pointer-events-none"
-                    style={{
-                        background: 'radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.02) 40%, transparent 70%)',
-                        filter: 'blur(70px)',
-                    }}
-                />
 
                 <div
                     className="fixed inset-0 pointer-events-none z-[1] opacity-[0.03]"
@@ -50,9 +45,10 @@ export default function PortfolioPage() {
                         backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
                     }}
                 />
+
                 <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
                     <div
-                        className="flex items-center gap-1 px-2 py-2 rounded-full"
+                        className="flex items-center gap-8 px-6 py-3 rounded-xl"
                         style={{
                             background: 'rgba(255, 255, 255, 0.08)',
                             backdropFilter: 'blur(20px)',
@@ -63,217 +59,169 @@ export default function PortfolioPage() {
                     >
                         <Link
                             href="/"
-                            className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-sm font-bold hover:scale-105 transition-transform"
+                            className="text-2xl hover:scale-105 transition-transform"
+                            style={deathNoteFont}
                         >
                             P
                         </Link>
-
-                        <div className="flex items-center gap-1 px-2">
-                            <button
-                                onClick={() => setActiveNav('work')}
-                                className={`px-4 py-1.5 rounded-full text-sm transition-all ${activeNav === 'work'
-                                    ? 'bg-white/15 text-white'
-                                    : 'text-white/60 hover:text-white hover:bg-white/5'
-                                    }`}
-                            >
-                                Work
-                            </button>
-                            <button
-                                onClick={() => setActiveNav('projects')}
-                                className={`px-4 py-1.5 rounded-full text-sm transition-all ${activeNav === 'projects'
-                                    ? 'bg-white/15 text-white'
-                                    : 'text-white/60 hover:text-white hover:bg-white/5'
-                                    }`}
-                            >
-                                Projects
-                            </button>
-                            <button
-                                onClick={() => setActiveNav('blog')}
-                                className={`px-4 py-1.5 rounded-full text-sm transition-all ${activeNav === 'blog'
-                                    ? 'bg-white/15 text-white'
-                                    : 'text-white/60 hover:text-white hover:bg-white/5'
-                                    }`}
-                            >
-                                Blog
-                            </button>
-                        </div>
+                        <Link href="#projects" className="text-sm text-white/60 hover:text-white transition-colors">
+                            projects
+                        </Link>
+                        <Link href="#blog" className="text-sm text-white/60 hover:text-white transition-colors">
+                            blog
+                        </Link>
                     </div>
                 </nav>
 
                 <div className="max-w-2xl mx-auto px-6 pt-32 pb-20">
-                    <div className="mb-12">
-                        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 mb-6 flex items-center justify-center text-2xl font-bold">
-                            P
+                    <div className="mb-16">
+                        <div className="flex items-center gap-4 mb-6">
+                            <span className="text-4xl text-white/80" style={deathNoteFont}>p</span>
+                            <h1 className="text-4xl md:text-5xl text-white tracking-wide" style={deathNoteFont}>
+                                I'M PRANAV
+                            </h1>
                         </div>
 
-                        <h1 className="text-4xl md:text-5xl font-semibold mb-4">
-                            Hi, I'm <span className="text-white">Pranav</span>{' '}
-                            <span className="text-white/50">— Full Stack Developer</span>
-                        </h1>
-
-                        <p className="text-white/60 text-lg leading-relaxed mb-6">
-                            I build production-ready applications using{' '}
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-white/10 rounded text-sm text-white/80">React</span>,{' '}
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-white/10 rounded text-sm text-white/80">Next.js</span>,{' '}
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-white/10 rounded text-sm text-white/80">TypeScript</span>,{' '}
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-white/10 rounded text-sm text-white/80">Node.js</span>{' '}
-                            and creating solutions that solve real-world problems.
-                        </p>
-
-                        <div className="flex items-center gap-3 mb-6">
-                            <button className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/15 rounded-lg text-sm transition-colors border border-white/10">
-                                <span>📄</span> Resume / CV
-                            </button>
-                            <button className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/15 rounded-lg text-sm transition-colors border border-white/10">
-                                <span>✉️</span> Get in touch
-                            </button>
+                        <div className="text-white/70 text-sm leading-relaxed mb-6">
+                            <p>a 19 y/o fullstack developer</p>
+                            <p>currently pursuing cs @muj</p>
                         </div>
 
-                        <div className="flex items-center gap-4 text-white/40">
-                            <a href="#" className="hover:text-white transition-colors">𝕏</a>
-                            <a href="#" className="hover:text-white transition-colors">in</a>
-                            <a href="#" className="hover:text-white transition-colors">⌘</a>
-                            <a href="#" className="hover:text-white transition-colors">✉</a>
+                        <div className="text-white/60 text-sm leading-relaxed mb-8">
+                            <p className="mb-1">
+                                i have experience working with{' '}
+                                <span className="text-amber-400">[react, next.js, node, python, typescript]</span>
+                            </p>
+                            <p className="mb-1">stacks and have made some good projects with them</p>
+                            <p>i also solve algorithms and play chess in free time.</p>
+                        </div>
+
+                        <div className="flex items-center gap-5 text-white/50">
+                            <a href="https://github.com/pranav718" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" title="GitHub">
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" /></svg>
+                            </a>
+                            <a href="https://x.com/knightkun__" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" title="X/Twitter">
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+                            </a>
+                            <a href="https://linkedin.com/in/pranav718" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" title="LinkedIn">
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
+                            </a>
+                            <a href="https://leetcode.com/pranav718" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" title="LeetCode">
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z" /></svg>
+                            </a>
+                            <a href="https://codeforces.com/profile/knightkun__" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" title="Codeforces">
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M4.5 7.5C5.328 7.5 6 8.172 6 9v10.5c0 .828-.672 1.5-1.5 1.5h-3C.672 21 0 20.328 0 19.5V9c0-.828.672-1.5 1.5-1.5h3zm9-4.5c.828 0 1.5.672 1.5 1.5v15c0 .828-.672 1.5-1.5 1.5h-3c-.828 0-1.5-.672-1.5-1.5v-15c0-.828.672-1.5 1.5-1.5h3zm9 7.5c.828 0 1.5.672 1.5 1.5v7.5c0 .828-.672 1.5-1.5 1.5h-3c-.828 0-1.5-.672-1.5-1.5V12c0-.828.672-1.5 1.5-1.5h3z" /></svg>
+                            </a>
+                            <a href="https://buymeacoffee.com/pranav718" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" title="Buy Me Coffee">
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.216 6.415l-.132-.666c-.119-.598-.388-1.163-1.001-1.379-.197-.069-.42-.098-.57-.241-.152-.143-.196-.366-.231-.572-.065-.378-.125-.756-.192-1.133-.057-.325-.102-.69-.25-.987-.195-.4-.597-.634-.996-.788a5.723 5.723 0 00-.626-.194c-1-.263-2.05-.36-3.077-.416a25.834 25.834 0 00-3.7.062c-.915.083-1.88.184-2.75.5-.318.116-.646.256-.888.501-.297.302-.393.77-.177 1.146.154.267.415.456.692.58.36.162.737.284 1.123.366 1.075.238 2.189.331 3.287.37 1.218.05 2.437.01 3.65-.118.299-.033.598-.073.896-.119.352-.054.578-.513.474-.834-.124-.383-.457-.531-.834-.473-.466.074-.96.108-1.382.146-1.177.08-2.358.082-3.536.006a22.228 22.228 0 01-1.157-.107c-.086-.01-.18-.025-.258-.036-.243-.036-.484-.08-.724-.13-.111-.027-.111-.185 0-.212h.005c.277-.06.557-.108.838-.147h.002c.131-.009.263-.032.394-.048a25.076 25.076 0 013.426-.12c.674.019 1.347.067 2.017.144l.228.031c.267.04.533.088.798.145.392.085.895.113 1.07.542.055.137.08.288.111.431l.319 1.484a.237.237 0 01-.199.284h-.003c-.037.006-.075.01-.112.015a36.704 36.704 0 01-4.743.295 37.059 37.059 0 01-4.699-.304c-.14-.017-.293-.042-.417-.06-.326-.048-.649-.108-.973-.161-.393-.065-.768-.032-1.123.161-.29.16-.527.404-.675.701-.154.316-.199.66-.267 1-.069.34-.176.707-.135 1.056.087.753.613 1.365 1.37 1.502a39.69 39.69 0 0011.343.376.483.483 0 01.535.53l-.071.697-1.018 9.907c-.041.41-.047.832-.125 1.237-.122.637-.553 1.028-1.182 1.171-.577.131-1.165.2-1.756.205-.656.004-1.31-.025-1.966-.022-.699.004-1.556-.06-2.095-.58-.475-.458-.54-1.174-.605-1.793l-.731-7.013-.322-3.094c-.037-.351-.286-.695-.678-.678-.336.015-.718.3-.678.679l.228 2.185.949 9.112c.147 1.344 1.174 2.068 2.446 2.272.742.12 1.503.144 2.257.156.966.016 1.942.053 2.892-.122 1.408-.258 2.465-1.198 2.616-2.657.34-3.332.683-6.663 1.024-9.995l.215-2.087a.484.484 0 01.39-.426c.402-.078.787-.212 1.074-.518.455-.488.546-1.124.385-1.766zm-1.478.772c-.145.137-.363.201-.578.233-2.416.359-4.866.54-7.308.46-1.748-.06-3.477-.254-5.207-.498-.17-.024-.353-.055-.47-.18-.22-.236-.111-.71-.054-.995.052-.26.152-.609.463-.646.484-.057 1.046.148 1.526.22.577.088 1.156.159 1.737.212 2.48.226 5.002.19 7.472-.14.45-.06.899-.13 1.345-.21.399-.072.84-.206 1.08.206.166.281.188.657.162.974a.544.544 0 01-.169.364z" /></svg>
+                            </a>
+                            <a href="https://chess.com/member/pranav718" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" title="Chess.com">
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.001 0C5.373 0 0 5.373 0 12s5.373 12 12.001 12C18.628 24 24 18.627 24 12S18.628 0 12.001 0zM6.235 19.757l-.706-.357.706-.306.706.306-.706.357zm0-1.664l-.706-.357.706-.306.706.306-.706.357zm5.766.857l-5.295 1.307v-4.072l5.295-1.307v4.072zm0-5.357l-5.295 1.307V10.829l5.295-1.307v4.071zm0-5.357l-5.295 1.307V5.471l5.295-1.307v4.072zm5.764 10.714l-.706.357-.706-.357.706-.306.706.306zm0-1.664l-.706.357-.706-.357.706-.306.706.306zm.705-3.693v4.072l-5.293-1.307v-4.072l5.293 1.307zm0-5.357v4.071l-5.293-1.307V7.829l5.293 1.307zm0-5.357v4.072l-5.293-1.307V.764l5.293 1.307z" /></svg>
+                            </a>
                         </div>
                     </div>
 
-                    <section className="mb-16">
-                        <p className="text-white/40 text-sm mb-2">Featured</p>
-                        <h2 className="text-2xl font-semibold mb-6">Experience</h2>
-
-                        <div className="space-y-4">
-                            <div className="flex items-start justify-between p-4 rounded-lg bg-white/5 border border-white/10">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-lg">A</div>
-                                    <div>
-                                        <p className="font-medium">Company A</p>
-                                        <p className="text-sm text-white/50">Full Stack Developer</p>
-                                    </div>
-                                </div>
-                                <p className="text-sm text-white/40">2024 - Present</p>
-                            </div>
-
-                            <div className="flex items-start justify-between p-4 rounded-lg bg-white/5 border border-white/10">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-lg">B</div>
-                                    <div>
-                                        <p className="font-medium">Company B</p>
-                                        <p className="text-sm text-white/50">Frontend Developer</p>
-                                    </div>
-                                </div>
-                                <p className="text-sm text-white/40">2023 - 2024</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section className="mb-16">
-                        <h2 className="text-2xl font-semibold mb-6">Projects</h2>
+                    <section id="projects" className="mb-16">
+                        <h2 className="text-2xl mb-6 tracking-wider" style={deathNoteFont}>PROJECTS</h2>
 
                         <div className="grid gap-4">
                             <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
                                 <div className="flex items-center justify-between mb-2">
-                                    <p className="font-medium">Project Alpha</p>
+                                    <p className="font-medium">Portfolio v2</p>
                                     <span className="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded">Live</span>
                                 </div>
-                                <p className="text-sm text-white/50 mb-3">A full-stack web application for managing tasks with real-time collaboration features.</p>
-                                <div className="flex gap-2">
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">React</span>
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">Node.js</span>
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">MongoDB</span>
-                                </div>
-                            </div>
-
-                            <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
-                                <div className="flex items-center justify-between mb-2">
-                                    <p className="font-medium">Project Beta</p>
-                                    <span className="text-xs px-2 py-1 bg-blue-500/20 text-blue-400 rounded">In Progress</span>
-                                </div>
-                                <p className="text-sm text-white/50 mb-3">An AI-powered code review tool that helps developers write better code.</p>
+                                <p className="text-sm text-white/50 mb-3">An immersive 3D desk portfolio experience with interactive elements and transitions.</p>
                                 <div className="flex gap-2">
                                     <span className="text-xs px-2 py-1 bg-white/10 rounded">Next.js</span>
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">OpenAI</span>
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">TypeScript</span>
+                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">Three.js</span>
+                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">Framer Motion</span>
                                 </div>
                             </div>
 
                             <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
                                 <div className="flex items-center justify-between mb-2">
-                                    <p className="font-medium">Project Gamma</p>
+                                    <p className="font-medium">AlgoVisualizer</p>
+                                    <span className="text-xs px-2 py-1 bg-blue-500/20 text-blue-400 rounded">In Progress</span>
+                                </div>
+                                <p className="text-sm text-white/50 mb-3">Interactive visualization tool for popular algorithms and data structures.</p>
+                                <div className="flex gap-2">
+                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">React</span>
+                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">TypeScript</span>
+                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">Algorithms</span>
+                                </div>
+                            </div>
+
+                            <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
+                                <div className="flex items-center justify-between mb-2">
+                                    <p className="font-medium">Chess Engine</p>
                                     <span className="text-xs px-2 py-1 bg-purple-500/20 text-purple-400 rounded">Open Source</span>
                                 </div>
-                                <p className="text-sm text-white/50 mb-3">A CLI tool for scaffolding modern web projects with best practices baked in.</p>
+                                <p className="text-sm text-white/50 mb-3">A chess engine with AI opponent using minimax algorithm with alpha-beta pruning.</p>
                                 <div className="flex gap-2">
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">Rust</span>
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">CLI</span>
-                                </div>
-                            </div>
-
-                            <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
-                                <div className="flex items-center justify-between mb-2">
-                                    <p className="font-medium">Project Delta</p>
-                                    <span className="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded">Live</span>
-                                </div>
-                                <p className="text-sm text-white/50 mb-3">Real-time multiplayer game built with WebSockets and Canvas API.</p>
-                                <div className="flex gap-2">
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">Socket.io</span>
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">Canvas</span>
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">Express</span>
+                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">Python</span>
+                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">AI</span>
+                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">Chess</span>
                                 </div>
                             </div>
                         </div>
                     </section>
 
                     <section className="mb-16">
-                        <h2 className="text-2xl font-semibold mb-6">Skills & Technologies</h2>
-
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-                                <p className="text-sm">JavaScript</p>
+                        <h2 className="text-2xl mb-6 tracking-wider" style={deathNoteFont}>CONTRIBUTIONS</h2>
+                        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                            <div className="flex items-center justify-between mb-4">
+                                <span className="text-sm text-white/50">GitHub Activity</span>
+                                <a href="https://github.com/pranav718" target="_blank" rel="noopener noreferrer" className="text-xs text-white/40 hover:text-white transition-colors">@pranav718</a>
                             </div>
-                            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-                                <p className="text-sm">TypeScript</p>
+                            <div className="grid grid-cols-[repeat(52,1fr)] gap-[3px]">
+                                {Array.from({ length: 52 }).map((_, weekIndex) => (
+                                    <div key={weekIndex} className="flex flex-col gap-[3px]">
+                                        {Array.from({ length: 7 }).map((_, dayIndex) => {
+                                            const intensity = Math.random();
+                                            let bgColor = 'bg-white/5';
+                                            if (intensity > 0.8) bgColor = 'bg-green-500';
+                                            else if (intensity > 0.6) bgColor = 'bg-green-500/70';
+                                            else if (intensity > 0.4) bgColor = 'bg-green-500/40';
+                                            else if (intensity > 0.2) bgColor = 'bg-green-500/20';
+                                            return (
+                                                <div
+                                                    key={dayIndex}
+                                                    className={`w-[10px] h-[10px] rounded-sm ${bgColor}`}
+                                                />
+                                            );
+                                        })}
+                                    </div>
+                                ))}
                             </div>
-                            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-                                <p className="text-sm">React</p>
-                            </div>
-                            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-                                <p className="text-sm">Next.js</p>
-                            </div>
-                            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-                                <p className="text-sm">Node.js</p>
-                            </div>
-                            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-                                <p className="text-sm">Three.js</p>
-                            </div>
-                            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-                                <p className="text-sm">PostgreSQL</p>
-                            </div>
-                            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-                                <p className="text-sm">MongoDB</p>
-                            </div>
-                            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-                                <p className="text-sm">Docker</p>
+                            <div className="flex items-center justify-end gap-2 mt-4 text-xs text-white/40">
+                                <span>Less</span>
+                                <div className="w-[10px] h-[10px] rounded-sm bg-white/5" />
+                                <div className="w-[10px] h-[10px] rounded-sm bg-green-500/20" />
+                                <div className="w-[10px] h-[10px] rounded-sm bg-green-500/40" />
+                                <div className="w-[10px] h-[10px] rounded-sm bg-green-500/70" />
+                                <div className="w-[10px] h-[10px] rounded-sm bg-green-500" />
+                                <span>More</span>
                             </div>
                         </div>
                     </section>
 
-                    <section className="mb-16">
-                        <h2 className="text-2xl font-semibold mb-6">Blog</h2>
+                    <section id="blog" className="mb-16">
+                        <h2 className="text-2xl mb-6 tracking-wider" style={deathNoteFont}>BLOG</h2>
 
                         <div className="space-y-4">
-                            <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
+                            <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors cursor-pointer">
                                 <p className="text-sm text-white/40 mb-1">Dec 2024</p>
                                 <p className="font-medium mb-1">Building Immersive Web Experiences with Three.js</p>
                                 <p className="text-sm text-white/50">A deep dive into creating 3D portfolio experiences...</p>
                             </div>
 
-                            <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
+                            <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors cursor-pointer">
                                 <p className="text-sm text-white/40 mb-1">Nov 2024</p>
                                 <p className="font-medium mb-1">The Future of Web Development in 2025</p>
                                 <p className="text-sm text-white/50">Predictions and trends I'm excited about...</p>
                             </div>
 
-                            <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
+                            <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors cursor-pointer">
                                 <p className="text-sm text-white/40 mb-1">Oct 2024</p>
                                 <p className="font-medium mb-1">Why I Switched to TypeScript (And You Should Too)</p>
                                 <p className="text-sm text-white/50">My journey from JavaScript purist to TypeScript advocate...</p>
@@ -286,7 +234,7 @@ export default function PortfolioPage() {
                             href="/"
                             className="text-white/40 hover:text-white text-sm transition-colors"
                         >
-                            ← Back to my space
+                            ← back to my space
                         </Link>
                     </div>
                 </div>

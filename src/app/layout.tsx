@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Pranav Ray | Interactive 3D Portfolio",
@@ -20,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">
+      <body className={`${jetbrainsMono.variable} antialiased`}>
         {children}
       </body>
     </html>
