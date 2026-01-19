@@ -25,7 +25,7 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
         async function fetchContributions() {
             try {
                 const response = await fetch(
-                    `https://github-contributions-api.jogruber.de/v4/${username}?y=2026`
+                    `https://github-contributions-api.jogruber.de/v4/${username}?y=last`
                 );
                 const data = await response.json();
 
@@ -112,7 +112,7 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
         <div className="p-4 rounded-lg bg-white/5 border border-white/10">
             <div className="flex items-center justify-between mb-4">
                 <span className="text-sm text-white/50">
-                    {totalContributions.toLocaleString()} contributions in 2026
+                    {totalContributions.toLocaleString()} contributions in the last year
                 </span>
                 <a
                     href={`https://github.com/${username}`}
