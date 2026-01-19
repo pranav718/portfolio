@@ -1,5 +1,6 @@
 'use client';
 
+import GitHubContributions from '@/components/GitHubContributions';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -59,10 +60,13 @@ export default function PortfolioPage() {
                     >
                         <Link
                             href="/"
-                            className="text-2xl hover:scale-105 transition-transform"
-                            style={deathNoteFont}
+                            className="hover:scale-105 transition-transform"
                         >
-                            P
+                            <img
+                                src="/images/avatar.jpg"
+                                alt="Avatar"
+                                className="w-8 h-8 rounded-sm object-cover"
+                            />
                         </Link>
                         <Link href="#projects" className="text-sm text-white/60 hover:text-white transition-colors">
                             projects
@@ -75,16 +79,22 @@ export default function PortfolioPage() {
 
                 <div className="max-w-2xl mx-auto px-6 pt-32 pb-20">
                     <div className="mb-16">
-                        <div className="flex items-center gap-4 mb-6">
-                            <span className="text-4xl text-white/80" style={deathNoteFont}>p</span>
-                            <h1 className="text-4xl md:text-5xl text-white tracking-wide" style={deathNoteFont}>
-                                I'M PRANAV
-                            </h1>
-                        </div>
-
-                        <div className="text-white/70 text-sm leading-relaxed mb-6">
-                            <p>a 19 y/o fullstack developer</p>
-                            <p>currently pursuing cs @muj</p>
+                        <div className="relative mb-8">
+                            <img
+                                src="/images/avatar.jpg"
+                                alt="Avatar"
+                                className="w-24 h-24 rounded-sm object-cover float-left mr-4"
+                            />
+                            <div>
+                                <h1 className="text-4xl md:text-5xl text-white tracking-wide mb-2" style={deathNoteFont}>
+                                    I'M PRANAV
+                                </h1>
+                                <div className="text-white/70 text-sm leading-relaxed">
+                                    <p>a 19 y/o fullstack developer</p>
+                                    <p>currently pursuing cs @muj</p>
+                                </div>
+                            </div>
+                            <div className="clear-both"></div>
                         </div>
 
                         <div className="text-white/60 text-sm leading-relaxed mb-8">
@@ -93,7 +103,7 @@ export default function PortfolioPage() {
                                 <span className="text-amber-400">[react, next.js, node, python, typescript]</span>
                             </p>
                             <p className="mb-1">stacks and have made some good projects with them</p>
-                            <p>i also solve algorithms and play chess in free time.</p>
+                            <p>i also write blogs, solve algorithms and play chess in free time.</p>
                         </div>
 
                         <div className="flex items-center gap-5 text-white/50">
@@ -168,41 +178,7 @@ export default function PortfolioPage() {
 
                     <section className="mb-16">
                         <h2 className="text-2xl mb-6 tracking-wider" style={deathNoteFont}>CONTRIBUTIONS</h2>
-                        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                            <div className="flex items-center justify-between mb-4">
-                                <span className="text-sm text-white/50">GitHub Activity</span>
-                                <a href="https://github.com/pranav718" target="_blank" rel="noopener noreferrer" className="text-xs text-white/40 hover:text-white transition-colors">@pranav718</a>
-                            </div>
-                            <div className="grid grid-cols-[repeat(52,1fr)] gap-[3px]">
-                                {Array.from({ length: 52 }).map((_, weekIndex) => (
-                                    <div key={weekIndex} className="flex flex-col gap-[3px]">
-                                        {Array.from({ length: 7 }).map((_, dayIndex) => {
-                                            const intensity = Math.random();
-                                            let bgColor = 'bg-white/5';
-                                            if (intensity > 0.8) bgColor = 'bg-green-500';
-                                            else if (intensity > 0.6) bgColor = 'bg-green-500/70';
-                                            else if (intensity > 0.4) bgColor = 'bg-green-500/40';
-                                            else if (intensity > 0.2) bgColor = 'bg-green-500/20';
-                                            return (
-                                                <div
-                                                    key={dayIndex}
-                                                    className={`w-[10px] h-[10px] rounded-sm ${bgColor}`}
-                                                />
-                                            );
-                                        })}
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="flex items-center justify-end gap-2 mt-4 text-xs text-white/40">
-                                <span>Less</span>
-                                <div className="w-[10px] h-[10px] rounded-sm bg-white/5" />
-                                <div className="w-[10px] h-[10px] rounded-sm bg-green-500/20" />
-                                <div className="w-[10px] h-[10px] rounded-sm bg-green-500/40" />
-                                <div className="w-[10px] h-[10px] rounded-sm bg-green-500/70" />
-                                <div className="w-[10px] h-[10px] rounded-sm bg-green-500" />
-                                <span>More</span>
-                            </div>
-                        </div>
+                        <GitHubContributions username="pranav718" />
                     </section>
 
                     <section id="blog" className="mb-16">
