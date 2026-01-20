@@ -1,6 +1,8 @@
 'use client';
 
 import GitHubContributions from '@/components/GitHubContributions';
+import ProjectCard from '@/components/ProjectCard';
+import { projects } from '@/data/projects';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -127,7 +129,7 @@ export default function PortfolioPage() {
                         </div>
 
                         <div className="mt-12 mb-8">
-                            <p className="text-lg mb-4 tracking-wider" style={headingFont}>SKILLS</p>
+                            <h2 className="text-2xl mb-6 tracking-wider" style={headingFont}>Skills</h2>
                             <div className="flex flex-wrap items-center gap-6 text-white/60">
                                 <div className="flex items-center gap-2 text-xs"><svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278z" /></svg>React</div>
                                 <div className="flex items-center gap-2 text-xs"><svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.572 0c-.176 0-.31.001-.358.007a19.76 19.76 0 0 1-.364.033C7.443.346 4.25 2.185 2.228 5.012a11.875 11.875 0 0 0-2.119 5.243c-.096.659-.108.854-.108 1.747s.012 1.089.108 1.748c.652 4.506 3.86 8.292 8.209 9.695.779.251 1.6.422 2.534.525.363.04 1.935.04 2.299 0 1.611-.178 2.977-.577 4.323-1.264.207-.106.247-.134.219-.158-.02-.013-.9-1.193-1.955-2.62l-1.919-2.592-2.404-3.558a338.739 338.739 0 0 0-2.422-3.556c-.009-.002-.018 1.579-.023 3.51-.007 3.38-.01 3.515-.052 3.595a.426.426 0 0 1-.206.214c-.075.037-.14.044-.495.044H7.81l-.108-.068a.438.438 0 0 1-.157-.171l-.05-.106.006-4.703.007-4.705.072-.092a.645.645 0 0 1 .174-.143c.096-.047.134-.051.54-.051.478 0 .558.018.682.154.035.038 1.337 1.999 2.895 4.361l4.735 7.17 1.9 2.879.096-.063a12.317 12.317 0 0 0 2.466-2.163 11.944 11.944 0 0 0 2.824-6.134c.096-.66.108-.854.108-1.748 0-.893-.012-1.088-.108-1.747-.652-4.506-3.859-8.292-8.208-9.695a12.597 12.597 0 0 0-2.499-.523A33.119 33.119 0 0 0 11.573 0z" /></svg>Next.js</div>
@@ -139,57 +141,29 @@ export default function PortfolioPage() {
                     </div>
 
                     <section id="projects" className="mb-16">
-                        <h2 className="text-2xl mb-6 tracking-wider" style={headingFont}>PROJECTS</h2>
+                        <h2 className="text-2xl mb-6 tracking-wider" style={headingFont}>Projects</h2>
 
-                        <div className="grid gap-4">
-                            <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
-                                <div className="flex items-center justify-between mb-2">
-                                    <p className="font-medium">Portfolio v2</p>
-                                    <span className="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded">Live</span>
-                                </div>
-                                <p className="text-sm text-white/50 mb-3">An immersive 3D desk portfolio experience with interactive elements and transitions.</p>
-                                <div className="flex gap-2">
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">Next.js</span>
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">Three.js</span>
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">Framer Motion</span>
-                                </div>
-                            </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {projects.slice(0, 2).map((project) => (
+                                <ProjectCard key={project.id} project={project} />
+                            ))}
+                        </div>
 
-                            <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
-                                <div className="flex items-center justify-between mb-2">
-                                    <p className="font-medium">AlgoVisualizer</p>
-                                    <span className="text-xs px-2 py-1 bg-blue-500/20 text-blue-400 rounded">In Progress</span>
-                                </div>
-                                <p className="text-sm text-white/50 mb-3">Interactive visualization tool for popular algorithms and data structures.</p>
-                                <div className="flex gap-2">
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">React</span>
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">TypeScript</span>
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">Algorithms</span>
-                                </div>
-                            </div>
-
-                            <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
-                                <div className="flex items-center justify-between mb-2">
-                                    <p className="font-medium">Chess Engine</p>
-                                    <span className="text-xs px-2 py-1 bg-purple-500/20 text-purple-400 rounded">Open Source</span>
-                                </div>
-                                <p className="text-sm text-white/50 mb-3">A chess engine with AI opponent using minimax algorithm with alpha-beta pruning.</p>
-                                <div className="flex gap-2">
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">Python</span>
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">AI</span>
-                                    <span className="text-xs px-2 py-1 bg-white/10 rounded">Chess</span>
-                                </div>
-                            </div>
+                        <div className="flex justify-center mt-6">
+                            <Link href="/portfolio/projects" className="text-sm text-white/50 hover:text-white px-4 py-2 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all flex items-center gap-2">
+                                View All Projects
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                            </Link>
                         </div>
                     </section>
 
                     <section className="mb-16">
-                        <h2 className="text-2xl mb-6 tracking-wider" style={headingFont}>CONTRIBUTIONS</h2>
+                        <h2 className="text-2xl mb-6 tracking-wider" style={headingFont}>Stats</h2>
                         <GitHubContributions username="pranav718" />
                     </section>
 
                     <section id="blog" className="mb-16">
-                        <h2 className="text-2xl mb-6 tracking-wider" style={headingFont}>BLOG</h2>
+                        <h2 className="text-2xl mb-6 tracking-wider" style={headingFont}>Blog</h2>
 
                         <div className="space-y-4">
                             <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors cursor-pointer">
