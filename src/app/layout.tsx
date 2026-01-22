@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono } from "next/font/google";
+import { Dancing_Script, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
+  display: "swap",
+});
+
+const dancingScript = Dancing_Script({
+  subsets: ["latin"],
+  variable: "--font-dancing",
   display: "swap",
 });
 
@@ -27,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${jetbrainsMono.variable} antialiased`}>
+      <body className={`${jetbrainsMono.variable} ${dancingScript.variable} antialiased`}>
         {children}
       </body>
     </html>
