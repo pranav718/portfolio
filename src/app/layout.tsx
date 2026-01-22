@@ -12,16 +12,18 @@ const dancingScript = Dancing_Script({
   subsets: ["latin"],
   variable: "--font-dancing",
   display: "swap",
+  preload: true,
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Pranav Ray | Interactive 3D Portfolio",
-  description: "Explore my portfolio through an immersive 3D desk experience. Pull the lamp string to begin your journey.",
+  title: "pranav.",
+  description: "explore my space or visit my portfolio",
   keywords: ["developer", "portfolio", "3D", "interactive", "three.js", "react", "open source"],
   authors: [{ name: "Pranav Ray" }],
   openGraph: {
-    title: "Pranav Ray | Interactive 3D Portfolio",
-    description: "An immersive 3D desk portfolio experience built with Three.js and React Three Fiber.",
+    title: "pranav.",
+    description: "explore my space or visit my portfolio",
     type: "website",
   },
 };
