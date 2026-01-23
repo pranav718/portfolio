@@ -26,6 +26,17 @@ import {
     SiTypescript,
 } from 'react-icons/si';
 
+const ZustandIcon = ({ className }: { className?: string }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+        <circle cx="7" cy="6" r="3" />
+        <circle cx="17" cy="6" r="3" />
+        <circle cx="12" cy="14" r="8" />
+        <circle cx="9" cy="13" r="1.2" fill="white" />
+        <circle cx="15" cy="13" r="1.2" fill="white" />
+        <path d="M9 17q3 2 6 0" fill="none" stroke="white" strokeWidth="1" strokeLinecap="round" />
+    </svg>
+);
+
 const skills = [
     { name: 'React', icon: SiReact },
     { name: 'Next', icon: SiNextdotjs },
@@ -36,7 +47,7 @@ const skills = [
     { name: 'MongoDB', icon: SiMongodb },
     { name: 'Redis', icon: SiRedis },
     { name: 'Prisma', icon: SiPrisma },
-    { name: 'Zustand', icon: SiReact }, 
+    { name: 'Zustand', icon: ZustandIcon },
     { name: 'Postman', icon: SiPostman },
     { name: 'Tailwind', icon: SiTailwindcss },
     { name: 'shadcn', icon: SiShadcnui },

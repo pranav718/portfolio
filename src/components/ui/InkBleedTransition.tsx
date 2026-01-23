@@ -31,7 +31,6 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
         setPhase('expand');
     }, [isActive]);
 
-    // Blinking cursor effect
     useEffect(() => {
         if (phase !== 'text' && phase !== 'hold') return;
 
@@ -42,7 +41,6 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
         return () => clearInterval(interval);
     }, [phase]);
 
-    // Expand circle animation
     useEffect(() => {
         if (phase !== 'expand') return;
 
@@ -75,7 +73,6 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
         };
     }, [phase]);
 
-    // Typewriter animation - letter by letter
     useEffect(() => {
         if (phase !== 'text') return;
 
@@ -90,12 +87,11 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
                 clearInterval(interval);
                 setTimeout(() => setPhase('hold'), 600);
             }
-        }, 80); // Classic typewriter speed
+        }, 80); 
 
         return () => clearInterval(interval);
     }, [phase, letters]);
 
-    // Hold phase before fade out
     useEffect(() => {
         if (phase !== 'hold') return;
 
@@ -103,7 +99,6 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
         return () => clearTimeout(timer);
     }, [phase]);
 
-    // Smooth fade out and navigate
     useEffect(() => {
         if (phase !== 'fadeOut') return;
 

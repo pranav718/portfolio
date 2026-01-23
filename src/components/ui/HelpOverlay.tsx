@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 interface HelpOverlayProps {
@@ -8,9 +9,19 @@ interface HelpOverlayProps {
 
 export default function HelpOverlay({ onDismiss }: HelpOverlayProps) {
     const [visible, setVisible] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     useEffect(() => {
         setTimeout(() => setVisible(true), 100);
+
+        if (isMobile) return;
 
         const handleInteraction = () => {
             setVisible(false);
@@ -24,7 +35,34 @@ export default function HelpOverlay({ onDismiss }: HelpOverlayProps) {
             window.removeEventListener('click', handleInteraction);
             window.removeEventListener('keydown', handleInteraction);
         };
-    }, [onDismiss]);
+    }, [onDismiss, isMobile]);
+
+    if (isMobile) {
+        return (
+            <div
+                className={`fixed inset-0 z-50 flex items-center justify-center
+                      bg-black/80 backdrop-blur-sm transition-opacity duration-300
+                      ${visible ? 'opacity-100' : 'opacity-0'}`}
+            >
+                <div className="text-center max-w-sm px-8">
+                    <h2 className="text-2xl font-serif text-[#FFF8E7] mb-4">
+                        welcome to my space
+                    </h2>
+
+                    <p className="text-[#a0a0a0] mb-8 font-sans text-sm">
+                        this experience is best viewed on desktop
+                    </p>
+
+                    <Link
+                        href="/portfolio"
+                        className="inline-block px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg text-white font-medium transition-all"
+                    >
+                        view portfolio →
+                    </Link>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div
@@ -33,49 +71,30 @@ export default function HelpOverlay({ onDismiss }: HelpOverlayProps) {
                   ${visible ? 'opacity-100' : 'opacity-0'}`}
         >
             <div className="text-center max-w-md px-8">
-                
                 <div className="mb-8 relative">
-                    <svg
-                        className="w-20 h-20 mx-auto text-[#F4D03F]"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path d="M12 2C9.24 2 7 4.24 7 7c0 1.94 1.1 3.62 2.72 4.46L9 18h6l-.72-6.54C15.9 10.62 17 8.94 17 7c0-2.76-2.24-5-5-5zm0 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
-                        <path d="M9 20v1c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9z" />
-                    </svg>
-
-                    
-                    <div className="absolute top-16 left-1/2 -translate-x-1/2">
-                        <div className="w-0.5 h-8 bg-[#8B4513] mx-auto" />
-                        <div className="w-3 h-3 bg-[#654321] rounded-full mx-auto animate-bounce" />
+                    <div className="relative w-24 h-24 mx-auto">
+                        <img
+                            src="/images/avatar.jpg"
+                            alt="Pranav"
+                            className="w-24 h-24 rounded-full object-cover border-2 border-white/20 animate-flicker"
+                        />
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/10 to-transparent animate-pulse" />
                     </div>
                 </div>
 
-                
                 <h2 className="text-2xl font-serif text-[#FFF8E7] mb-4">
-                    Welcome to my workspace
+                    hey, welcome to my space
                 </h2>
 
-                <p className="text-[#c0c0c0] mb-6 font-sans">
-                    Pull the lamp string to illuminate the desk and begin exploring my portfolio journal.
-                </p>
-
-                
-                <div className="flex justify-center gap-6 text-xs text-[#888] font-mono">
-                    <div className="flex items-center gap-2">
-                        <kbd className="px-2 py-1 bg-white/10 rounded">←</kbd>
-                        <kbd className="px-2 py-1 bg-white/10 rounded">→</kbd>
-                        <span>Navigate pages</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <span>🎵</span>
-                        <span>Click vinyl to play music</span>
-                    </div>
+                <div className="text-[#a0a0a0] mb-6 font-sans text-sm leading-relaxed space-y-2">
+                    <p>click on the lamp to turn it on</p>
+                    <p>click on my journal to view my portfolio</p>
+                    <p>click on the vinyl to play music</p>
+                    <p>turn up volume for sound effects</p>
                 </div>
 
-                
-                <p className="mt-8 text-xs text-[#555] animate-pulse">
-                    Click anywhere to continue
+                <p className="mt-6 text-xs text-[#555] animate-pulse">
+                    click anywhere to continue
                 </p>
             </div>
         </div>
