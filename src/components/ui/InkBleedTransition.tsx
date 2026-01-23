@@ -11,10 +11,11 @@ const FAREWELL_TEXT = "I hope you enjoyed my space";
 
 export default function InkBleedTransition({ isActive }: InkBleedTransitionProps) {
     const router = useRouter();
-    const [phase, setPhase] = useState<'idle' | 'expand' | 'text' | 'hold' | 'fadeOut' | 'complete'>('idle');
+    const [phase, setPhase] = useState<'idle' | 'expand' | 'text' | 'hold' | 'fadeOutText' | 'darken' | 'complete'>('idle');
     const [displayedText, setDisplayedText] = useState('');
     const [circleSize, setCircleSize] = useState(0);
-    const [fadeOpacity, setFadeOpacity] = useState(1);
+    const [textOpacity, setTextOpacity] = useState(1);
+    const [darkOverlayOpacity, setDarkOverlayOpacity] = useState(0);
     const [showCursor, setShowCursor] = useState(true);
 
     const letters = useMemo(() => FAREWELL_TEXT.split(''), []);
@@ -24,7 +25,8 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
             setPhase('idle');
             setDisplayedText('');
             setCircleSize(0);
-            setFadeOpacity(1);
+            setTextOpacity(1);
+            setDarkOverlayOpacity(0);
             return;
         }
 
@@ -87,7 +89,7 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
                 clearInterval(interval);
                 setTimeout(() => setPhase('hold'), 600);
             }
-        }, 80); 
+        }, 80);
 
         return () => clearInterval(interval);
     }, [phase, letters]);
@@ -95,12 +97,12 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
     useEffect(() => {
         if (phase !== 'hold') return;
 
-        const timer = setTimeout(() => setPhase('fadeOut'), 1200);
+        const timer = setTimeout(() => setPhase('fadeOutText'), 1200);
         return () => clearTimeout(timer);
     }, [phase]);
 
     useEffect(() => {
-        if (phase !== 'fadeOut') return;
+        if (phase !== 'fadeOutText') return;
 
         setShowCursor(false);
 
@@ -113,11 +115,41 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
             const duration = 800;
             const progress = Math.min(elapsed / duration, 1);
 
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setTextOpacity(1 - eased);
+
+            if (progress < 1) {
+                animationId = requestAnimationFrame(animate);
+            }
+        };
+
+        animationId = requestAnimationFrame(animate);
+
+        const timer = setTimeout(() => setPhase('darken'), 900);
+
+        return () => {
+            cancelAnimationFrame(animationId);
+            clearTimeout(timer);
+        };
+    }, [phase]);
+
+    useEffect(() => {
+        if (phase !== 'darken') return;
+
+        let startTime: number | null = null;
+        let animationId: number;
+
+        const animate = (timestamp: number) => {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            const duration = 600;
+            const progress = Math.min(elapsed / duration, 1);
+
             const eased = progress < 0.5
                 ? 2 * progress * progress
                 : 1 - Math.pow(-2 * progress + 2, 2) / 2;
 
-            setFadeOpacity(1 - eased);
+            setDarkOverlayOpacity(eased);
 
             if (progress < 1) {
                 animationId = requestAnimationFrame(animate);
@@ -129,7 +161,7 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
         const timer = setTimeout(() => {
             setPhase('complete');
             router.push('/portfolio');
-        }, 900);
+        }, 700);
 
         return () => {
             cancelAnimationFrame(animationId);
@@ -140,7 +172,8 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
     if (!isActive && phase === 'idle') return null;
 
     const isExpanding = phase === 'expand';
-    const showText = phase === 'text' || phase === 'hold' || phase === 'fadeOut';
+    const showText = phase === 'text' || phase === 'hold' || phase === 'fadeOutText';
+    const showDarkOverlay = phase === 'fadeOutText' || phase === 'darken' || phase === 'complete';
 
     return (
         <div className="fixed inset-0 z-[100] pointer-events-auto overflow-hidden">
@@ -163,7 +196,7 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
             {showText && (
                 <div
                     className="absolute inset-0 bg-[#FFF8E7] flex items-center justify-center"
-                    style={{ opacity: fadeOpacity }}
+                    style={{ opacity: textOpacity }}
                 >
                     <p
                         className="text-4xl md:text-5xl lg:text-6xl leading-relaxed text-center px-8"
@@ -190,11 +223,11 @@ export default function InkBleedTransition({ isActive }: InkBleedTransitionProps
                 </div>
             )}
 
-            {phase === 'fadeOut' && (
+            {showDarkOverlay && (
                 <div
                     className="absolute inset-0 bg-[#0a0a0a]"
                     style={{
-                        opacity: 1 - fadeOpacity,
+                        opacity: darkOverlayOpacity,
                     }}
                 />
             )}
