@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 interface ContributionDay {
     date: string;
@@ -16,10 +17,19 @@ interface GitHubContributionsProps {
     username: string;
 }
 
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
 export default function GitHubContributions({ username }: GitHubContributionsProps) {
     const [contributions, setContributions] = useState<ContributionWeek[]>([]);
     const [loading, setLoading] = useState(true);
     const [totalContributions, setTotalContributions] = useState(0);
+    const [hoveredDay, setHoveredDay] = useState<{ day: ContributionDay; x: number; y: number } | null>(null);
+    const [mounted, setMounted] = useState(false);
+    const [year, setYear] = useState(new Date().getFullYear());
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         async function fetchContributions() {
@@ -34,7 +44,7 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
                     let currentWeek: ContributionDay[] = [];
                     let calculatedTotal = 0;
 
-                    data.contributions.forEach((day: { date: string; count: number; level: number }, index: number) => {
+                    data.contributions.forEach((day: { date: string; count: number; level: number }) => {
                         calculatedTotal += day.count;
                         currentWeek.push({
                             date: day.date,
@@ -53,8 +63,12 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
                     }
 
                     setContributions(weeks);
-                    const apiTotal = data.total?.['2026'] || data.total?.lastYear || calculatedTotal;
+                    const apiTotal = data.total?.['2025'] || data.total?.['2026'] || data.total?.lastYear || calculatedTotal;
                     setTotalContributions(apiTotal);
+
+                    if (data.contributions.length > 0) {
+                        setYear(new Date(data.contributions[0].date).getFullYear());
+                    }
                 }
             } catch (error) {
                 console.error('Failed to fetch GitHub contributions:', error);
@@ -66,16 +80,25 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
 
         function generateMockData() {
             const weeks: ContributionWeek[] = [];
+            const today = new Date();
             for (let w = 0; w < 52; w++) {
                 const days: ContributionDay[] = [];
                 for (let d = 0; d < 7; d++) {
                     const rand = Math.random();
                     let level = 0;
-                    if (rand > 0.7) level = 4;
-                    else if (rand > 0.5) level = 3;
-                    else if (rand > 0.3) level = 2;
-                    else if (rand > 0.15) level = 1;
-                    days.push({ date: '', count: level * 2, level });
+                    let count = 0;
+                    if (rand > 0.7) { level = 4; count = 10 + Math.floor(Math.random() * 10); }
+                    else if (rand > 0.5) { level = 3; count = 5 + Math.floor(Math.random() * 5); }
+                    else if (rand > 0.3) { level = 2; count = 2 + Math.floor(Math.random() * 3); }
+                    else if (rand > 0.15) { level = 1; count = 1; }
+
+                    const date = new Date(today);
+                    date.setDate(date.getDate() - ((51 - w) * 7 + (6 - d)));
+                    days.push({
+                        date: date.toISOString().split('T')[0],
+                        count,
+                        level
+                    });
                 }
                 weeks.push({ days });
             }
@@ -86,15 +109,54 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
         fetchContributions();
     }, [username]);
 
+    const monthLabels = useMemo(() => {
+        if (contributions.length === 0) return [];
+
+        const labels: { month: string; position: number }[] = [];
+        let lastMonth = -1;
+
+        contributions.forEach((week, weekIndex) => {
+            if (week.days.length > 0 && week.days[0].date) {
+                const date = new Date(week.days[0].date);
+                const month = date.getMonth();
+
+                if (month !== lastMonth) {
+                    labels.push({
+                        month: MONTHS[month],
+                        position: weekIndex
+                    });
+                    lastMonth = month;
+                }
+            }
+        });
+
+        return labels;
+    }, [contributions]);
+
     const getLevelColor = (level: number) => {
         switch (level) {
-            case 0: return 'bg-white/5';
-            case 1: return 'bg-green-500/30';
-            case 2: return 'bg-green-500/50';
-            case 3: return 'bg-green-500/75';
-            case 4: return 'bg-green-500';
-            default: return 'bg-white/5';
+            case 0: return 'bg-[#1a1a1a]';
+            case 1: return 'bg-[#3d3d3d] shadow-[inset_0_0_4px_rgba(255,255,255,0.05)]';
+            case 2: return 'bg-[#5a5a5a] shadow-[inset_0_0_6px_rgba(255,255,255,0.1)]';
+            case 3: return 'bg-[#8a8a8a] shadow-[inset_0_0_8px_rgba(255,255,255,0.15)]';
+            case 4: return 'bg-[#e8e8e8] shadow-[0_0_8px_rgba(255,255,255,0.4),inset_0_0_4px_rgba(255,255,255,0.3)]';
+            default: return 'bg-[#1a1a1a]';
         }
+    };
+
+    const totalWeeks = contributions.length;
+
+    const handleMouseEnter = (day: ContributionDay, e: React.MouseEvent) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        setHoveredDay({
+            day,
+            x: rect.left + rect.width / 2,
+            y: rect.top - 8
+        });
+    };
+
+    const handleMouseLeave = () => {
+        setHoveredDay(null);
     };
 
     if (loading) {
@@ -102,51 +164,86 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <div className="animate-pulse">
                     <div className="h-4 bg-white/10 rounded w-1/4 mb-4"></div>
-                    <div className="h-20 bg-white/5 rounded"></div>
+                    <div className="h-24 bg-white/5 rounded"></div>
                 </div>
             </div>
         );
     }
 
+    const tooltip = hoveredDay && hoveredDay.day.date && mounted ? createPortal(
+        <div
+            className="fixed z-[9999] px-3 py-1.5 bg-[#1a1a1a] border border-white/20 rounded-md text-xs text-white/90 whitespace-nowrap pointer-events-none shadow-lg"
+            style={{
+                left: hoveredDay.x,
+                top: hoveredDay.y,
+                transform: 'translate(-50%, -100%)'
+            }}
+        >
+            {hoveredDay.day.count} contribution{hoveredDay.day.count !== 1 ? 's' : ''} on {hoveredDay.day.date}
+        </div>,
+        document.body
+    ) : null;
+
+    const tileSize = 10;
+    const tileGap = 2;
+
     return (
-        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-            <div className="flex items-center justify-between mb-4">
-                <span className="text-sm text-white/50">
-                    {totalContributions.toLocaleString()} contributions in the last year
-                </span>
-                <a
-                    href={`https://github.com/${username}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-white/40 hover:text-white transition-colors"
-                >
-                    @{username}
-                </a>
-            </div>
-            <div className="overflow-x-auto">
-                <div className="flex gap-[3px]" style={{ minWidth: 'max-content' }}>
-                    {contributions.map((week, weekIndex) => (
-                        <div key={weekIndex} className="flex flex-col gap-[3px]">
-                            {week.days.map((day, dayIndex) => (
+        <>
+            <div className="w-full">
+                <div className="flex flex-col items-center">
+                    <div className="flex mb-2 text-[11px] text-white/40" style={{ gap: `${tileGap}px` }}>
+                        {monthLabels.map((label, index) => {
+                            const nextLabelPos = monthLabels[index + 1]?.position ?? totalWeeks;
+                            const weekSpan = nextLabelPos - label.position;
+                            const width = weekSpan * tileSize + (weekSpan - 1) * tileGap;
+                            const showLabel = index > 0 || width >= 30;
+                            return (
                                 <div
-                                    key={dayIndex}
-                                    className={`w-[10px] h-[10px] rounded-sm ${getLevelColor(day.level)}`}
-                                    title={day.date ? `${day.count} contributions on ${day.date}` : undefined}
-                                />
-                            ))}
-                        </div>
-                    ))}
+                                    key={`${label.month}-${label.position}`}
+                                    style={{ width: `${width}px`, minWidth: `${width}px` }}
+                                    className="text-left"
+                                >
+                                    {showLabel ? label.month : ''}
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    <div className="flex" style={{ gap: `${tileGap}px` }}>
+                        {contributions.map((week, weekIndex) => (
+                            <div key={weekIndex} className="flex flex-col" style={{ gap: `${tileGap}px` }}>
+                                {week.days.map((day, dayIndex) => (
+                                    <div
+                                        key={dayIndex}
+                                        style={{ width: `${tileSize}px`, height: `${tileSize}px` }}
+                                        className={`rounded-[2px] ${getLevelColor(day.level)} transition-all duration-150 hover:scale-125 hover:ring-1 hover:ring-white/40 cursor-pointer`}
+                                        onMouseEnter={(e) => handleMouseEnter(day, e)}
+                                        onMouseLeave={handleMouseLeave}
+                                    />
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="flex items-center justify-between mt-4">
+                    <span className="text-xs text-white/40">
+                        {totalContributions.toLocaleString()} activities in {year}
+                    </span>
+                    <div className="flex items-center gap-1 text-[11px] text-white/40">
+                        <span>Less</span>
+                        <div style={{ width: `${tileSize}px`, height: `${tileSize}px` }} className="rounded-[2px] bg-[#2d2d2d]" />
+                        <div style={{ width: `${tileSize}px`, height: `${tileSize}px` }} className="rounded-[2px] bg-[#4a4a4a]" />
+                        <div style={{ width: `${tileSize}px`, height: `${tileSize}px` }} className="rounded-[2px] bg-[#6b6b6b]" />
+                        <div style={{ width: `${tileSize}px`, height: `${tileSize}px` }} className="rounded-[2px] bg-[#9a9a9a]" />
+                        <div style={{ width: `${tileSize}px`, height: `${tileSize}px` }} className="rounded-[2px] bg-white" />
+                        <span>More</span>
+                    </div>
                 </div>
             </div>
-            <div className="flex items-center justify-end gap-2 mt-4 text-xs text-white/40">
-                <span>Less</span>
-                <div className="w-[10px] h-[10px] rounded-sm bg-white/5" />
-                <div className="w-[10px] h-[10px] rounded-sm bg-green-500/30" />
-                <div className="w-[10px] h-[10px] rounded-sm bg-green-500/50" />
-                <div className="w-[10px] h-[10px] rounded-sm bg-green-500/75" />
-                <div className="w-[10px] h-[10px] rounded-sm bg-green-500" />
-                <span>More</span>
-            </div>
-        </div>
+            {tooltip}
+        </>
     );
 }
+
+

@@ -22,8 +22,9 @@ import {
     SiReact,
     SiRedis,
     SiShadcnui,
+    SiSwift,
     SiTailwindcss,
-    SiTypescript,
+    SiTypescript
 } from 'react-icons/si';
 
 const ZustandIcon = ({ className }: { className?: string }) => (
@@ -56,6 +57,7 @@ const skills = [
     { name: 'JavaScript', icon: SiJavascript },
     { name: 'TypeScript', icon: SiTypescript },
     { name: 'Python', icon: SiPython },
+    { name: 'Swift', icon: SiSwift },
     { name: 'C/C++', icon: SiCplusplus },
     { name: 'SQL', icon: SiMysql },
     { name: 'Git', icon: SiGit },
