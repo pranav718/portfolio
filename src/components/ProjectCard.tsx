@@ -11,6 +11,7 @@ export interface Project {
     liveUrl?: string;
     gradient: string;
     hoverGlow: string;
+    image?: string;
 }
 
 interface ProjectCardProps {
@@ -46,9 +47,13 @@ export default function ProjectCard({ project, compact = false }: ProjectCardPro
     return (
         <div className={`group rounded-xl bg-white/5 border border-white/10 overflow-hidden hover:border-white/20 hover:bg-white/[0.07] transition-all duration-300 hover:scale-[1.02] hover:shadow-lg ${project.hoverGlow}`}>
             <div className={`relative ${compact ? 'h-36' : 'h-40'} overflow-hidden`}>
-                <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} flex items-center justify-center`}>
-                    <span className="text-white/30 text-sm">Preview</span>
-                </div>
+                {project.image ? (
+                    <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover object-top" />
+                ) : (
+                    <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} flex items-center justify-center`}>
+                        <span className="text-white/30 text-sm">Preview</span>
+                    </div>
+                )}
                 <span className={`absolute top-3 right-3 text-xs px-2 py-1 ${statusStyle.bg} text-white rounded font-medium flex items-center gap-1`}>
                     {statusStyle.pulse && <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>}
                     {project.status}
