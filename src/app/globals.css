@@ -28,6 +28,9 @@
 
   --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.5);
   --shadow-glow: 0 0 60px rgba(244, 208, 63, 0.4);
+
+  /* Project card title glow */
+  --title-glow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 /*base styles*/

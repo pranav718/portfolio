@@ -73,11 +73,9 @@ export default function ProjectsPage() {
 
                 <div className="max-w-4xl mx-auto px-6 pt-32 pb-20">
                     <div className="mb-10">
-                        <Link href="/portfolio" className="text-white/40 hover:text-white text-sm transition-colors mb-4 inline-block">
-                            ← back to portfolio
+                        <Link href="/portfolio" className="text-white/90 hover:text-white text-lg font-medium transition-colors inline-flex items-center gap-2">
+                            <span className="text-xl">‹</span> Projects
                         </Link>
-                        <h1 className="text-4xl text-white tracking-wide" style={headingFont}>All Projects</h1>
-                        <p className="text-white/50 mt-2">A collection of things I've built</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
