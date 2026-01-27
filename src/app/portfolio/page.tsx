@@ -2,6 +2,7 @@
 
 import GitHubContributions from '@/components/GitHubContributions';
 import ProjectCard from '@/components/ProjectCard';
+import RotatingTitle from '@/components/RotatingTitle';
 import SkillBadges from '@/components/SkillBadges';
 import { projects } from '@/data/projects';
 import Link from 'next/link';
@@ -89,9 +90,10 @@ export default function PortfolioPage() {
                                 className="w-24 h-24 rounded-sm object-cover float-left mr-4"
                             />
                             <div>
-                                <h1 className="text-4xl md:text-5xl text-white tracking-wide mb-2" style={headingFont}>
-                                    I'm Pranav
+                                <h1 className="text-2xl md:text-3xl text-white tracking-wide mb-1" style={headingFont}>
+                                    Pranav Ray
                                 </h1>
+                                <RotatingTitle />
                                 <div className="text-white/70 text-sm leading-relaxed">
                                     <p>a 19 y/o fullstack developer</p>
                                     <p>currently pursuing cs (and greatness)</p>
