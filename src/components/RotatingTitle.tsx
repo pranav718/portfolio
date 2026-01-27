@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 const titles = [
     'fullstack dev',
     'ios dev',
-    'oss contributor',
+    'open source contributor',
     'pursuing cs (and greatness)',
 ];
 
@@ -33,7 +33,7 @@ export default function RotatingTitle() {
 
     return (
         <p
-            className="text-white/50 text-sm mb-2"
+            className="text-white/50 text-sm mb-2 ml-[1px]"
             style={{
                 minHeight: '20px',
                 filter: isVisible ? 'blur(0px)' : 'blur(6px)',

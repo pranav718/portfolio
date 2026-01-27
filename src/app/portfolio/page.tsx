@@ -1,6 +1,7 @@
 'use client';
 
 import AgeCounter from '@/components/AgeCounter';
+import CTAButtons from '@/components/CTAButtons';
 import GitHubContributions from '@/components/GitHubContributions';
 import ProjectCard from '@/components/ProjectCard';
 import RotatingTitle from '@/components/RotatingTitle';
@@ -128,6 +129,8 @@ export default function PortfolioPage() {
                                 <img src="/images/chesscom-logo.png" alt="Chess.com" className="w-5 h-5 rounded-sm" style={{ filter: 'grayscale(100%) brightness(2)' }} />
                             </a>
                         </div>
+
+                        <CTAButtons />
 
                         <div className="mt-12 mb-8">
                             <h2 className="text-2xl mb-6 tracking-wider" style={headingFont}>Skills</h2>
