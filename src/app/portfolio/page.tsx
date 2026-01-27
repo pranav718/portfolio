@@ -1,5 +1,6 @@
 'use client';
 
+import AgeCounter from '@/components/AgeCounter';
 import GitHubContributions from '@/components/GitHubContributions';
 import ProjectCard from '@/components/ProjectCard';
 import RotatingTitle from '@/components/RotatingTitle';
@@ -94,17 +95,14 @@ export default function PortfolioPage() {
                                     Pranav Ray
                                 </h1>
                                 <RotatingTitle />
-                                <div className="text-white/70 text-sm leading-relaxed">
-                                    <p>a 19 y/o fullstack developer</p>
-                                    <p>currently pursuing cs (and greatness)</p>
-                                </div>
+                                <AgeCounter />
                             </div>
                             <div className="clear-both"></div>
                         </div>
 
                         <div className="text-white/60 text-sm leading-relaxed mb-8">
-                            <p className="mb-3">i code, code and code, also learning devops and diving deep into backend these days</p>
-                            <p>i also write blogs, solve algorithms and play chess in free time.</p>
+                            <p className="mb-3">basically, i just like building things. a lot. currently learning devops and diving deep into backend systems.</p>
+                            <p>in my free time, i like to write blogs, read, solve algorithms and pretend to be good at chess.</p>
                         </div>
 
                         <div className="flex items-center gap-5 text-white/50">
