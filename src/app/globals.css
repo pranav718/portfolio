@@ -246,3 +246,25 @@
 .animate-flicker {
   animation: flicker 3s ease-in-out infinite;
 }
+
+@keyframes glowPulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 15px rgba(255, 255, 255, 0.15),
+      0 0 30px rgba(255, 255, 255, 0.1),
+      0 0 45px rgba(255, 255, 255, 0.05);
+  }
+
+  50% {
+    box-shadow:
+      0 0 20px rgba(255, 255, 255, 0.25),
+      0 0 40px rgba(255, 255, 255, 0.15),
+      0 0 60px rgba(255, 255, 255, 0.08);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glowPulse 2.5s ease-in-out infinite;
+}
