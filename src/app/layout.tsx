@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Dancing_Script, JetBrains_Mono } from "next/font/google";
+import { Dancing_Script, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const jetbrainsMono = JetBrains_Mono({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-jetbrains",
+  variable: "--font-geist-mono",
   display: "swap",
 });
 
@@ -35,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${jetbrainsMono.variable} ${dancingScript.variable} antialiased`}>
+      <body className={`${geistMono.variable} ${dancingScript.variable} antialiased`}>
         {children}
       </body>
     </html>

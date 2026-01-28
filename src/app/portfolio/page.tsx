@@ -1,12 +1,14 @@
 'use client';
 
 import AgeCounter from '@/components/AgeCounter';
+import BlogCard from '@/components/BlogCard';
 import CTAButtons from '@/components/CTAButtons';
 import GitHubContributions from '@/components/GitHubContributions';
 import ProjectCard from '@/components/ProjectCard';
 import RotatingTitle from '@/components/RotatingTitle';
 import SkillBadges from '@/components/SkillBadges';
 import SmoothScroll from '@/components/SmoothScroll';
+import { blogs } from '@/data/blogs';
 import { projects } from '@/data/projects';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -19,12 +21,12 @@ export default function PortfolioPage() {
         return () => clearTimeout(timer);
     }, []);
 
-    const headingFont = { fontFamily: "'Outfit', sans-serif", fontWeight: 600 };
-    const jetbrainsFont = { fontFamily: "var(--font-jetbrains), 'JetBrains Mono', monospace" };
+    const headingFont = { fontFamily: "var(--font-geist-mono), 'Geist Mono', monospace", fontWeight: 600 };
+    const geistMonoFont = { fontFamily: "var(--font-geist-mono), 'Geist Mono', monospace" };
 
     return (
         <SmoothScroll>
-            <div className="min-h-screen bg-black text-[#f5f5f5] overflow-y-auto overflow-x-hidden" style={jetbrainsFont}>
+            <div className="min-h-screen bg-black text-[#f5f5f5] overflow-y-auto overflow-x-hidden" style={geistMonoFont}>
                 <main
                     className="relative transition-all duration-700 ease-out"
                     style={{
@@ -145,26 +147,26 @@ export default function PortfolioPage() {
                         </section>
 
                         <section id="blog" className="mb-16">
-                            <h2 className="text-2xl mb-6 tracking-wider" style={headingFont}>Blog</h2>
+                            <h2 className="text-2xl mb-6 tracking-wider" style={headingFont}>Blogs</h2>
 
                             <div className="space-y-4">
-                                <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors cursor-pointer">
-                                    <p className="text-sm text-white/40 mb-1">Dec 2024</p>
-                                    <p className="font-medium mb-1">Building Immersive Web Experiences with Three.js</p>
-                                    <p className="text-sm text-white/50">A deep dive into creating 3D portfolio experiences...</p>
-                                </div>
+                                {blogs.map((blog) => (
+                                    <BlogCard key={blog.id} blog={blog} />
+                                ))}
+                            </div>
 
-                                <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors cursor-pointer">
-                                    <p className="text-sm text-white/40 mb-1">Nov 2024</p>
-                                    <p className="font-medium mb-1">The Future of Web Development in 2025</p>
-                                    <p className="text-sm text-white/50">Predictions and trends I'm excited about...</p>
-                                </div>
-
-                                <div className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/8 transition-colors cursor-pointer">
-                                    <p className="text-sm text-white/40 mb-1">Oct 2024</p>
-                                    <p className="font-medium mb-1">Why I Switched to TypeScript (And You Should Too)</p>
-                                    <p className="text-sm text-white/50">My journey from JavaScript purist to TypeScript advocate...</p>
-                                </div>
+                            <div className="flex justify-center mt-6">
+                                <a
+                                    href="https://medium.com/@knightkun"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-sm text-white/50 hover:text-white px-4 py-2 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all flex items-center gap-2"
+                                >
+                                    View All
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                                    </svg>
+                                </a>
                             </div>
                         </section>
 
