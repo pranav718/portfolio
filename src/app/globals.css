@@ -86,7 +86,8 @@
 
   /* Links - clean for 3D experience */
   a {
-    @apply text-text-dim transition-colors duration-200 no-underline;
+    @apply text-text-dim transition-colors duration-200;
+    text-decoration: none;
   }
 
   a:hover {
@@ -267,4 +268,20 @@
 
 .animate-glow-pulse {
   animation: glowPulse 2.5s ease-in-out infinite;
+}
+
+.animated-underline {
+  @apply relative;
+  text-decoration: none !important;
+}
+
+.animated-underline::after {
+  content: '';
+  @apply absolute left-0 w-0 h-px bg-white;
+  bottom: -2px;
+  transition: width 0.3s ease;
+}
+
+.group:hover .animated-underline::after {
+  @apply w-full;
 }

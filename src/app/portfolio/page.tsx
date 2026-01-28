@@ -134,9 +134,14 @@ export default function PortfolioPage() {
                             </div>
 
                             <div className="flex justify-center mt-6">
-                                <Link href="/portfolio/projects" className="text-sm text-white/50 hover:text-white px-4 py-2 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all flex items-center gap-2">
-                                    View All Projects
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                                <Link
+                                    href="/portfolio/projects"
+                                    className="group text-sm text-white/50 hover:text-white px-4 py-2 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all flex items-center gap-2"
+                                >
+                                    <span className="animated-underline">View All</span>
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                                    </svg>
                                 </Link>
                             </div>
                         </section>
@@ -160,9 +165,9 @@ export default function PortfolioPage() {
                                     href="https://medium.com/@knightkun"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-sm text-white/50 hover:text-white px-4 py-2 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all flex items-center gap-2"
+                                    className="group text-sm text-white/50 hover:text-white px-4 py-2 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all flex items-center gap-2"
                                 >
-                                    View All
+                                    <span className="animated-underline">View All</span>
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
                                     </svg>
