@@ -45,7 +45,18 @@ export default function BlogCard({ blog }: BlogCardProps) {
                     </div>
                 </div>
 
-                <span className="text-white/30 group-hover:text-white/60 transition-colors text-lg">↗</span>
+                <svg
+                    className="w-4 h-4 text-white/30 group-hover:text-white group-hover:opacity-100 opacity-40 transition-all duration-200"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                >
+                    <path d="M7 17L17 7" />
+                    <path d="M7 7h10v10" />
+                </svg>
             </div>
         </a>
     );
