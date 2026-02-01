@@ -46,7 +46,7 @@ export default function BlogCard({ blog }: BlogCardProps) {
                 </div>
 
                 <svg
-                    className="w-4 h-4 text-white/30 group-hover:text-white group-hover:opacity-100 opacity-40 transition-all duration-200"
+                    className="w-4 h-4 view-all-arrow text-white/30 group-hover:text-white group-hover:opacity-100 opacity-40 transition-all duration-200"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"

@@ -285,3 +285,11 @@
 .group:hover .animated-underline::after {
   @apply w-full;
 }
+
+.view-all-arrow {
+  transition: transform 0.5s ease;
+}
+
+.group:hover .view-all-arrow {
+  transform: rotate(405deg);
+}
