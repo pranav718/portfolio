@@ -1,11 +1,11 @@
 'use client';
 
-import ProjectCard from '@/components/ProjectCard';
-import { projects } from '@/data/projects';
+import BlogCard from '@/components/BlogCard';
+import { blogs } from '@/data/blogs';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-export default function ProjectsPage() {
+export default function BlogsPage() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
@@ -50,16 +50,16 @@ export default function ProjectsPage() {
                     </div>
                 </nav>
 
-                <div className="max-w-4xl mx-auto px-6 pt-32 pb-20">
+                <div className="max-w-2xl mx-auto px-6 pt-32 pb-20">
                     <div className="mb-10">
-                        <Link href="/portfolio#projects" className="text-white/90 hover:text-white text-lg font-medium transition-colors inline-flex items-center gap-2">
-                            <span className="text-xl">‹</span> Projects
+                        <Link href="/portfolio#blog" className="text-white/90 hover:text-white text-lg font-medium transition-colors inline-flex items-center gap-2">
+                            <span className="text-xl">‹</span> Blogs
                         </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {projects.map((project) => (
-                            <ProjectCard key={project.id} project={project} compact />
+                    <div className="space-y-4">
+                        {blogs.map((blog) => (
+                            <BlogCard key={blog.id} blog={blog} />
                         ))}
                     </div>
                 </div>
