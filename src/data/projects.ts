@@ -8,8 +8,6 @@ export const projects: Project[] = [
         techStack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'Convex', 'Framer Motion'],
         status: 'Live',
         githubUrl: 'https://github.com/pranav718/typingterminal',
-        gradient: 'from-green-600/30 via-emerald-500/20 to-teal-400/30',
-        hoverGlow: 'hover:shadow-green-500/10',
         image: '/images/projects/typingterminal.png',
     },
     {
@@ -19,8 +17,6 @@ export const projects: Project[] = [
         techStack: ['Next.js', 'TypeScript', 'Tailwind', 'Prisma', 'MongoDB', 'YouTube API'],
         status: 'Live',
         githubUrl: 'https://github.com/pranav718/goatcast',
-        gradient: 'from-rose-600/30 via-pink-500/20 to-fuchsia-400/30',
-        hoverGlow: 'hover:shadow-rose-500/10',
         image: '/images/projects/goatcast.png',
     },
     {
@@ -28,10 +24,8 @@ export const projects: Project[] = [
         title: 'atlas (uniway)',
         description: 'Campus navigation app with interactive maps, search & discovery, and real-time information for MUJ.',
         techStack: ['Next.js', 'TypeScript', 'Tailwind', 'Leaflet'],
-        status: 'Open Source',
+        status: 'Live',
         githubUrl: 'https://github.com/pranav718/Atlas',
-        gradient: 'from-sky-600/30 via-cyan-500/20 to-blue-400/30',
-        hoverGlow: 'hover:shadow-sky-500/10',
         image: '/images/projects/atlas.png',
     },
     {
@@ -41,8 +35,7 @@ export const projects: Project[] = [
         techStack: ['Next.js', 'TypeScript', 'Tailwind', 'Three.js', 'Zustand'],
         status: 'In Progress',
         githubUrl: 'https://github.com/pranav718/nanimo',
-        gradient: 'from-violet-600/30 via-purple-500/20 to-indigo-400/30',
-        hoverGlow: 'hover:shadow-violet-500/10',
+        image: '/images/projects/in-progress.png',
     },
     {
         id: 'musashi',
@@ -51,7 +44,6 @@ export const projects: Project[] = [
         techStack: ['Next.js', 'TypeScript', 'Tailwind', 'GSAP'],
         status: 'In Progress',
         githubUrl: 'https://github.com/pranav718/musashi',
-        gradient: 'from-orange-600/30 via-amber-500/20 to-yellow-400/30',
-        hoverGlow: 'hover:shadow-orange-500/10',
+        image: '/images/projects/in-progress.png',
     },
 ];

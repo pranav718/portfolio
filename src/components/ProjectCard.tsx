@@ -9,8 +9,6 @@ export interface Project {
     status: 'Live' | 'In Progress' | 'Open Source';
     githubUrl?: string;
     liveUrl?: string;
-    gradient: string;
-    hoverGlow: string;
     image?: string;
 }
 
@@ -45,7 +43,7 @@ export default function ProjectCard({ project, compact = false }: ProjectCardPro
                 {project.image ? (
                     <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover object-top" />
                 ) : (
-                    <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} flex items-center justify-center`}>
+                    <div className="absolute inset-0 bg-white/10 flex items-center justify-center">
                         <span className="text-white/30 text-sm">Preview</span>
                     </div>
                 )}
