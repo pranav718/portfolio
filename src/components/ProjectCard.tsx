@@ -10,6 +10,8 @@ export interface Project {
     githubUrl?: string;
     liveUrl?: string;
     image?: string;
+    videoUrl?: string;
+    postUrl?: string;
 }
 
 interface ProjectCardProps {
@@ -35,10 +37,10 @@ const statusStyles = {
 
 export default function ProjectCard({ project, compact = false }: ProjectCardProps) {
     const statusStyle = statusStyles[project.status];
-    const cardLink = project.liveUrl || project.githubUrl;
+    const cardLink = `/portfolio/projects/${project.id}`;
 
     return (
-        <a href={cardLink} target="_blank" rel="noopener noreferrer" className="group block rounded-xl bg-white/5 border border-white/10 overflow-hidden hover:border-white/20 hover:bg-white/[0.07] transition-all duration-300 hover:scale-[1.02] cursor-pointer" style={{ boxShadow: 'none' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 8px 30px rgba(255, 255, 255, 0.15), 0 4px 15px rgba(255, 255, 255, 0.1)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'none'}>
+        <a href={cardLink} className="group block rounded-xl bg-white/5 border border-white/10 overflow-hidden hover:border-white/20 hover:bg-white/[0.07] transition-all duration-300 hover:scale-[1.02] cursor-pointer" style={{ boxShadow: 'none' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 8px 30px rgba(255, 255, 255, 0.15), 0 4px 15px rgba(255, 255, 255, 0.1)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'none'}>
             <div className={`relative ${compact ? 'h-36' : 'h-40'} overflow-hidden`}>
                 {project.image ? (
                     <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover object-top" />

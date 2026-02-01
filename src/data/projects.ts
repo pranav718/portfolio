@@ -8,7 +8,10 @@ export const projects: Project[] = [
         techStack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'Convex', 'Framer Motion'],
         status: 'Live',
         githubUrl: 'https://github.com/pranav718/typingterminal',
+        liveUrl: 'https://typingterminal.vercel.app',
         image: '/images/projects/typingterminal.png',
+        // videoUrl: '/videos/projects/typingterminal.mp4',
+        // postUrl: 'https://x.com/knightkun__/status/...',
     },
     {
         id: 'goatcast',
@@ -17,6 +20,7 @@ export const projects: Project[] = [
         techStack: ['Next.js', 'TypeScript', 'Tailwind', 'Prisma', 'MongoDB', 'YouTube API'],
         status: 'Live',
         githubUrl: 'https://github.com/pranav718/goatcast',
+        liveUrl: 'https://goatcast.vercel.app',
         image: '/images/projects/goatcast.png',
     },
     {
@@ -26,6 +30,7 @@ export const projects: Project[] = [
         techStack: ['Next.js', 'TypeScript', 'Tailwind', 'Leaflet'],
         status: 'Live',
         githubUrl: 'https://github.com/pranav718/Atlas',
+        liveUrl: 'https://atlas-uniway.vercel.app',
         image: '/images/projects/atlas.png',
     },
     {
