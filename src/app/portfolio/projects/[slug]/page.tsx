@@ -2,8 +2,56 @@
 
 import { projects } from '@/data/projects';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { use, useEffect, useState } from 'react';
+import { notFound, useSearchParams } from 'next/navigation';
+import React, { use, useEffect, useState } from 'react';
+import {
+    SiFramer,
+    SiGreensock,
+    SiLeaflet,
+    SiMongodb,
+    SiNextdotjs,
+    SiPrisma,
+    SiReact,
+    SiTailwindcss,
+    SiThreedotjs,
+    SiTypescript,
+    SiYoutube
+} from 'react-icons/si';
+import { TbBrandFramerMotion } from 'react-icons/tb';
+
+const ZustandIcon = ({ className }: { className?: string }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+        <circle cx="7" cy="6" r="3" />
+        <circle cx="17" cy="6" r="3" />
+        <circle cx="12" cy="14" r="8" />
+        <circle cx="9" cy="13" r="1.2" fill="white" />
+        <circle cx="15" cy="13" r="1.2" fill="white" />
+        <path d="M9 17q3 2 6 0" fill="none" stroke="white" strokeWidth="1" strokeLinecap="round" />
+    </svg>
+);
+
+const ConvexIcon = ({ className }: { className?: string }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18l6.9 3.45L12 11.08 5.1 7.63 12 4.18zM4 8.82l7 3.5v7.36l-7-3.5V8.82zm9 10.86v-7.36l7-3.5v7.36l-7 3.5z" />
+    </svg>
+);
+
+const techIcons: Record<string, React.ComponentType<{ className?: string }>> = {
+    'Next.js': SiNextdotjs,
+    'React': SiReact,
+    'TypeScript': SiTypescript,
+    'Tailwind': SiTailwindcss,
+    'Convex': ConvexIcon,
+    'Framer Motion': TbBrandFramerMotion,
+    'Prisma': SiPrisma,
+    'MongoDB': SiMongodb,
+    'YouTube API': SiYoutube,
+    'Leaflet': SiLeaflet,
+    'Three.js': SiThreedotjs,
+    'Zustand': ZustandIcon,
+    'GSAP': SiGreensock,
+    'Motion': SiFramer,
+};
 
 interface ProjectDetailPageProps {
     params: Promise<{ slug: string }>;
@@ -31,6 +79,9 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
     const { slug } = use(params);
     const project = projects.find((p) => p.id === slug);
     const [isLoaded, setIsLoaded] = useState(false);
+    const searchParams = useSearchParams();
+    const from = searchParams.get('from');
+    const backLink = from === 'home' ? '/portfolio#projects' : '/portfolio/projects';
 
     useEffect(() => {
         const timer = setTimeout(() => setIsLoaded(true), 100);
@@ -81,7 +132,7 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                 <div className="max-w-3xl mx-auto px-6 pt-32 pb-20">
                     <div className="mb-8 flex items-center justify-between">
                         <Link
-                            href="/portfolio/projects"
+                            href={backLink}
                             className="text-white/90 hover:text-white transition-colors inline-flex items-center gap-2 group"
                         >
                             <svg className="w-4 h-4 back-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -175,7 +226,7 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
 
                     <div className="border-t border-white/10 mb-8"></div>
 
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-6">
                         <h1 className="text-2xl text-white" style={headingFont}>{project.title}</h1>
                         <span className={`text-sm px-3 py-1 ${statusStyle.bg} text-white rounded-full font-medium flex items-center gap-2`}>
                             {statusStyle.pulse && <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>}
@@ -183,21 +234,24 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                         </span>
                     </div>
 
-                    <div className="text-white/60 text-sm leading-relaxed mb-8">
+                    <div className="text-white/60 text-sm leading-relaxed mb-10">
                         <p>{project.description}</p>
                     </div>
-                    <div className="mb-8">
-                        <h3 className="text-sm text-white/40 mb-4">Stack used</h3>
+                    <div className="mb-10">
+                        <h3 className="text-lg text-white/80 mb-4" style={headingFont}>Stack used</h3>
                         <div className="flex flex-wrap gap-3">
-                            {project.techStack.map((tech) => (
-                                <span
-                                    key={tech}
-                                    className="text-sm px-4 py-2 bg-white/5 text-white/80 rounded-lg border border-white/10 flex items-center gap-2"
-                                >
-                                    <span className="text-white/40">⚙</span>
-                                    {tech}
-                                </span>
-                            ))}
+                            {project.techStack.map((tech) => {
+                                const Icon = techIcons[tech];
+                                return (
+                                    <span
+                                        key={tech}
+                                        className="text-sm px-4 py-2 bg-white/5 text-white/80 rounded-lg border border-white/10 flex items-center gap-2"
+                                    >
+                                        {Icon ? <Icon className="w-4 h-4 text-white/60" /> : <span className="text-white/40">⚙</span>}
+                                        {tech}
+                                    </span>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>
