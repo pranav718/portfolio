@@ -40,10 +40,10 @@ export default function ProjectCard({ project, compact = false }: ProjectCardPro
     const cardLink = `/portfolio/projects/${project.id}`;
 
     return (
-        <a href={cardLink} className="group block rounded-xl bg-white/5 border border-white/10 overflow-hidden hover:border-white/20 hover:bg-white/[0.07] transition-all duration-300 hover:scale-[1.02] cursor-pointer" style={{ boxShadow: 'none' }} onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 8px 30px rgba(255, 255, 255, 0.15), 0 4px 15px rgba(255, 255, 255, 0.1)'} onMouseLeave={(e) => e.currentTarget.style.boxShadow = 'none'}>
+        <a href={cardLink} className="group block rounded-xl bg-white/5 border border-white/10 overflow-hidden hover:border-white/20 hover:bg-white/[0.07] transition-all duration-300 hover:scale-[1.02] cursor-pointer">
             <div className={`relative ${compact ? 'h-36' : 'h-40'} overflow-hidden`}>
                 {project.image ? (
-                    <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover object-top" />
+                    <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110" />
                 ) : (
                     <div className="absolute inset-0 bg-white/10 flex items-center justify-center">
                         <span className="text-white/30 text-sm">Preview</span>
