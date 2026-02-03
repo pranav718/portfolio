@@ -293,3 +293,12 @@
 .group:hover .view-all-arrow {
   transform: rotate(405deg);
 }
+
+.back-arrow {
+  transition: transform 0.5s ease;
+  transform: rotate(225deg);
+}
+
+.group:hover .back-arrow {
+  transform: rotate(585deg);
+}

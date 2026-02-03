@@ -82,9 +82,12 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                     <div className="mb-8 flex items-center justify-between">
                         <Link
                             href="/portfolio/projects"
-                            className="text-white/90 hover:text-white text-lg font-medium transition-colors inline-flex items-center gap-2"
+                            className="text-white/90 hover:text-white transition-colors inline-flex items-center gap-2 group"
                         >
-                            <span className="text-xl">‹</span> Projects
+                            <svg className="w-4 h-4 back-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                            </svg>
+                            <span className="text-2xl tracking-wider" style={headingFont}>Projects</span>
                         </Link>
                         <div className="text-white/30">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
