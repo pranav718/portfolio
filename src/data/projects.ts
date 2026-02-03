@@ -10,8 +10,8 @@ export const projects: Project[] = [
         githubUrl: 'https://github.com/pranav718/typingterminal',
         liveUrl: 'https://typingterminal.vercel.app',
         image: '/images/projects/typingterminal.png',
+        postUrl: 'https://x.com/knightkun__/status/1998719321996939438',
         // videoUrl: '/videos/projects/typingterminal.mp4',
-        // postUrl: 'https://x.com/knightkun__/status/...',
     },
     {
         id: 'goatcast',
@@ -22,6 +22,7 @@ export const projects: Project[] = [
         githubUrl: 'https://github.com/pranav718/goatcast',
         liveUrl: 'https://goatcast.vercel.app',
         image: '/images/projects/goatcast.png',
+        postUrl: 'https://x.com/knightkun__/status/1964361515999645724',
     },
     {
         id: 'atlas',
