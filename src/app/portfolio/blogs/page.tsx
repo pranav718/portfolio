@@ -13,11 +13,11 @@ export default function BlogsPage() {
         return () => clearTimeout(timer);
     }, []);
 
-    const headingFont = { fontFamily: "'Outfit', sans-serif", fontWeight: 600 };
-    const jetbrainsFont = { fontFamily: "var(--font-jetbrains), 'JetBrains Mono', monospace" };
+    const headingFont = { fontFamily: "var(--font-geist-mono), 'Geist Mono', monospace", fontWeight: 600 };
+    const geistMonoFont = { fontFamily: "var(--font-geist-mono), 'Geist Mono', monospace" };
 
     return (
-        <div className="min-h-screen bg-black text-[#f5f5f5] overflow-y-auto overflow-x-hidden" style={jetbrainsFont}>
+        <div className="min-h-screen bg-black text-[#f5f5f5] overflow-y-auto overflow-x-hidden" style={geistMonoFont}>
             <main
                 className="relative transition-all duration-700 ease-out"
                 style={{
@@ -52,8 +52,11 @@ export default function BlogsPage() {
 
                 <div className="max-w-2xl mx-auto px-6 pt-32 pb-20">
                     <div className="mb-10">
-                        <Link href="/portfolio#blog" className="text-white/90 hover:text-white text-lg font-medium transition-colors inline-flex items-center gap-2">
-                            <span className="text-xl">‹</span> Blogs
+                        <Link href="/portfolio#blog" className="text-white/90 hover:text-white transition-colors inline-flex items-center gap-2 group">
+                            <svg className="w-4 h-4 back-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
+                            </svg>
+                            <span className="text-2xl tracking-wider" style={headingFont}>Blogs</span>
                         </Link>
                     </div>
 

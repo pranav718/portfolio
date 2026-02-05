@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 interface ContributionDay {
@@ -26,6 +26,13 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
     const [hoveredDay, setHoveredDay] = useState<{ day: ContributionDay; x: number; y: number } | null>(null);
     const [mounted, setMounted] = useState(false);
     const [year, setYear] = useState(new Date().getFullYear());
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (!loading && scrollContainerRef.current) {
+            scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
+        }
+    }, [loading]);
 
     useEffect(() => {
         setMounted(true);
@@ -190,39 +197,45 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
     return (
         <>
             <div className="w-full">
-                <div className="flex flex-col items-center">
-                    <div className="flex mb-2 text-[11px] text-white/40" style={{ gap: `${tileGap}px` }}>
-                        {monthLabels.map((label, index) => {
-                            const nextLabelPos = monthLabels[index + 1]?.position ?? totalWeeks;
-                            const weekSpan = nextLabelPos - label.position;
-                            const width = weekSpan * tileSize + (weekSpan - 1) * tileGap;
-                            const showLabel = index > 0 || width >= 30;
-                            return (
-                                <div
-                                    key={`${label.month}-${label.position}`}
-                                    style={{ width: `${width}px`, minWidth: `${width}px` }}
-                                    className="text-left"
-                                >
-                                    {showLabel ? label.month : ''}
-                                </div>
-                            );
-                        })}
-                    </div>
-
-                    <div className="flex" style={{ gap: `${tileGap}px` }}>
-                        {contributions.map((week, weekIndex) => (
-                            <div key={weekIndex} className="flex flex-col" style={{ gap: `${tileGap}px` }}>
-                                {week.days.map((day, dayIndex) => (
+                <div
+                    ref={scrollContainerRef}
+                    className="overflow-x-auto scrollbar-hide"
+                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                >
+                    <div className="flex flex-col items-start min-w-max">
+                        <div className="flex mb-2 text-[11px] text-white/40" style={{ gap: `${tileGap}px` }}>
+                            {monthLabels.map((label, index) => {
+                                const nextLabelPos = monthLabels[index + 1]?.position ?? totalWeeks;
+                                const weekSpan = nextLabelPos - label.position;
+                                const width = weekSpan * tileSize + (weekSpan - 1) * tileGap;
+                                const showLabel = index > 0 || width >= 30;
+                                return (
                                     <div
-                                        key={dayIndex}
-                                        style={{ width: `${tileSize}px`, height: `${tileSize}px` }}
-                                        className={`rounded-[2px] ${getLevelColor(day.level)} transition-all duration-150 hover:scale-125 hover:ring-1 hover:ring-white/40 cursor-pointer`}
-                                        onMouseEnter={(e) => handleMouseEnter(day, e)}
-                                        onMouseLeave={handleMouseLeave}
-                                    />
-                                ))}
-                            </div>
-                        ))}
+                                        key={`${label.month}-${label.position}`}
+                                        style={{ width: `${width}px`, minWidth: `${width}px` }}
+                                        className="text-left"
+                                    >
+                                        {showLabel ? label.month : ''}
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        <div className="flex" style={{ gap: `${tileGap}px` }}>
+                            {contributions.map((week, weekIndex) => (
+                                <div key={weekIndex} className="flex flex-col" style={{ gap: `${tileGap}px` }}>
+                                    {week.days.map((day, dayIndex) => (
+                                        <div
+                                            key={dayIndex}
+                                            style={{ width: `${tileSize}px`, height: `${tileSize}px` }}
+                                            className={`rounded-[2px] ${getLevelColor(day.level)} transition-all duration-150 hover:scale-125 hover:ring-1 hover:ring-white/40 cursor-pointer`}
+                                            onMouseEnter={(e) => handleMouseEnter(day, e)}
+                                            onMouseLeave={handleMouseLeave}
+                                        />
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
 
