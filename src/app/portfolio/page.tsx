@@ -173,13 +173,24 @@ export default function PortfolioPage() {
                             </div>
                         </section>
 
-                        <div className="pt-8 border-t border-white/10">
-                            <Link
-                                href="/"
-                                className="text-white/40 hover:text-white text-sm transition-colors"
+                        <div className="mt-16 relative">
+                            <div
+                                className="absolute inset-0 pointer-events-none z-10"
+                                style={{
+                                    background: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 70%, rgba(0,0,0,1) 100%)'
+                                }}
+                            />
+                            <img
+                                src="/images/vagabond-mountains.jpg"
+                                alt="Vagabond - Mountains"
+                                className="w-full h-48 object-cover object-center opacity-60"
+                            />
+                            <p
+                                className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/40 text-lg tracking-wider z-20"
+                                style={{ fontFamily: "var(--font-dancing), 'Dancing Script', cursive" }}
                             >
-                                ← back to my space
-                            </Link>
+                                "inside, i'm infinite"
+                            </p>
                         </div>
                     </div>
                 </main>
