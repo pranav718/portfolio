@@ -4,7 +4,7 @@ export const projects: Project[] = [
     {
         id: 'typingterminal',
         title: 'typingterminal',
-        description: 'Retro terminal-themed typing platform with real-time multiplayer races, leaderboards, and classic literature practice. 150+ users, 2500+ visits.',
+        description: 'A retro terminal-themed typing practice platform featuring real-time multiplayer races with invite codes, global leaderboards (daily/weekly/monthly/all-time), and a curated library of classic literature from Pride & Prejudice to 1984. Supports custom book uploads (PDF, EPUB, TXT), guest mode, detailed progress tracking, and an authentic CRT aesthetic with scanlines and green phosphor glow. 150+ users, 2500+ visits.',
         techStack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'Convex', 'Framer Motion'],
         status: 'Live',
         githubUrl: 'https://github.com/pranav718/typingterminal',

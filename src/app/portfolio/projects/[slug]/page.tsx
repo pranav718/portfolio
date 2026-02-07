@@ -59,17 +59,20 @@ interface ProjectDetailPageProps {
 
 const statusStyles = {
     'Live': {
-        bg: 'bg-green-500/90',
+        dotColor: 'bg-emerald-400',
+        textColor: 'text-white/50',
         text: 'Live',
         pulse: true,
     },
     'In Progress': {
-        bg: 'bg-blue-500/90',
+        dotColor: 'bg-amber-400',
+        textColor: 'text-white/50',
         text: 'In Progress',
-        pulse: false,
+        pulse: true,
     },
     'Open Source': {
-        bg: 'bg-purple-500/90',
+        dotColor: 'bg-violet-400',
+        textColor: 'text-white/50',
         text: 'Open Source',
         pulse: false,
     },
@@ -226,19 +229,19 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
 
                     <div className="border-t border-white/10 mb-8"></div>
 
-                    <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center justify-between mb-4">
                         <h1 className="text-2xl text-white" style={headingFont}>{project.title}</h1>
-                        <span className={`text-sm px-3 py-1 ${statusStyle.bg} text-white rounded-full font-medium flex items-center gap-2`}>
-                            {statusStyle.pulse && <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>}
+                        <span className={`text-xs ${statusStyle.textColor} flex items-center gap-1.5`}>
+                            <span className={`w-1.5 h-1.5 ${statusStyle.dotColor} rounded-full ${statusStyle.pulse ? 'animate-pulse' : ''}`}></span>
                             {statusStyle.text}
                         </span>
                     </div>
 
-                    <div className="text-white/60 text-sm leading-relaxed mb-10">
+                    <div className="text-white/50 text-sm leading-relaxed mb-12">
                         <p>{project.description}</p>
                     </div>
-                    <div className="mb-10">
-                        <h3 className="text-lg text-white/80 mb-4" style={headingFont}>Stack used</h3>
+                    <div className="mb-12">
+                        <h3 className="text-sm text-white/40 uppercase tracking-wider mb-4" style={headingFont}>Stack</h3>
                         <div className="flex flex-wrap gap-3">
                             {project.techStack.map((tech) => {
                                 const Icon = techIcons[tech];
