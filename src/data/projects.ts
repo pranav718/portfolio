@@ -4,7 +4,7 @@ export const projects: Project[] = [
     {
         id: 'typingterminal',
         title: 'typingterminal',
-        description: 'A retro terminal-themed typing practice platform featuring real-time multiplayer races with invite codes, global leaderboards (daily/weekly/monthly/all-time), and a curated library of classic literature from Pride & Prejudice to 1984. Supports custom book uploads (PDF, EPUB, TXT), guest mode, detailed progress tracking, and an authentic CRT aesthetic with scanlines and green phosphor glow. 150+ users, 2500+ visits.',
+        description: 'A retro terminal-themed typing platform with real-time multiplayer races, global leaderboards, and a curated library of classic literature. Features custom book uploads, guest mode, and authentic CRT aesthetics. 150+ users, 2500+ visits.',
         techStack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'Convex', 'Framer Motion'],
         status: 'Live',
         githubUrl: 'https://github.com/pranav718/typingterminal',
@@ -16,7 +16,7 @@ export const projects: Project[] = [
     {
         id: 'goatcast',
         title: 'goatcast',
-        description: 'A curated platform for discovering high-quality YouTube podcasts with genre organization and admin dashboard.',
+        description: 'A podcast-like platform for curated YouTube videos. Browse hand-picked podcasts by genre, submit new content for review, and manage everything through a secure admin dashboard with automated YouTube metadata fetching.',
         techStack: ['Next.js', 'TypeScript', 'Tailwind', 'Prisma', 'MongoDB', 'YouTube API'],
         status: 'Live',
         githubUrl: 'https://github.com/pranav718/goatcast',
@@ -27,7 +27,7 @@ export const projects: Project[] = [
     {
         id: 'atlas',
         title: 'atlas (uniway)',
-        description: 'Campus navigation app with interactive maps, search & discovery, and real-time information for MUJ.',
+        description: 'A campus navigation web app for MUJ featuring an interactive map with Leaflet, real-time predictive search, dynamic location markers, and live open/closed status. Built as a team project with plans for turn-by-turn and indoor navigation.',
         techStack: ['Next.js', 'TypeScript', 'Tailwind', 'Leaflet'],
         status: 'Live',
         githubUrl: 'https://github.com/pranav718/Atlas',
@@ -37,7 +37,7 @@ export const projects: Project[] = [
     {
         id: 'nanimo',
         title: 'Nanimo',
-        description: 'A Next.js TypeScript web application with modern architecture and optimized performance.',
+        description: 'A visually immersive web app for exploring trending anime and manga, featuring custom shader-based 3D effects and interactive canvas animations. Currently in development.',
         techStack: ['Next.js', 'TypeScript', 'Tailwind', 'Three.js', 'Zustand'],
         status: 'In Progress',
         githubUrl: 'https://github.com/pranav718/nanimo',
@@ -46,7 +46,7 @@ export const projects: Project[] = [
     {
         id: 'musashi',
         title: 'Musashi',
-        description: 'A Next.js TypeScript web application with modern styling and development workflow.',
+        description: 'Soon.',
         techStack: ['Next.js', 'TypeScript', 'Tailwind', 'GSAP'],
         status: 'In Progress',
         githubUrl: 'https://github.com/pranav718/musashi',

@@ -4,7 +4,7 @@ export default function CTAButtons() {
     return (
         <div className="flex items-center gap-5 mt-8">
             <a
-                href="/resume.pdf"
+                href="/pranav_ray_resume.pdf"
                 download
                 className="group flex items-center gap-2.5 px-5 py-2.5 text-white/70 hover:text-white transition-all duration-300 border border-white/20 hover:border-white/40 rounded-xl hover:bg-white/5"
             >
