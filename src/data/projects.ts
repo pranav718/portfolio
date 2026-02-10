@@ -11,7 +11,7 @@ export const projects: Project[] = [
         liveUrl: 'https://typingterminal.vercel.app',
         image: '/images/projects/typingterminal.png',
         postUrl: 'https://x.com/knightkun__/status/1998719321996939438',
-        // videoUrl: '/videos/projects/typingterminal.mp4',
+        videoUrl: '/videos/projects/typingterminal.mp4',
     },
     {
         id: 'goatcast',
@@ -23,6 +23,7 @@ export const projects: Project[] = [
         liveUrl: 'https://goatcast.vercel.app',
         image: '/images/projects/goatcast.png',
         postUrl: 'https://x.com/knightkun__/status/1964361515999645724',
+        videoUrl: '/videos/projects/goatcast.mp4',
     },
     {
         id: 'atlas',

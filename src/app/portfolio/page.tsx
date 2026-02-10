@@ -59,7 +59,7 @@ export default function PortfolioPage() {
                                             href="/"
                                             className="flex items-center gap-1.5 whitespace-nowrap hover:text-white text-white/75 transition-colors"
                                         >
-                                            <span className="flex flex-col items-end">
+                                            <span className="flex flex-col items-center">
                                                 <span
                                                     className="tooltip-text"
                                                     style={{
@@ -74,7 +74,7 @@ export default function PortfolioPage() {
                                                     className="text-white/40 text-[11px] tracking-wider"
                                                     style={{ fontFamily: "var(--font-geist-mono), 'Geist Mono', monospace" }}
                                                 >
-                                                    (still in construction)
+                                                    (under construction)
                                                 </span>
                                             </span>
                                             <svg className="arrow-svg flex-shrink-0" width="55" height="30" viewBox="0 0 70 38" fill="none">
