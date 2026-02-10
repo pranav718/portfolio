@@ -353,10 +353,12 @@
 
 .personal-space-tooltip {
   opacity: 0;
+  pointer-events: none;
 }
 
 .nav-avatar-wrapper:hover .personal-space-tooltip {
   opacity: 1;
+  pointer-events: auto;
   animation: tooltipFadeIn 0.35s ease-out forwards;
 }
 
