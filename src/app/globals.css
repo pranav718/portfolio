@@ -302,3 +302,76 @@
 .group:hover .back-arrow {
   transform: rotate(585deg);
 }
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes drawArrow {
+  from {
+    stroke-dashoffset: 200;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes arrowheadFade {
+  0% {
+    opacity: 0;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes textSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.personal-space-tooltip {
+  opacity: 0;
+}
+
+.nav-avatar-wrapper:hover .personal-space-tooltip {
+  opacity: 1;
+  animation: tooltipFadeIn 0.35s ease-out forwards;
+}
+
+.nav-avatar-wrapper:hover .personal-space-tooltip .arrow-path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: drawArrow 0.6s ease-out 0.1s forwards;
+}
+
+.nav-avatar-wrapper:hover .personal-space-tooltip .arrow-head {
+  opacity: 0;
+  animation: arrowheadFade 0.6s ease-out 0.1s forwards;
+}
+
+.nav-avatar-wrapper:hover .personal-space-tooltip .tooltip-text {
+  opacity: 0;
+  animation: textSlideIn 0.4s ease-out 0.25s forwards;
+}

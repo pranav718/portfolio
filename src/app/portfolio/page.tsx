@@ -47,16 +47,46 @@ export default function PortfolioPage() {
                                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
                             }}
                         >
-                            <Link
-                                href="/"
-                                className="hover:scale-105 transition-transform"
-                            >
-                                <img
-                                    src="/images/avatar.jpg"
-                                    alt="Avatar"
-                                    className="w-8 h-8 rounded-sm object-cover"
-                                />
-                            </Link>
+                            <div className="relative nav-avatar-wrapper">
+                                <Link
+                                    href="/"
+                                    className="hover:scale-105 transition-transform block"
+                                >
+                                    <img
+                                        src="/images/avatar.jpg"
+                                        alt="Avatar"
+                                        className="w-8 h-8 rounded-sm object-cover"
+                                    />
+                                </Link>
+                                <div className="personal-space-tooltip flex items-end gap-2 absolute top-[calc(100%+14px)] right-[-8px] z-[100] pointer-events-none whitespace-nowrap">
+                                    <span
+                                        className="tooltip-text text-white/80 text-sm tracking-wide"
+                                        style={{ fontFamily: "var(--font-dancing), 'Dancing Script', cursive" }}
+                                    >
+                                        visit my personal space!
+                                    </span>
+                                    <svg
+                                        className="arrow-svg w-[60px] h-[50px] flex-shrink-0"
+                                        viewBox="0 0 80 60"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            className="arrow-path"
+                                            d="M4 55 C 15 45, 25 30, 40 22 C 55 14, 65 12, 72 6"
+                                            stroke="rgba(255,255,255,0.7)"
+                                            strokeWidth="1.8"
+                                            strokeLinecap="round"
+                                            fill="none"
+                                        />
+                                        <polygon
+                                            className="arrow-head"
+                                            points="68,2 78,4 70,11"
+                                            fill="rgba(255,255,255,0.7)"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
                             <Link href="#projects" className="text-sm text-white/60 hover:text-white transition-colors">
                                 projects
                             </Link>
