@@ -16,17 +16,17 @@ export default function AgeCounter() {
         };
 
         updateAge();
-        const interval = setInterval(updateAge, 50); 
+        const interval = setInterval(updateAge, 50);
         return () => clearInterval(interval);
     }, []);
 
     if (age === null) return null;
 
     return (
-        <p className="text-white/70 text-sm font-mono">
-            <span className="text-white/50">~ </span>
+        <p className="text-theme-badge-text text-sm font-mono">
+            <span className="text-theme-muted">~ </span>
             {age.toFixed(8)}
-            <span className="text-white/40 ml-1">years</span>
+            <span className="text-theme-muted ml-1">years</span>
         </p>
     );
 }
