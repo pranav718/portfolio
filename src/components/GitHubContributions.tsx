@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useTheme } from './ThemeProvider';
 
 interface ContributionDay {
     date: string;
@@ -27,6 +28,7 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
     const [mounted, setMounted] = useState(false);
     const [year, setYear] = useState(new Date().getFullYear());
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const { theme } = useTheme();
 
     useEffect(() => {
         if (!loading && scrollContainerRef.current) {
@@ -141,6 +143,16 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
     }, [contributions]);
 
     const getLevelColor = (level: number) => {
+        if (theme === 'light') {
+            switch (level) {
+                case 0: return 'bg-[#ebedf0]';
+                case 1: return 'bg-[#c6d0da]';
+                case 2: return 'bg-[#8b9bab]';
+                case 3: return 'bg-[#586d7e]';
+                case 4: return 'bg-[#2d3e50] shadow-[0_0_6px_rgba(0,0,0,0.2)]';
+                default: return 'bg-[#ebedf0]';
+            }
+        }
         switch (level) {
             case 0: return 'bg-[#1a1a1a]';
             case 1: return 'bg-[#3d3d3d] shadow-[inset_0_0_4px_rgba(255,255,255,0.05)]';
@@ -168,10 +180,10 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
 
     if (loading) {
         return (
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+            <div className="p-4 rounded-lg bg-theme-card border border-theme-divider">
                 <div className="animate-pulse">
-                    <div className="h-4 bg-white/10 rounded w-1/4 mb-4"></div>
-                    <div className="h-24 bg-white/5 rounded"></div>
+                    <div className="h-4 bg-theme-card-hover rounded w-1/4 mb-4"></div>
+                    <div className="h-24 bg-theme-card rounded"></div>
                 </div>
             </div>
         );
@@ -179,11 +191,14 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
 
     const tooltip = hoveredDay && hoveredDay.day.date && mounted ? createPortal(
         <div
-            className="fixed z-[9999] px-3 py-1.5 bg-[#1a1a1a] border border-white/20 rounded-md text-xs text-white/90 whitespace-nowrap pointer-events-none shadow-lg"
+            className="fixed z-[9999] px-3 py-1.5 rounded-md text-xs whitespace-nowrap pointer-events-none shadow-lg"
             style={{
                 left: hoveredDay.x,
                 top: hoveredDay.y,
-                transform: 'translate(-50%, -100%)'
+                transform: 'translate(-50%, -100%)',
+                background: theme === 'light' ? '#1a1a1a' : '#1a1a1a',
+                border: '1px solid rgba(255,255,255,0.2)',
+                color: 'rgba(255,255,255,0.9)',
             }}
         >
             {hoveredDay.day.count} contribution{hoveredDay.day.count !== 1 ? 's' : ''} on {hoveredDay.day.date}
@@ -203,7 +218,7 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
                     style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
                     <div className="flex flex-col items-start min-w-max">
-                        <div className="flex mb-2 text-[11px] text-white/40" style={{ gap: `${tileGap}px` }}>
+                        <div className="flex mb-2 text-[11px] text-theme-muted" style={{ gap: `${tileGap}px` }}>
                             {monthLabels.map((label, index) => {
                                 const nextLabelPos = monthLabels[index + 1]?.position ?? totalWeeks;
                                 const weekSpan = nextLabelPos - label.position;
@@ -228,7 +243,7 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
                                         <div
                                             key={dayIndex}
                                             style={{ width: `${tileSize}px`, height: `${tileSize}px` }}
-                                            className={`rounded-[2px] ${getLevelColor(day.level)} transition-all duration-150 hover:scale-125 hover:ring-1 hover:ring-white/40 cursor-pointer`}
+                                            className={`rounded-[2px] ${getLevelColor(day.level)} transition-all duration-150 hover:scale-125 hover:ring-1 hover:ring-theme-card-hover-border cursor-pointer`}
                                             onMouseEnter={(e) => handleMouseEnter(day, e)}
                                             onMouseLeave={handleMouseLeave}
                                         />
@@ -240,16 +255,16 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
                 </div>
 
                 <div className="flex items-center justify-between mt-4">
-                    <span className="text-xs text-white/40">
+                    <span className="text-xs text-theme-muted">
                         {totalContributions.toLocaleString()} activities in {year}
                     </span>
-                    <div className="flex items-center gap-1 text-[11px] text-white/40">
+                    <div className="flex items-center gap-1 text-[11px] text-theme-muted">
                         <span>Less</span>
-                        <div style={{ width: `${tileSize}px`, height: `${tileSize}px` }} className="rounded-[2px] bg-[#2d2d2d]" />
-                        <div style={{ width: `${tileSize}px`, height: `${tileSize}px` }} className="rounded-[2px] bg-[#4a4a4a]" />
-                        <div style={{ width: `${tileSize}px`, height: `${tileSize}px` }} className="rounded-[2px] bg-[#6b6b6b]" />
-                        <div style={{ width: `${tileSize}px`, height: `${tileSize}px` }} className="rounded-[2px] bg-[#9a9a9a]" />
-                        <div style={{ width: `${tileSize}px`, height: `${tileSize}px` }} className="rounded-[2px] bg-white" />
+                        <div style={{ width: `${tileSize}px`, height: `${tileSize}px` }} className={`rounded-[2px] ${getLevelColor(0)}`} />
+                        <div style={{ width: `${tileSize}px`, height: `${tileSize}px` }} className={`rounded-[2px] ${getLevelColor(1)}`} />
+                        <div style={{ width: `${tileSize}px`, height: `${tileSize}px` }} className={`rounded-[2px] ${getLevelColor(2)}`} />
+                        <div style={{ width: `${tileSize}px`, height: `${tileSize}px` }} className={`rounded-[2px] ${getLevelColor(3)}`} />
+                        <div style={{ width: `${tileSize}px`, height: `${tileSize}px` }} className={`rounded-[2px] ${getLevelColor(4)}`} />
                         <span>More</span>
                     </div>
                 </div>

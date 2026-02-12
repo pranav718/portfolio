@@ -6,7 +6,7 @@ export default function CTAButtons() {
             <a
                 href="/pranav_ray_resume.pdf"
                 download
-                className="group flex items-center gap-2.5 px-5 py-2.5 text-white/70 hover:text-white transition-all duration-300 border border-white/20 hover:border-white/40 rounded-xl hover:bg-white/5"
+                className="group flex items-center gap-2.5 px-5 py-2.5 text-theme-badge-text hover:text-theme-primary transition-all duration-300 border border-theme-card-border hover:border-theme-card-hover-border rounded-xl hover:bg-theme-card"
             >
                 <svg
                     className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5"
@@ -28,29 +28,29 @@ export default function CTAButtons() {
                 href="mailto:raypranav718@gmail.com?subject=Let's work together!"
                 className="group relative flex items-center gap-2.5 px-5 py-2.5 rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.03]"
                 style={{
-                    background: 'rgba(255, 255, 255, 0.1)',
+                    background: 'var(--theme-nav-bg)',
                     backdropFilter: 'blur(12px)',
                     WebkitBackdropFilter: 'blur(12px)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    border: '1px solid var(--theme-nav-border)',
                     boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
                 }}
             >
                 <div
                     className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"
                     style={{
-                        background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)',
+                        background: 'linear-gradient(90deg, transparent, var(--theme-card-hover-bg), transparent)',
                     }}
                 />
 
                 <div
                     className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                     style={{
-                        boxShadow: '0 0 25px rgba(255, 255, 255, 0.15)',
+                        boxShadow: 'var(--theme-nav-shadow)',
                     }}
                 />
 
                 <svg
-                    className="w-4 h-4 text-white relative z-10 transition-transform duration-300 group-hover:rotate-[-5deg] group-hover:scale-110"
+                    className="w-4 h-4 text-theme-primary relative z-10 transition-transform duration-300 group-hover:rotate-[-5deg] group-hover:scale-110"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -63,7 +63,7 @@ export default function CTAButtons() {
                     />
                 </svg>
 
-                <span className="text-white font-medium text-sm relative z-10">Hire Me</span>
+                <span className="text-theme-primary font-medium text-sm relative z-10">Hire Me</span>
             </a>
         </div>
     );

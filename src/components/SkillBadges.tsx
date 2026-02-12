@@ -83,7 +83,7 @@ export default function SkillBadges() {
                 return (
                     <span
                         key={skill.name}
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-white/20 bg-white/5 text-white/70 text-xs hover:bg-white/10 transition-colors"
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-theme-badge-border bg-theme-badge-bg text-theme-badge-text text-xs hover:bg-theme-card-hover transition-colors"
                     >
                         <Icon className="w-3 h-3" />
                         {skill.name}
