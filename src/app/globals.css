@@ -2,6 +2,61 @@
 
 @import "tailwindcss";
 
+:root {
+  /* Page */
+  --theme-page-bg: #000000;
+  --theme-page-text: #f5f5f5;
+  /* Cards & surfaces */
+  --theme-card-bg: rgba(255, 255, 255, 0.05);
+  --theme-card-border: rgba(255, 255, 255, 0.1);
+  --theme-card-hover-bg: rgba(255, 255, 255, 0.07);
+  --theme-card-hover-border: rgba(255, 255, 255, 0.2);
+  /* Text hierarchy */
+  --theme-primary: rgba(255, 255, 255, 0.9);
+  --theme-secondary: rgba(255, 255, 255, 0.6);
+  --theme-muted: rgba(255, 255, 255, 0.4);
+  --theme-faint: rgba(255, 255, 255, 0.3);
+  /* Navbar */
+  --theme-nav-bg: rgba(255, 255, 255, 0.08);
+  --theme-nav-border: rgba(255, 255, 255, 0.1);
+  --theme-nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  /* Misc */
+  --theme-badge-bg: rgba(255, 255, 255, 0.05);
+  --theme-badge-border: rgba(255, 255, 255, 0.2);
+  --theme-badge-text: rgba(255, 255, 255, 0.7);
+  --theme-divider: rgba(255, 255, 255, 0.1);
+  --theme-underline: #ffffff;
+  --theme-avatar-shadow: 0 0 20px rgba(255, 255, 255, 0.2), 0 0 40px rgba(255, 255, 255, 0.1);
+  --theme-gradient-overlay: rgba(0, 0, 0, 1);
+  --theme-chess-filter: grayscale(100%) brightness(2);
+  --theme-icon-hover: #ffffff;
+}
+
+.light {
+  --theme-page-bg: #fafafa;
+  --theme-page-text: #1a1a1a;
+  --theme-card-bg: rgba(0, 0, 0, 0.03);
+  --theme-card-border: rgba(0, 0, 0, 0.1);
+  --theme-card-hover-bg: rgba(0, 0, 0, 0.06);
+  --theme-card-hover-border: rgba(0, 0, 0, 0.2);
+  --theme-primary: rgba(0, 0, 0, 0.9);
+  --theme-secondary: rgba(0, 0, 0, 0.6);
+  --theme-muted: rgba(0, 0, 0, 0.4);
+  --theme-faint: rgba(0, 0, 0, 0.25);
+  --theme-nav-bg: rgba(255, 255, 255, 0.75);
+  --theme-nav-border: rgba(0, 0, 0, 0.1);
+  --theme-nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --theme-badge-bg: rgba(0, 0, 0, 0.04);
+  --theme-badge-border: rgba(0, 0, 0, 0.15);
+  --theme-badge-text: rgba(0, 0, 0, 0.65);
+  --theme-divider: rgba(0, 0, 0, 0.1);
+  --theme-underline: #1a1a1a;
+  --theme-avatar-shadow: 0 0 20px rgba(0, 0, 0, 0.15), 0 0 40px rgba(0, 0, 0, 0.08);
+  --theme-gradient-overlay: rgba(250, 250, 250, 1);
+  --theme-chess-filter: grayscale(100%) brightness(0.3);
+  --theme-icon-hover: #000000;
+}
+
 @theme {
   /* Original colors */
   --color-bg-dark: #0a0a0a;
@@ -10,6 +65,23 @@
   --color-text: #f5f5f5;
   --color-text-dim: #c0c0c0;
   --color-text-muted: #888888;
+
+  --color-page: var(--theme-page-bg);
+  --color-page-text: var(--theme-page-text);
+  --color-theme-card: var(--theme-card-bg);
+  --color-theme-card-border: var(--theme-card-border);
+  --color-theme-card-hover: var(--theme-card-hover-bg);
+  --color-theme-card-hover-border: var(--theme-card-hover-border);
+  --color-theme-primary: var(--theme-primary);
+  --color-theme-secondary: var(--theme-secondary);
+  --color-theme-muted: var(--theme-muted);
+  --color-theme-faint: var(--theme-faint);
+  --color-theme-badge-bg: var(--theme-badge-bg);
+  --color-theme-badge-border: var(--theme-badge-border);
+  --color-theme-badge-text: var(--theme-badge-text);
+  --color-theme-divider: var(--theme-divider);
+  --color-theme-underline: var(--theme-underline);
+  --color-theme-icon-hover: var(--theme-icon-hover);
 
   /* Warm palette for 3D scene */
   --color-warm-yellow: #F4D03F;
@@ -277,7 +349,8 @@
 
 .animated-underline::after {
   content: '';
-  @apply absolute left-0 w-0 h-px bg-white;
+  @apply absolute left-0 w-0 h-px;
+  background-color: var(--theme-underline);
   bottom: -2px;
   transition: width 0.3s ease;
 }

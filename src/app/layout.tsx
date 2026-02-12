@@ -1,3 +1,4 @@
+import ThemeProvider from "@/components/ThemeProvider";
 import type { Metadata } from "next";
 import { Dancing_Script, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -34,9 +35,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${geistMono.variable} ${dancingScript.variable} antialiased`}>
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

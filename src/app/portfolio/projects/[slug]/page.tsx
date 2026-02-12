@@ -1,5 +1,6 @@
 'use client';
 
+import ThemeToggle from '@/components/ThemeToggle';
 import { projects } from '@/data/projects';
 import Link from 'next/link';
 import { notFound, useSearchParams } from 'next/navigation';
@@ -60,19 +61,19 @@ interface ProjectDetailPageProps {
 const statusStyles = {
     'Live': {
         dotColor: 'bg-emerald-400',
-        textColor: 'text-white/50',
+        textColor: 'text-theme-muted',
         text: 'Live',
         pulse: true,
     },
     'In Progress': {
         dotColor: 'bg-amber-400',
-        textColor: 'text-white/50',
+        textColor: 'text-theme-muted',
         text: 'In Progress',
         pulse: true,
     },
     'Open Source': {
         dotColor: 'bg-violet-400',
-        textColor: 'text-white/50',
+        textColor: 'text-theme-muted',
         text: 'Open Source',
         pulse: false,
     },
@@ -100,7 +101,7 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
     const headingFont = { fontFamily: "var(--font-geist-mono), 'Geist Mono', monospace", fontWeight: 600 };
 
     return (
-        <div className="min-h-screen bg-black text-[#f5f5f5] overflow-y-auto overflow-x-hidden" style={geistMonoFont}>
+        <div className="min-h-screen bg-page text-page-text overflow-y-auto overflow-x-hidden transition-colors duration-300" style={geistMonoFont}>
             <main
                 className="relative transition-all duration-700 ease-out"
                 style={{
@@ -113,22 +114,23 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                     <div
                         className="flex items-center gap-8 px-6 py-3 rounded-xl"
                         style={{
-                            background: 'rgba(255, 255, 255, 0.08)',
+                            background: 'var(--theme-nav-bg)',
                             backdropFilter: 'blur(20px)',
                             WebkitBackdropFilter: 'blur(20px)',
-                            border: '1px solid rgba(255, 255, 255, 0.1)',
-                            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+                            border: '1px solid var(--theme-nav-border)',
+                            boxShadow: 'var(--theme-nav-shadow)',
                         }}
                     >
                         <Link href="/" className="hover:scale-105 transition-transform">
                             <img src="/images/avatar.jpg" alt="Avatar" className="w-8 h-8 rounded-sm object-cover" />
                         </Link>
-                        <Link href="/portfolio#projects" className="text-sm text-white/60 hover:text-white transition-colors">
+                        <Link href="/portfolio#projects" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
                             projects
                         </Link>
-                        <Link href="/portfolio#blog" className="text-sm text-white/60 hover:text-white transition-colors">
+                        <Link href="/portfolio#blog" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
                             blog
                         </Link>
+                        <ThemeToggle />
                     </div>
                 </nav>
 
@@ -136,22 +138,17 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                     <div className="mb-8 flex items-center justify-between">
                         <Link
                             href={backLink}
-                            className="text-white/90 hover:text-white transition-colors inline-flex items-center gap-2 group"
+                            className="text-theme-primary hover:text-theme-icon-hover transition-colors inline-flex items-center gap-2 group"
                         >
                             <svg className="w-4 h-4 back-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
                             </svg>
                             <span className="text-2xl tracking-wider" style={headingFont}>Projects</span>
                         </Link>
-                        <div className="text-white/30">
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="4" strokeWidth={2} />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.364-5.364l-1.414 1.414M6.05 17.95l-1.414 1.414m12.728 0l-1.414-1.414M6.05 6.05L4.636 4.636" />
-                            </svg>
-                        </div>
+                        <ThemeToggle />
                     </div>
 
-                    <div className="rounded-xl overflow-hidden border border-white/10 mb-6 bg-white/5">
+                    <div className="rounded-xl overflow-hidden border border-theme-divider mb-6 bg-theme-card">
                         {project.videoUrl ? (
                             <video
                                 src={project.videoUrl}
@@ -169,8 +166,8 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                                 className="w-full aspect-video object-cover object-top"
                             />
                         ) : (
-                            <div className="w-full aspect-video bg-white/10 flex items-center justify-center">
-                                <span className="text-white/30">No preview available</span>
+                            <div className="w-full aspect-video bg-theme-card flex items-center justify-center">
+                                <span className="text-theme-faint">No preview available</span>
                             </div>
                         )}
                     </div>
@@ -181,7 +178,7 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                                 href={project.githubUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm group"
+                                className="flex items-center gap-2 text-theme-badge-text hover:text-theme-primary transition-colors text-sm group"
                             >
                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
@@ -194,7 +191,7 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                                 href={project.liveUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm group"
+                                className="flex items-center gap-2 text-theme-badge-text hover:text-theme-primary transition-colors text-sm group"
                             >
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <circle cx="12" cy="12" r="10" strokeWidth={1.5} />
@@ -209,7 +206,7 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                                     href={project.postUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-2 text-white/70 hover:text-white transition-colors text-sm group"
+                                    className="flex items-center gap-2 text-theme-badge-text hover:text-theme-primary transition-colors text-sm group"
                                 >
                                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -217,7 +214,7 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                                     <span className="animated-underline">Post</span>
                                 </a>
                             ) : (
-                                <span className="flex items-center gap-2 text-white/30 text-sm cursor-not-allowed">
+                                <span className="flex items-center gap-2 text-theme-faint text-sm cursor-not-allowed">
                                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                                     </svg>
@@ -227,30 +224,30 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                         )}
                     </div>
 
-                    <div className="border-t border-white/10 mb-8"></div>
+                    <div className="border-t border-theme-divider mb-8"></div>
 
                     <div className="flex items-center justify-between mb-4">
-                        <h1 className="text-2xl text-white" style={headingFont}>{project.title}</h1>
+                        <h1 className="text-2xl text-theme-primary" style={headingFont}>{project.title}</h1>
                         <span className={`text-xs ${statusStyle.textColor} flex items-center gap-1.5`}>
                             <span className={`w-1.5 h-1.5 ${statusStyle.dotColor} rounded-full ${statusStyle.pulse ? 'animate-pulse' : ''}`}></span>
                             {statusStyle.text}
                         </span>
                     </div>
 
-                    <div className="text-white/50 text-sm leading-relaxed mb-12">
+                    <div className="text-theme-muted text-sm leading-relaxed mb-12">
                         <p>{project.description}</p>
                     </div>
                     <div className="mb-12">
-                        <h3 className="text-sm text-white/40 uppercase tracking-wider mb-4" style={headingFont}>Stack</h3>
+                        <h3 className="text-sm text-theme-muted uppercase tracking-wider mb-4" style={headingFont}>Stack</h3>
                         <div className="flex flex-wrap gap-3">
                             {project.techStack.map((tech) => {
                                 const Icon = techIcons[tech];
                                 return (
                                     <span
                                         key={tech}
-                                        className="text-sm px-4 py-2 bg-white/5 text-white/80 rounded-lg border border-white/10 flex items-center gap-2"
+                                        className="text-sm px-4 py-2 bg-theme-card text-theme-badge-text rounded-lg border border-theme-divider flex items-center gap-2"
                                     >
-                                        {Icon ? <Icon className="w-4 h-4 text-white/60" /> : <span className="text-white/40">⚙</span>}
+                                        {Icon ? <Icon className="w-4 h-4 text-theme-secondary" /> : <span className="text-theme-muted">⚙</span>}
                                         {tech}
                                     </span>
                                 );

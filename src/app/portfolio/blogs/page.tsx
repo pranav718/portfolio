@@ -1,6 +1,7 @@
 'use client';
 
 import BlogCard from '@/components/BlogCard';
+import ThemeToggle from '@/components/ThemeToggle';
 import { blogs } from '@/data/blogs';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -17,7 +18,7 @@ export default function BlogsPage() {
     const geistMonoFont = { fontFamily: "var(--font-geist-mono), 'Geist Mono', monospace" };
 
     return (
-        <div className="min-h-screen bg-black text-[#f5f5f5] overflow-y-auto overflow-x-hidden" style={geistMonoFont}>
+        <div className="min-h-screen bg-page text-page-text overflow-y-auto overflow-x-hidden transition-colors duration-300" style={geistMonoFont}>
             <main
                 className="relative transition-all duration-700 ease-out"
                 style={{
@@ -31,28 +32,29 @@ export default function BlogsPage() {
                     <div
                         className="flex items-center gap-8 px-6 py-3 rounded-xl"
                         style={{
-                            background: 'rgba(255, 255, 255, 0.08)',
+                            background: 'var(--theme-nav-bg)',
                             backdropFilter: 'blur(20px)',
                             WebkitBackdropFilter: 'blur(20px)',
-                            border: '1px solid rgba(255, 255, 255, 0.1)',
-                            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+                            border: '1px solid var(--theme-nav-border)',
+                            boxShadow: 'var(--theme-nav-shadow)',
                         }}
                     >
                         <Link href="/" className="hover:scale-105 transition-transform">
                             <img src="/images/avatar.jpg" alt="Avatar" className="w-8 h-8 rounded-sm object-cover" />
                         </Link>
-                        <Link href="/portfolio#projects" className="text-sm text-white/60 hover:text-white transition-colors">
+                        <Link href="/portfolio#projects" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
                             projects
                         </Link>
-                        <Link href="/portfolio#blog" className="text-sm text-white/60 hover:text-white transition-colors">
+                        <Link href="/portfolio#blog" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
                             blog
                         </Link>
+                        <ThemeToggle />
                     </div>
                 </nav>
 
                 <div className="max-w-2xl mx-auto px-6 pt-32 pb-20">
                     <div className="mb-10">
-                        <Link href="/portfolio#blog" className="text-white/90 hover:text-white transition-colors inline-flex items-center gap-2 group">
+                        <Link href="/portfolio#blog" className="text-theme-primary hover:text-theme-icon-hover transition-colors inline-flex items-center gap-2 group">
                             <svg className="w-4 h-4 back-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
                             </svg>
