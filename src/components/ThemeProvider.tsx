@@ -1,12 +1,12 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
 type Theme = 'dark' | 'light';
 
 interface ThemeContextType {
     theme: Theme;
-    toggleTheme: () => void;
+    toggleTheme: (x?: number, y?: number) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType>({
@@ -21,6 +21,8 @@ export function useTheme() {
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
     const [theme, setTheme] = useState<Theme>('dark');
     const [mounted, setMounted] = useState(false);
+    const overlayRef = useRef<HTMLDivElement>(null);
+    const animatingRef = useRef(false);
 
     useEffect(() => {
         const saved = localStorage.getItem('theme') as Theme | null;
@@ -31,14 +33,73 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
         setMounted(true);
     }, []);
 
-    const toggleTheme = () => {
+    const toggleTheme = (x?: number, y?: number) => {
+        if (animatingRef.current) return;
+        animatingRef.current = true;
+
         const next = theme === 'dark' ? 'light' : 'dark';
-        setTheme(next);
-        localStorage.setItem('theme', next);
-        document.documentElement.classList.toggle('light', next === 'light');
+        const overlay = overlayRef.current;
+
+        if (!overlay || x === undefined || y === undefined) {
+            setTheme(next);
+            localStorage.setItem('theme', next);
+            document.documentElement.classList.toggle('light', next === 'light');
+            animatingRef.current = false;
+            return;
+        }
+
+        overlay.getAnimations().forEach(a => a.cancel());
+
+        const maxRadius = Math.hypot(
+            Math.max(x, window.innerWidth - x),
+            Math.max(y, window.innerHeight - y)
+        );
+
+        overlay.style.backgroundColor = next === 'light' ? '#fafafa' : '#000000';
+        overlay.style.opacity = '1';
+        overlay.style.clipPath = `circle(0px at ${x}px ${y}px)`;
+        overlay.style.display = 'block';
+        overlay.offsetHeight;
+
+        const expandAnim = overlay.animate(
+            [
+                { clipPath: `circle(0px at ${x}px ${y}px)` },
+                { clipPath: `circle(${maxRadius}px at ${x}px ${y}px)` },
+            ],
+            { duration: 500, easing: 'ease-in-out' }
+        );
+
+        const switchTimer = setTimeout(() => {
+            setTheme(next);
+            localStorage.setItem('theme', next);
+            document.documentElement.classList.toggle('light', next === 'light');
+        }, 300);
+
+        expandAnim.onfinish = () => {
+            overlay.style.clipPath = `circle(${maxRadius}px at ${x}px ${y}px)`;
+
+            const fadeAnim = overlay.animate(
+                [{ opacity: '1' }, { opacity: '0' }],
+                { duration: 200, easing: 'ease-out' }
+            );
+
+            fadeAnim.onfinish = () => {
+                overlay.style.display = 'none';
+                overlay.style.clipPath = '';
+                overlay.style.opacity = '';
+                animatingRef.current = false;
+            };
+        };
+
+        expandAnim.oncancel = () => {
+            clearTimeout(switchTimer);
+            overlay.style.display = 'none';
+            overlay.style.clipPath = '';
+            overlay.style.opacity = '';
+            animatingRef.current = false;
+        };
     };
 
-    // Prevent flash of wrong theme
     if (!mounted) {
         return <>{children}</>;
     }
@@ -46,6 +107,16 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
             {children}
+            <div
+                ref={overlayRef}
+                style={{
+                    position: 'fixed',
+                    inset: 0,
+                    zIndex: 99999,
+                    pointerEvents: 'none',
+                    display: 'none',
+                }}
+            />
         </ThemeContext.Provider>
     );
 }

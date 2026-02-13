@@ -6,9 +6,16 @@ export default function ThemeToggle() {
     const { theme, toggleTheme } = useTheme();
     const isLight = theme === 'light';
 
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+        toggleTheme(x, y);
+    };
+
     return (
         <button
-            onClick={toggleTheme}
+            onClick={handleClick}
             className="relative w-8 h-8 flex items-center justify-center rounded-lg text-theme-secondary hover:text-theme-primary transition-all duration-300 hover:bg-theme-card cursor-pointer"
             aria-label={`Switch to ${isLight ? 'dark' : 'light'} mode`}
             title={`Switch to ${isLight ? 'dark' : 'light'} mode`}

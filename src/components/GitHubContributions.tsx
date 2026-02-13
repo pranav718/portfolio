@@ -146,10 +146,10 @@ export default function GitHubContributions({ username }: GitHubContributionsPro
         if (theme === 'light') {
             switch (level) {
                 case 0: return 'bg-[#ebedf0]';
-                case 1: return 'bg-[#c6d0da]';
-                case 2: return 'bg-[#8b9bab]';
-                case 3: return 'bg-[#586d7e]';
-                case 4: return 'bg-[#2d3e50] shadow-[0_0_6px_rgba(0,0,0,0.2)]';
+                case 1: return 'bg-[#c0c0c0]';
+                case 2: return 'bg-[#8a8a8a]';
+                case 3: return 'bg-[#505050]';
+                case 4: return 'bg-[#1a1a1a]';
                 default: return 'bg-[#ebedf0]';
             }
         }
