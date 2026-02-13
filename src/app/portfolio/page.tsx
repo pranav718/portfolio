@@ -27,7 +27,7 @@ export default function PortfolioPage() {
 
     return (
         <SmoothScroll>
-            <div className="min-h-screen bg-page text-page-text overflow-y-auto overflow-x-hidden transition-colors duration-300" style={geistMonoFont}>
+            <div className="min-h-screen bg-page text-page-text overflow-y-auto overflow-x-hidden" style={geistMonoFont}>
                 <main
                     className="relative transition-all duration-700 ease-out"
                     style={{
