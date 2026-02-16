@@ -66,14 +66,14 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
                 { clipPath: `circle(0px at ${x}px ${y}px)` },
                 { clipPath: `circle(${maxRadius}px at ${x}px ${y}px)` },
             ],
-            { duration: 500, easing: 'ease-in-out' }
+            { duration: 800, easing: 'cubic-bezier(0.22, 0.61, 0.36, 1)' }
         );
 
         const switchTimer = setTimeout(() => {
             setTheme(next);
             localStorage.setItem('theme', next);
             document.documentElement.classList.toggle('light', next === 'light');
-        }, 300);
+        }, 480);
 
         expandAnim.onfinish = () => {
             overlay.style.clipPath = `circle(${maxRadius}px at ${x}px ${y}px)`;
