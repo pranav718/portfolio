@@ -18,7 +18,7 @@ export default function BlogsPage() {
     const geistMonoFont = { fontFamily: "var(--font-geist-mono), 'Geist Mono', monospace" };
 
     return (
-        <div className="min-h-screen bg-page text-page-text overflow-y-auto overflow-x-hidden" style={geistMonoFont}>
+        <div className="min-h-screen text-page-text overflow-y-auto overflow-x-hidden relative z-[2]" style={geistMonoFont}>
             <main
                 className="relative transition-all duration-700 ease-out"
                 style={{

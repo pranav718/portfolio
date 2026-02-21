@@ -112,7 +112,7 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
                 style={{
                     position: 'fixed',
                     inset: 0,
-                    zIndex: 99999,
+                    zIndex: 1,
                     pointerEvents: 'none',
                     display: 'none',
                 }}
