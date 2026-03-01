@@ -86,17 +86,22 @@ export default function Notebook({ isOpen, onOpen, lampOn }: NotebookProps) {
 
             <mesh
                 position={[0, 0.1, 0]}
-                onPointerEnter={() => {
+                onPointerEnter={(e) => {
+                    e.stopPropagation();
                     if (lampOn && !isOpen) {
                         setHovered(true);
                         document.body.style.cursor = 'pointer';
                     }
                 }}
-                onPointerLeave={() => {
+                onPointerLeave={(e) => {
+                    e.stopPropagation();
                     setHovered(false);
                     document.body.style.cursor = 'auto';
                 }}
-                onClick={handleOpen}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    handleOpen();
+                }}
             >
                 <boxGeometry args={[0.8, 0.3, 1.0]} />
                 <meshBasicMaterial transparent opacity={0} />
