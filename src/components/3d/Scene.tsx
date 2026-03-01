@@ -19,6 +19,8 @@ interface SceneProps {
     currentPage: number;
     isPlaying: boolean;
     onMusicToggle: () => void;
+    onBookshelfClick: () => void;
+    isBookshelfOpen: boolean;
 }
 
 export default function Scene({
@@ -29,17 +31,19 @@ export default function Scene({
     currentPage,
     isPlaying,
     onMusicToggle,
+    onBookshelfClick,
+    isBookshelfOpen,
 }: SceneProps) {
     return (
         <>
-            <CameraController isJournalOpen={notebookOpen} />
+            <CameraController isJournalOpen={notebookOpen} isBookshelfOpen={isBookshelfOpen} />
 
             <Lighting lampOn={lampOn} />
 
-            
+
             <Effects lampOn={lampOn} />
 
-            
+
             <mesh
                 rotation={[-Math.PI / 2, 0, 0]}
                 position={[0, 0, 0]}
@@ -49,7 +53,7 @@ export default function Scene({
                 <meshStandardMaterial color="#1a1512" />
             </mesh>
 
-            
+
             <Desk />
             <DeskLamp onPull={onLampPull} lampOn={lampOn} />
             <Notebook
@@ -60,7 +64,7 @@ export default function Scene({
             />
             <GlowingStars visible={true} />
             <VinylPlayer isPlaying={isPlaying} onToggle={onMusicToggle} lampOn={lampOn} />
-            <Bookshelf />
+            <Bookshelf lampOn={lampOn} onBookshelfClick={onBookshelfClick} />
             <Props />
         </>
     );

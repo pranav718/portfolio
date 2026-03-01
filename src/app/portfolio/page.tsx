@@ -49,11 +49,13 @@ export default function PortfolioPage() {
                             }}
                         >
                             <div className="relative nav-avatar-wrapper">
-                                <img
-                                    src="/images/avatar.jpg"
-                                    alt="Avatar"
-                                    className="w-8 h-8 rounded-sm object-cover cursor-pointer"
-                                />
+                                <Link href="/">
+                                    <img
+                                        src="/images/avatar.jpg"
+                                        alt="Avatar"
+                                        className="w-8 h-8 rounded-sm object-cover cursor-pointer"
+                                    />
+                                </Link>
                                 <div className="personal-space-tooltip absolute top-[90%] -translate-y-1/2 right-full z-[100]">
                                     <div className="pr-4">
                                         <Link

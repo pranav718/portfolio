@@ -7,9 +7,10 @@ import { useEffect } from 'react';
 
 interface CameraControllerProps {
     isJournalOpen: boolean;
+    isBookshelfOpen: boolean;
 }
 
-export default function CameraController({ isJournalOpen }: CameraControllerProps) {
+export default function CameraController({ isJournalOpen, isBookshelfOpen }: CameraControllerProps) {
     const { camera } = useThree();
 
     useEffect(() => {
@@ -29,6 +30,22 @@ export default function CameraController({ isJournalOpen }: CameraControllerProp
                 duration: 1.8,
                 ease: 'power2.inOut',
             });
+        } else if (isBookshelfOpen) {
+            const shelfPos = SCENE_POSITIONS.bookshelf;
+            gsap.to(camera.position, {
+                x: shelfPos[0] + 0.5,
+                y: 2.8,
+                z: 4.0,
+                duration: 1.2,
+                ease: 'power2.inOut',
+            });
+            gsap.to(camera.rotation, {
+                x: -0.25,
+                y: -0.1,
+                z: 0,
+                duration: 1.2,
+                ease: 'power2.inOut',
+            });
         } else {
             gsap.to(camera.position, {
                 x: 0,
@@ -45,7 +62,7 @@ export default function CameraController({ isJournalOpen }: CameraControllerProp
                 ease: 'power2.inOut',
             });
         }
-    }, [isJournalOpen, camera]);
+    }, [isJournalOpen, isBookshelfOpen, camera]);
 
     return null;
 }

@@ -1,9 +1,14 @@
 'use client';
 
 import { SCENE_POSITIONS } from '@/utils/constants';
-import { useGLTF } from '@react-three/drei';
-import { Suspense, useEffect, useRef } from 'react';
+import { Html, useGLTF } from '@react-three/drei';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+
+interface BookshelfProps {
+    lampOn: boolean;
+    onBookshelfClick: () => void;
+}
 
 function BookshelfModel() {
     const { scene } = useGLTF('/models/bookshelf.glb');
@@ -38,12 +43,50 @@ function FallbackBookshelf() {
     );
 }
 
-export default function Bookshelf() {
+export default function Bookshelf({ lampOn, onBookshelfClick }: BookshelfProps) {
+    const [hovered, setHovered] = useState(false);
+
+    const handleClick = () => {
+        if (!lampOn) return;
+        onBookshelfClick();
+    };
+
     return (
         <group position={SCENE_POSITIONS.bookshelf}>
             <Suspense fallback={<FallbackBookshelf />}>
                 <BookshelfModel />
             </Suspense>
+
+            <mesh
+                position={[0, 1, 0.2]}
+                onPointerEnter={() => {
+                    if (lampOn) {
+                        setHovered(true);
+                        document.body.style.cursor = 'pointer';
+                    }
+                }}
+                onPointerLeave={() => {
+                    setHovered(false);
+                    document.body.style.cursor = 'auto';
+                }}
+                onClick={handleClick}
+            >
+                <boxGeometry args={[1.6, 2.2, 0.6]} />
+                <meshBasicMaterial transparent opacity={0} />
+            </mesh>
+
+            {lampOn && hovered && (
+                <Html position={[0, 2.2, 0.2]} center>
+                    <div
+                        className="bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none border border-yellow-400/50 shadow-xl"
+                        style={{
+                            animation: 'fadeIn 0.2s ease-out forwards',
+                        }}
+                    >
+                        My Reading List
+                    </div>
+                </Html>
+            )}
         </group>
     );
 }

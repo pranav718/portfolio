@@ -2,6 +2,7 @@
 
 import Scene from '@/components/3d/Scene';
 import AudioControls from '@/components/ui/AudioControls';
+import BookViewer from '@/components/ui/BookViewer';
 import HelpOverlay from '@/components/ui/HelpOverlay';
 import InkBleedTransition from '@/components/ui/InkBleedTransition';
 import LoadingScreen from '@/components/ui/LoadingScreen';
@@ -22,6 +23,7 @@ export default function Home() {
 
   const [showHelp, setShowHelp] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [bookshelfOpen, setBookshelfOpen] = useState(false);
 
   useEffect(() => {
     setNotebookOpen(false);
@@ -68,13 +70,21 @@ export default function Home() {
     setIsPlaying(!isPlaying);
   };
 
+  const handleBookshelfClick = () => {
+    setBookshelfOpen(true);
+  };
+
+  const handleBookshelfClose = () => {
+    setBookshelfOpen(false);
+  };
+
   if (isMobile) {
     return <MobileWarning />;
   }
 
   return (
     <main className="w-full h-screen bg-[#0a0a0a] canvas-container">
-        
+
       <Canvas
         shadows
         camera={{
@@ -97,14 +107,16 @@ export default function Home() {
             currentPage={currentPage}
             isPlaying={isPlaying}
             onMusicToggle={handleMusicToggle}
+            onBookshelfClick={handleBookshelfClick}
+            isBookshelfOpen={bookshelfOpen}
           />
         </Suspense>
       </Canvas>
 
-      
+
       <LoadingScreen />
 
-      
+
       {showHelp && !lampOn && (
         <HelpOverlay onDismiss={() => setShowHelp(false)} />
       )}
@@ -117,6 +129,8 @@ export default function Home() {
         isMuted={isMuted}
         onMuteToggle={() => setIsMuted(!isMuted)}
       />
+
+      <BookViewer isOpen={bookshelfOpen} onClose={handleBookshelfClose} />
 
       <InkBleedTransition isActive={isTransitioning} />
     </main>
