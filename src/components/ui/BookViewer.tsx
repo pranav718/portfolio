@@ -8,31 +8,22 @@ interface BookViewerProps {
     onClose: () => void;
 }
 
-function BookCard({ book, index, delayBase }: { book: { title: string; author: string; genre: string; cover: string }; index: number; delayBase: number }) {
-    const genreColors: Record<string, { bg: string[]; dark: string[]; accent: string }> = {
-        literature: {
-            bg: ['#4A2D2D', '#3D2D4A', '#2D3A2D'],
-            dark: ['#2E1A1A', '#261A2E', '#1A251A'],
-            accent: '#D4A574',
-        },
-        tech: {
-            bg: ['#2D3A4A', '#2D4A4A', '#1E3A5F'],
-            dark: ['#1A252E', '#1A2E2E', '#0F2440'],
-            accent: '#7EB8DA',
-        },
-    };
-
-    const colors = genreColors[book.genre] || genreColors.literature;
-
+function BookCard({ book, index, delayBase }: { book: { title: string; author: string; genre: string; cover: string; goodreadsUrl: string }; index: number; delayBase: number }) {
     return (
-        <div
-            className="flex-shrink-0 group/book cursor-default"
-            style={{ animation: `bookFadeIn 0.4s ease-out ${delayBase + index * 0.1}s both` }}
+        <a
+            href={book.goodreadsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group/book flex flex-col items-center no-underline"
+            style={{
+                animation: `bookFadeIn 0.4s ease-out ${delayBase + index * 0.1}s both`,
+                textDecoration: 'none',
+            }}
         >
             <div
-                className="w-[72px] h-[108px] rounded overflow-hidden transition-transform duration-200 group-hover/book:scale-105 group-hover/book:-translate-y-1 relative"
+                className="w-[78px] h-[112px] rounded overflow-hidden transition-transform duration-200 group-hover/book:scale-105 group-hover/book:-translate-y-1 relative"
                 style={{
-                    boxShadow: '3px 3px 12px rgba(0,0,0,0.3), -1px -1px 4px rgba(255,255,255,0.15)',
+                    boxShadow: '4px 4px 14px rgba(0,0,0,0.3), -1px -1px 4px rgba(255,255,255,0.12)',
                 }}
             >
                 <img
@@ -40,31 +31,24 @@ function BookCard({ book, index, delayBase }: { book: { title: string; author: s
                     alt={book.title}
                     className="w-full h-full object-cover"
                 />
-                <div
-                    className="absolute bottom-0 left-0 right-0 py-0.5 text-center"
-                    style={{
-                        background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
-                    }}
-                >
-                    <span
-                        className="text-[6px] uppercase tracking-[0.12em] font-medium"
-                        style={{ color: colors.accent }}
-                    >
-                        {book.genre}
-                    </span>
-                </div>
             </div>
             <p
-                className="text-[10px] mt-1.5 text-center leading-tight"
+                className="text-center"
                 style={{
-                    color: '#6D4C41',
-                    maxWidth: '72px',
-                    fontFamily: "var(--font-dancing), 'Dancing Script', cursive",
+                    color: '#777',
+                    maxWidth: '86px',
+                    marginTop: '7px',
+                    fontSize: '10px',
+                    fontWeight: 500,
+                    letterSpacing: '0.06em',
+                    textTransform: 'uppercase',
+                    lineHeight: 1.3,
+                    fontFamily: "var(--font-geist-mono), 'Geist Mono', monospace",
                 }}
             >
                 {book.author}
             </p>
-        </div>
+        </a>
     );
 }
 
@@ -114,12 +98,13 @@ export default function BookViewer({ isOpen, onClose }: BookViewerProps) {
                 onClick={(e) => e.stopPropagation()}
             >
                 <div
-                    className="relative rounded-2xl px-7 py-6 overflow-hidden"
+                    className="relative rounded-2xl px-8 py-7 overflow-hidden"
                     style={{
                         background: 'linear-gradient(145deg, #FFF8E7 0%, #F5E6C8 40%, #EDD9B3 100%)',
                         boxShadow: `
-                            0 0 40px rgba(244, 208, 63, 0.15),
-                            0 20px 60px rgba(0, 0, 0, 0.4),
+                            0 8px 40px rgba(0, 0, 0, 0.25),
+                            0 0 40px rgba(244, 208, 63, 0.12),
+                            0 24px 70px rgba(0, 0, 0, 0.35),
                             inset 0 1px 0 rgba(255, 255, 255, 0.5),
                             inset 0 -1px 0 rgba(0, 0, 0, 0.05)
                         `,
@@ -135,27 +120,42 @@ export default function BookViewer({ isOpen, onClose }: BookViewerProps) {
 
                     <button
                         onClick={onClose}
-                        className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-full transition-all z-10 hover:bg-black/5"
+                        className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-full transition-all duration-150 z-10"
                         style={{ color: '#8B7355' }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.06)';
+                            e.currentTarget.style.color = '#5D4037';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = 'transparent';
+                            e.currentTarget.style.color = '#8B7355';
+                        }}
                     >
                         <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                             <path d="M2 2L12 12M12 2L2 12" />
                         </svg>
                     </button>
 
-                    {/* Books I've Read */}
                     <div className="relative z-[1] mb-6">
                         <h3
-                            className="text-xl mb-4"
                             style={{
                                 fontFamily: "var(--font-dancing), 'Dancing Script', cursive",
                                 color: '#3E2723',
-                                letterSpacing: '0.5px',
+                                fontSize: '22px',
+                                letterSpacing: '0.02em',
+                                lineHeight: 1.6,
+                                marginBottom: '10px',
                             }}
                         >
-                            some books i&apos;ve read:
+                            books i&apos;ve read:
                         </h3>
-                        <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+                        <div
+                            style={{
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(auto-fill, minmax(86px, 1fr))',
+                                gap: '16px',
+                            }}
+                        >
                             {booksRead.map((book, i) => (
                                 <BookCard key={i} book={book} index={i} delayBase={0.1} />
                             ))}
@@ -163,38 +163,52 @@ export default function BookViewer({ isOpen, onClose }: BookViewerProps) {
                     </div>
 
                     <div
-                        className="w-full h-px mb-5"
                         style={{
-                            background: 'linear-gradient(90deg, transparent, rgba(139, 115, 85, 0.35), transparent)',
+                            width: '100%',
+                            height: '1px',
+                            background: 'linear-gradient(90deg, transparent, rgba(0,0,0,0.08), transparent)',
+                            marginBottom: '24px',
                         }}
                     />
 
-                    {/* Reading Nowadays */}
                     <div className="relative z-[1]">
                         <h3
-                            className="text-xl mb-4"
                             style={{
                                 fontFamily: "var(--font-dancing), 'Dancing Script', cursive",
                                 color: '#3E2723',
-                                letterSpacing: '0.5px',
+                                fontSize: '22px',
+                                letterSpacing: '0.02em',
+                                lineHeight: 1.6,
+                                marginBottom: '10px',
                             }}
                         >
                             reading nowadays:
                         </h3>
-                        <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+                        <div
+                            style={{
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(auto-fill, minmax(86px, 1fr))',
+                                gap: '16px',
+                            }}
+                        >
                             {currentlyReading.map((book, i) => (
                                 <BookCard key={i} book={book} index={i} delayBase={0.3} />
                             ))}
                         </div>
+
                         <p
-                            className="text-sm mt-4 leading-relaxed"
                             style={{
                                 fontFamily: "var(--font-dancing), 'Dancing Script', cursive",
                                 color: '#8D6E63',
+                                fontSize: '15px',
+                                lineHeight: 1.6,
+                                marginTop: '24px',
+                                paddingTop: '16px',
+                                borderTop: '1px solid rgba(0,0,0,0.08)',
                                 animation: 'bookFadeIn 0.4s ease-out 0.5s both',
                             }}
                         >
-                            (there&apos;s many more but still, if you&apos;ve got some reccs, dm{' '}
+                            ( there&apos;s many more that i&apos; haven&apos;t added yet, if you&apos;ve got some reccs, dm{' '}
                             <a
                                 href="https://x.com/knightkun__"
                                 target="_blank"
@@ -205,10 +219,7 @@ export default function BookViewer({ isOpen, onClose }: BookViewerProps) {
                                 onMouseLeave={(e) => (e.currentTarget.style.color = '#5D4037')}
                             >
                                 @knightkun__
-                                <span className="text-xs"> on</span>
-                                <svg className="w-3 h-3 inline" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                                </svg>
+
                             </a>
                             )
                         </p>

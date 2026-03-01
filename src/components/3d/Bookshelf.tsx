@@ -7,6 +7,7 @@ import * as THREE from 'three';
 
 interface BookshelfProps {
     lampOn: boolean;
+    isBookshelfOpen: boolean;
     onBookshelfClick: () => void;
 }
 
@@ -43,11 +44,13 @@ function FallbackBookshelf() {
     );
 }
 
-export default function Bookshelf({ lampOn, onBookshelfClick }: BookshelfProps) {
+export default function Bookshelf({ lampOn, isBookshelfOpen, onBookshelfClick }: BookshelfProps) {
     const [hovered, setHovered] = useState(false);
 
     const handleClick = () => {
         if (!lampOn) return;
+        setHovered(false);
+        document.body.style.cursor = 'auto';
         onBookshelfClick();
     };
 
@@ -60,7 +63,7 @@ export default function Bookshelf({ lampOn, onBookshelfClick }: BookshelfProps) 
             <mesh
                 position={[0, 1, 0.2]}
                 onPointerEnter={() => {
-                    if (lampOn) {
+                    if (lampOn && !isBookshelfOpen) {
                         setHovered(true);
                         document.body.style.cursor = 'pointer';
                     }
@@ -75,7 +78,7 @@ export default function Bookshelf({ lampOn, onBookshelfClick }: BookshelfProps) 
                 <meshBasicMaterial transparent opacity={0} />
             </mesh>
 
-            {lampOn && hovered && (
+            {lampOn && hovered && !isBookshelfOpen && (
                 <Html position={[0, 2.2, 0.2]} center>
                     <div
                         className="bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none border border-yellow-400/50 shadow-xl"
