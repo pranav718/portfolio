@@ -45,17 +45,6 @@ export default function MobileWarning() {
                     >
                         github
                     </a>
-
-                    <a
-                        href="https://www.linkedin.com/in/pranav-ray-9ab54133b/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block w-full py-3 px-4 border border-[#333] text-[#c0c0c0]
-                       rounded-lg hover:border-[#555] hover:text-white transition-all
-                       no-underline"
-                    >
-                        linkedin
-                    </a>
                 </div>
             </div>
         </div>

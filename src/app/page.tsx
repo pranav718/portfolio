@@ -3,13 +3,13 @@
 import Scene from '@/components/3d/Scene';
 import AudioControls from '@/components/ui/AudioControls';
 import BookViewer from '@/components/ui/BookViewer';
-import HelpOverlay from '@/components/ui/HelpOverlay';
 import InkBleedTransition from '@/components/ui/InkBleedTransition';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import MobileWarning from '@/components/ui/MobileWarning';
+import OnboardingGuide from '@/components/ui/OnboardingGuide';
 import { CAMERA } from '@/utils/constants';
 import { Canvas } from '@react-three/fiber';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 
 export default function Home() {
   const [lampOn, setLampOn] = useState(false);
@@ -21,7 +21,7 @@ export default function Home() {
   const [volume, setVolume] = useState(60);
   const [isMuted, setIsMuted] = useState(false);
 
-  const [showHelp, setShowHelp] = useState(true);
+  const [onboardingStep, setOnboardingStep] = useState<'landing' | 'lamp' | 'hints' | null>('landing');
   const [isMobile, setIsMobile] = useState(false);
   const [bookshelfOpen, setBookshelfOpen] = useState(false);
 
@@ -41,7 +41,7 @@ export default function Home() {
 
     const hasVisited = localStorage.getItem('portfolio-visited');
     if (hasVisited) {
-      setShowHelp(false);
+      setOnboardingStep('lamp');
     }
 
     return () => window.removeEventListener('resize', checkMobile);
@@ -51,7 +51,9 @@ export default function Home() {
     setLampOn(!lampOn);
     if (!lampOn) {
       localStorage.setItem('portfolio-visited', 'true');
-      setShowHelp(false);
+      if (onboardingStep === 'lamp') {
+        setOnboardingStep('hints');
+      }
     }
     if (lampOn) {
       setNotebookOpen(false);
@@ -77,6 +79,14 @@ export default function Home() {
   const handleBookshelfClose = () => {
     setBookshelfOpen(false);
   };
+
+  const handleEnterSpace = () => {
+    setOnboardingStep('lamp');
+  };
+
+  const handleHintsDone = useCallback(() => {
+    setOnboardingStep(null);
+  }, []);
 
   if (isMobile) {
     return <MobileWarning />;
@@ -109,17 +119,18 @@ export default function Home() {
             onMusicToggle={handleMusicToggle}
             onBookshelfClick={handleBookshelfClick}
             isBookshelfOpen={bookshelfOpen}
+            isOnboarding={onboardingStep === 'hints'}
           />
         </Suspense>
       </Canvas>
 
-
       <LoadingScreen />
 
-
-      {showHelp && !lampOn && (
-        <HelpOverlay onDismiss={() => setShowHelp(false)} />
-      )}
+      <OnboardingGuide
+        step={onboardingStep}
+        onEnterSpace={handleEnterSpace}
+        onHintsDone={handleHintsDone}
+      />
 
       <AudioControls
         isPlaying={isPlaying}
