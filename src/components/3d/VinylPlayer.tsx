@@ -10,6 +10,7 @@ interface VinylPlayerProps {
     isPlaying: boolean;
     onToggle: () => void;
     lampOn: boolean;
+    isOnboarding: boolean;
 }
 
 function VinylModel({ isPlaying }: { isPlaying: boolean }) {
@@ -50,7 +51,7 @@ function FallbackVinyl() {
     );
 }
 
-export default function VinylPlayer({ isPlaying, onToggle, lampOn }: VinylPlayerProps) {
+export default function VinylPlayer({ isPlaying, onToggle, lampOn, isOnboarding }: VinylPlayerProps) {
     const groupRef = useRef<THREE.Group>(null);
     const [hovered, setHovered] = useState(false);
 
@@ -68,7 +69,7 @@ export default function VinylPlayer({ isPlaying, onToggle, lampOn }: VinylPlayer
             <mesh
                 position={[0, 0.1, 0]}
                 onPointerEnter={() => {
-                    if (lampOn) {
+                    if (lampOn && !isOnboarding) {
                         setHovered(true);
                         document.body.style.cursor = 'pointer';
                     }
@@ -83,7 +84,7 @@ export default function VinylPlayer({ isPlaying, onToggle, lampOn }: VinylPlayer
                 <meshBasicMaterial transparent opacity={0} />
             </mesh>
 
-            {lampOn && hovered && (
+            {lampOn && hovered && !isOnboarding && (
                 <Html position={[0, 0.3, 0.15]} center>
                     <div
                         className="bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none border border-yellow-400/50 shadow-xl"

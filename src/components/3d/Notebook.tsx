@@ -12,6 +12,7 @@ interface NotebookProps {
     onOpen: () => void;
     lampOn: boolean;
     currentPage: number;
+    isOnboarding: boolean;
 }
 
 function NotebookModel() {
@@ -38,7 +39,7 @@ function NotebookModel() {
     );
 }
 
-export default function Notebook({ isOpen, onOpen, lampOn }: NotebookProps) {
+export default function Notebook({ isOpen, onOpen, lampOn, isOnboarding }: NotebookProps) {
     const groupRef = useRef<THREE.Group>(null);
     const [hovered, setHovered] = useState(false);
 
@@ -88,7 +89,7 @@ export default function Notebook({ isOpen, onOpen, lampOn }: NotebookProps) {
                 position={[0, 0.1, 0]}
                 onPointerEnter={(e) => {
                     e.stopPropagation();
-                    if (lampOn && !isOpen) {
+                    if (lampOn && !isOpen && !isOnboarding) {
                         setHovered(true);
                         document.body.style.cursor = 'pointer';
                     }
@@ -107,7 +108,7 @@ export default function Notebook({ isOpen, onOpen, lampOn }: NotebookProps) {
                 <meshBasicMaterial transparent opacity={0} />
             </mesh>
 
-            {lampOn && !isOpen && hovered && (
+            {lampOn && !isOpen && hovered && !isOnboarding && (
                 <Html position={[0, 0.25, 0]} center>
                     <div
                         className="bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none border border-yellow-400/50 shadow-xl animate-fade-in"

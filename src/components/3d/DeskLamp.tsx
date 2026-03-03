@@ -9,6 +9,7 @@ import * as THREE from 'three';
 interface DeskLampProps {
     onPull: () => void;
     lampOn: boolean;
+    isOnboarding: boolean;
 }
 
 function LampModel({ lampOn }: { lampOn: boolean }) {
@@ -52,7 +53,7 @@ function LampModel({ lampOn }: { lampOn: boolean }) {
     );
 }
 
-export default function DeskLamp({ onPull, lampOn }: DeskLampProps) {
+export default function DeskLamp({ onPull, lampOn, isOnboarding }: DeskLampProps) {
     const groupRef = useRef<THREE.Group>(null);
     const [hovered, setHovered] = useState(false);
 
@@ -73,29 +74,36 @@ export default function DeskLamp({ onPull, lampOn }: DeskLampProps) {
 
             <mesh
                 position={[0, 0.4, 0]}
-                onPointerEnter={() => {
+                onPointerEnter={(e) => {
+                    e.stopPropagation();
                     setHovered(true);
                     document.body.style.cursor = 'pointer';
                 }}
-                onPointerLeave={() => {
+                onPointerLeave={(e) => {
+                    e.stopPropagation();
                     setHovered(false);
                     document.body.style.cursor = 'auto';
                 }}
-                onClick={handleClick}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    handleClick();
+                }}
             >
                 <boxGeometry args={[0.6, 1.0, 0.5]} />
                 <meshBasicMaterial transparent opacity={0} />
             </mesh>
 
-            <Html position={[0, 0.4, 0.2]} center>
-                <div
-                    className={`bg-black/95 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none transition-all duration-200 border shadow-xl ${hovered ? (lampOn ? 'border-red-400 bg-red-900/70' : 'border-yellow-400 bg-yellow-900/70') + ' scale-110 opacity-100' : 'border-white/10 opacity-0'}`}
-                >
-                    {hovered
-                        ? (lampOn ? 'Turn Off' : 'Turn On')
-                        : ''}
-                </div>
-            </Html>
+            {!isOnboarding && (
+                <Html position={[0, 0.4, 0.2]} center>
+                    <div
+                        className={`bg-black/95 text-white px-3 py-1.5 rounded-lg text-xs whitespace-nowrap pointer-events-none transition-all duration-200 border shadow-xl ${hovered ? (lampOn ? 'border-red-400 bg-red-900/70' : 'border-yellow-400 bg-yellow-900/70') + ' scale-110 opacity-100' : 'border-white/10 opacity-0'}`}
+                    >
+                        {hovered
+                            ? (lampOn ? 'Turn Off' : 'Turn On')
+                            : ''}
+                    </div>
+                </Html>
+            )}
         </group>
     );
 }

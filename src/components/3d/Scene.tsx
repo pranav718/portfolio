@@ -21,6 +21,7 @@ interface SceneProps {
     onMusicToggle: () => void;
     onBookshelfClick: () => void;
     isBookshelfOpen: boolean;
+    isOnboarding: boolean;
 }
 
 export default function Scene({
@@ -33,6 +34,7 @@ export default function Scene({
     onMusicToggle,
     onBookshelfClick,
     isBookshelfOpen,
+    isOnboarding,
 }: SceneProps) {
     return (
         <>
@@ -40,9 +42,7 @@ export default function Scene({
 
             <Lighting lampOn={lampOn} />
 
-
             <Effects lampOn={lampOn} />
-
 
             <mesh
                 rotation={[-Math.PI / 2, 0, 0]}
@@ -53,18 +53,18 @@ export default function Scene({
                 <meshStandardMaterial color="#1a1512" />
             </mesh>
 
-
             <Desk />
-            <DeskLamp onPull={onLampPull} lampOn={lampOn} />
+            <DeskLamp onPull={onLampPull} lampOn={lampOn} isOnboarding={isOnboarding} />
             <Notebook
                 isOpen={notebookOpen}
                 onOpen={onNotebookOpen}
                 lampOn={lampOn}
                 currentPage={currentPage}
+                isOnboarding={isOnboarding}
             />
             <GlowingStars visible={true} />
-            <VinylPlayer isPlaying={isPlaying} onToggle={onMusicToggle} lampOn={lampOn} />
-            <Bookshelf lampOn={lampOn} isBookshelfOpen={isBookshelfOpen} onBookshelfClick={onBookshelfClick} />
+            <VinylPlayer isPlaying={isPlaying} onToggle={onMusicToggle} lampOn={lampOn} isOnboarding={isOnboarding} />
+            <Bookshelf lampOn={lampOn} isBookshelfOpen={isBookshelfOpen} onBookshelfClick={onBookshelfClick} isOnboarding={isOnboarding} />
             <Props />
         </>
     );

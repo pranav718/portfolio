@@ -9,6 +9,7 @@ interface BookshelfProps {
     lampOn: boolean;
     isBookshelfOpen: boolean;
     onBookshelfClick: () => void;
+    isOnboarding: boolean;
 }
 
 function BookshelfModel() {
@@ -44,7 +45,7 @@ function FallbackBookshelf() {
     );
 }
 
-export default function Bookshelf({ lampOn, isBookshelfOpen, onBookshelfClick }: BookshelfProps) {
+export default function Bookshelf({ lampOn, isBookshelfOpen, onBookshelfClick, isOnboarding }: BookshelfProps) {
     const [hovered, setHovered] = useState(false);
 
     const handleClick = () => {
@@ -63,7 +64,7 @@ export default function Bookshelf({ lampOn, isBookshelfOpen, onBookshelfClick }:
             <mesh
                 position={[0, 1, 0.2]}
                 onPointerEnter={() => {
-                    if (lampOn && !isBookshelfOpen) {
+                    if (lampOn && !isBookshelfOpen && !isOnboarding) {
                         setHovered(true);
                         document.body.style.cursor = 'pointer';
                     }
@@ -78,7 +79,7 @@ export default function Bookshelf({ lampOn, isBookshelfOpen, onBookshelfClick }:
                 <meshBasicMaterial transparent opacity={0} />
             </mesh>
 
-            {lampOn && hovered && !isBookshelfOpen && (
+            {lampOn && hovered && !isBookshelfOpen && !isOnboarding && (
                 <Html position={[0, 2.2, 0.2]} center>
                     <div
                         className="bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none border border-yellow-400/50 shadow-xl"
