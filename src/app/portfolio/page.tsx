@@ -53,7 +53,7 @@ export default function PortfolioPage() {
                                     <img
                                         src="/images/avatar.jpg"
                                         alt="Avatar"
-                                        className="w-8 h-8 rounded-sm object-cover cursor-pointer"
+                                        className="w-8 h-8 min-w-[32px] min-h-[32px] rounded-sm object-cover cursor-pointer shrink-0"
                                     />
                                 </Link>
                                 <div className="personal-space-tooltip absolute top-[90%] -translate-y-1/2 right-full z-[100]">
@@ -95,10 +95,10 @@ export default function PortfolioPage() {
                                     </div>
                                 </div>
                             </div>
-                            <Link href="#projects" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
+                            <Link href="/portfolio/projects" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
                                 projects
                             </Link>
-                            <Link href="#blog" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
+                            <Link href="/portfolio/blogs" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
                                 blog
                             </Link>
                             <ThemeToggle />

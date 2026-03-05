@@ -12,6 +12,7 @@ interface OnboardingGuideProps {
 export default function OnboardingGuide({ step, onEnterSpace, onHintsDone }: OnboardingGuideProps) {
     const [visible, setVisible] = useState(false);
     const [hintsVisible, setHintsVisible] = useState(false);
+    const [hintsFading, setHintsFading] = useState(false);
     const [dismissedHints, setDismissedHints] = useState<Set<string>>(new Set());
 
     useEffect(() => {
@@ -21,26 +22,28 @@ export default function OnboardingGuide({ step, onEnterSpace, onHintsDone }: Onb
         }
         if (step === 'hints') {
             setVisible(false);
+            setHintsFading(false);
             const t = setTimeout(() => setHintsVisible(true), 400);
             return () => clearTimeout(t);
         }
         setVisible(false);
         setHintsVisible(false);
+        setHintsFading(false);
     }, [step]);
 
     useEffect(() => {
-        if (step !== 'hints') return;
+        if (step !== 'hints' || !hintsVisible) return;
         const timeout = setTimeout(() => {
-            setHintsVisible(false);
-            setTimeout(onHintsDone, 400);
-        }, 10000);
+            setHintsFading(true);
+            setTimeout(onHintsDone, 1000);
+        }, 5000);
         return () => clearTimeout(timeout);
-    }, [step, onHintsDone]);
+    }, [step, hintsVisible, onHintsDone]);
 
     useEffect(() => {
         if (dismissedHints.size >= 3) {
-            setHintsVisible(false);
-            setTimeout(onHintsDone, 400);
+            setHintsFading(true);
+            setTimeout(onHintsDone, 1000);
         }
     }, [dismissedHints, onHintsDone]);
 
@@ -132,7 +135,7 @@ export default function OnboardingGuide({ step, onEnterSpace, onHintsDone }: Onb
                                 e.currentTarget.style.transform = 'translateY(0)';
                             }}
                         >
-                            view portfolio 
+                            view portfolio
                         </Link>
                     </div>
                 </div>
@@ -159,16 +162,6 @@ export default function OnboardingGuide({ step, onEnterSpace, onHintsDone }: Onb
                     >
                         click the lamp to light up the room
                     </p>
-                    <div
-                        className="mx-auto mt-3 animate-bounce"
-                        style={{
-                            width: 0,
-                            height: 0,
-                            borderLeft: '6px solid transparent',
-                            borderRight: '6px solid transparent',
-                            borderTop: '8px solid rgba(244, 208, 63, 0.5)',
-                        }}
-                    />
                 </div>
             </div>
         );
@@ -193,25 +186,27 @@ export default function OnboardingGuide({ step, onEnterSpace, onHintsDone }: Onb
             {
                 id: 'vinyl',
                 label: 'play some music',
-                top: '55%',
+                top: '45%',
                 left: '28%',
                 translateX: '-50%',
             },
         ];
 
         return (
-            <div className="fixed inset-0 z-40 pointer-events-none">
+            <div
+                className="fixed inset-0 z-40 pointer-events-none transition-opacity duration-[1000ms]"
+                style={{ opacity: hintsFading ? 0 : 1 }}
+            >
                 {hints.map((hint, i) => (
                     !dismissedHints.has(hint.id) && (
                         <div
                             key={hint.id}
-                            className="absolute pointer-events-auto cursor-pointer transition-all duration-500"
+                            className="absolute pointer-events-auto cursor-pointer transition-all duration-[600ms]"
                             style={{
                                 top: hint.top,
                                 left: hint.left,
-                                opacity: hintsVisible ? 1 : 0,
-                                transform: `translateX(${hint.translateX}) ${hintsVisible ? 'translateY(0)' : 'translateY(8px)'}`,
-                                animation: `bookFadeIn 0.5s ease-out ${0.2 + i * 0.15}s both`,
+                                transform: `translateX(${hint.translateX})`,
+                                animation: hintsVisible ? `bookFadeIn 2s ease-out ${0.2 + i * 0.3}s both` : 'none',
                             }}
                             onClick={() => dismissHint(hint.id)}
                         >

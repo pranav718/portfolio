@@ -39,13 +39,13 @@ export default function ProjectsPage() {
                             boxShadow: 'var(--theme-nav-shadow)',
                         }}
                     >
-                        <Link href="/" className="hover:scale-105 transition-transform">
-                            <img src="/images/avatar.jpg" alt="Avatar" className="w-8 h-8 rounded-sm object-cover" />
+                        <Link href="/portfolio" className="hover:scale-105 transition-transform">
+                            <img src="/images/avatar.jpg" alt="Avatar" className="w-8 h-8 min-w-[32px] min-h-[32px] rounded-sm object-cover shrink-0" />
                         </Link>
-                        <Link href="/portfolio#projects" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
+                        <Link href="/portfolio/projects" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
                             projects
                         </Link>
-                        <Link href="/portfolio#blog" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
+                        <Link href="/portfolio/blogs" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
                             blog
                         </Link>
                         <ThemeToggle />
@@ -54,7 +54,7 @@ export default function ProjectsPage() {
 
                 <div className="max-w-4xl mx-auto px-6 pt-32 pb-20">
                     <div className="mb-10">
-                        <Link href="/portfolio#projects" className="text-theme-primary hover:text-theme-icon-hover transition-colors inline-flex items-center gap-2 group">
+                        <Link href="/portfolio" className="text-theme-primary hover:text-theme-icon-hover transition-colors inline-flex items-center gap-2 group">
                             <svg className="w-4 h-4 back-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
                             </svg>

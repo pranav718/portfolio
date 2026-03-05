@@ -208,7 +208,7 @@ export default function BookViewer({ isOpen, onClose }: BookViewerProps) {
                                 animation: 'bookFadeIn 0.4s ease-out 0.5s both',
                             }}
                         >
-                            ( there&apos;s many more that i&apos; haven&apos;t added yet, if you&apos;ve got some reccs, dm{' '}
+                            ( i&apos;ve got many more to read, if you&apos;ve got some reccs, dm{' '}
                             <a
                                 href="https://x.com/knightkun__"
                                 target="_blank"

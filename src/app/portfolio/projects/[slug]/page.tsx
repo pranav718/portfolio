@@ -85,7 +85,7 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
     const [isLoaded, setIsLoaded] = useState(false);
     const searchParams = useSearchParams();
     const from = searchParams.get('from');
-    const backLink = from === 'home' ? '/portfolio#projects' : '/portfolio/projects';
+    const backLink = from === 'home' ? '/portfolio' : '/portfolio/projects';
 
     useEffect(() => {
         const timer = setTimeout(() => setIsLoaded(true), 100);
@@ -121,13 +121,13 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                             boxShadow: 'var(--theme-nav-shadow)',
                         }}
                     >
-                        <Link href="/" className="hover:scale-105 transition-transform">
-                            <img src="/images/avatar.jpg" alt="Avatar" className="w-8 h-8 rounded-sm object-cover" />
+                        <Link href="/portfolio" className="hover:scale-105 transition-transform">
+                            <img src="/images/avatar.jpg" alt="Avatar" className="w-8 h-8 min-w-[32px] min-h-[32px] rounded-sm object-cover shrink-0" />
                         </Link>
-                        <Link href="/portfolio#projects" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
+                        <Link href="/portfolio/projects" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
                             projects
                         </Link>
-                        <Link href="/portfolio#blog" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
+                        <Link href="/portfolio/blogs" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
                             blog
                         </Link>
                         <ThemeToggle />
