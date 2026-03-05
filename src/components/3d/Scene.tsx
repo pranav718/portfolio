@@ -8,6 +8,7 @@ import Effects from './Effects';
 import GlowingStars from './GlowingStars';
 import Lighting from './Lighting';
 import Notebook from './Notebook';
+import OrigamiCrane from './OrigamiCrane';
 import Props from './Props';
 import VinylPlayer from './VinylPlayer';
 
@@ -66,6 +67,7 @@ export default function Scene({
             <VinylPlayer isPlaying={isPlaying} onToggle={onMusicToggle} lampOn={lampOn} isOnboarding={isOnboarding} />
             <Bookshelf lampOn={lampOn} isBookshelfOpen={isBookshelfOpen} onBookshelfClick={onBookshelfClick} isOnboarding={isOnboarding} />
             <Props />
+            <OrigamiCrane visible={lampOn && !notebookOpen} />
         </>
     );
 }

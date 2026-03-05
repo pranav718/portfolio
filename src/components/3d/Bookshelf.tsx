@@ -80,7 +80,7 @@ export default function Bookshelf({ lampOn, isBookshelfOpen, onBookshelfClick, i
             </mesh>
 
             {lampOn && hovered && !isBookshelfOpen && !isOnboarding && (
-                <Html position={[0, 2.2, 0.2]} center>
+                <Html position={[0, 2.1, 0.2]} center>
                     <div
                         className="bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none border border-yellow-400/50 shadow-xl"
                         style={{

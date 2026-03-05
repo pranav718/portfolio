@@ -85,7 +85,7 @@ export default function VinylPlayer({ isPlaying, onToggle, lampOn, isOnboarding 
             </mesh>
 
             {lampOn && hovered && !isOnboarding && (
-                <Html position={[0, 0.3, 0.15]} center>
+                <Html position={[0, 0.70, 0]} center>
                     <div
                         className="bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none border border-yellow-400/50 shadow-xl"
                         style={{
