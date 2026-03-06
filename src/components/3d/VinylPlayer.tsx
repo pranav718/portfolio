@@ -8,7 +8,7 @@ import * as THREE from 'three';
 
 interface VinylPlayerProps {
     isPlaying: boolean;
-    onToggle: () => void;
+    onOpenPlayer: () => void;
     lampOn: boolean;
     isOnboarding: boolean;
 }
@@ -51,13 +51,13 @@ function FallbackVinyl() {
     );
 }
 
-export default function VinylPlayer({ isPlaying, onToggle, lampOn, isOnboarding }: VinylPlayerProps) {
+export default function VinylPlayer({ isPlaying, onOpenPlayer, lampOn, isOnboarding }: VinylPlayerProps) {
     const groupRef = useRef<THREE.Group>(null);
     const [hovered, setHovered] = useState(false);
 
     const handleClick = () => {
         if (!lampOn) return;
-        onToggle();
+        onOpenPlayer();
     };
 
     return (
@@ -92,7 +92,7 @@ export default function VinylPlayer({ isPlaying, onToggle, lampOn, isOnboarding 
                             animation: 'fadeIn 0.2s ease-out forwards',
                         }}
                     >
-                        {isPlaying ? '⏸ Pause Music' : 'Play Music'}
+                        {isPlaying ? '🎵 Open Music Player' : 'Play Music'}
                     </div>
                 </Html>
             )}

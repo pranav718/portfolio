@@ -6,6 +6,7 @@ import BookViewer from '@/components/ui/BookViewer';
 import InkBleedTransition from '@/components/ui/InkBleedTransition';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import MobileWarning from '@/components/ui/MobileWarning';
+import MusicPlayer from '@/components/ui/MusicPlayer';
 import OnboardingGuide from '@/components/ui/OnboardingGuide';
 import { CAMERA } from '@/utils/constants';
 import { Canvas } from '@react-three/fiber';
@@ -20,6 +21,7 @@ export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(60);
   const [isMuted, setIsMuted] = useState(false);
+  const [musicPlayerOpen, setMusicPlayerOpen] = useState(false);
 
   const [onboardingStep, setOnboardingStep] = useState<'landing' | 'lamp' | 'hints' | null>('landing');
   const [isMobile, setIsMobile] = useState(false);
@@ -116,7 +118,7 @@ export default function Home() {
             onNotebookOpen={handleNotebookOpen}
             currentPage={currentPage}
             isPlaying={isPlaying}
-            onMusicToggle={handleMusicToggle}
+            onOpenPlayer={() => setMusicPlayerOpen(true)}
             onBookshelfClick={handleBookshelfClick}
             isBookshelfOpen={bookshelfOpen}
             isOnboarding={onboardingStep === 'hints'}
@@ -135,6 +137,18 @@ export default function Home() {
       <AudioControls
         isPlaying={isPlaying}
         onToggle={handleMusicToggle}
+        volume={volume}
+        onVolumeChange={setVolume}
+        isMuted={isMuted}
+        onMuteToggle={() => setIsMuted(!isMuted)}
+        onOpenPlayer={() => setMusicPlayerOpen(true)}
+      />
+
+      <MusicPlayer
+        isOpen={musicPlayerOpen}
+        onClose={() => setMusicPlayerOpen(false)}
+        isPlaying={isPlaying}
+        onTogglePlay={handleMusicToggle}
         volume={volume}
         onVolumeChange={setVolume}
         isMuted={isMuted}

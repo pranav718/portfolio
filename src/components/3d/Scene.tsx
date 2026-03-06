@@ -19,7 +19,7 @@ interface SceneProps {
     onNotebookOpen: () => void;
     currentPage: number;
     isPlaying: boolean;
-    onMusicToggle: () => void;
+    onOpenPlayer: () => void;
     onBookshelfClick: () => void;
     isBookshelfOpen: boolean;
     isOnboarding: boolean;
@@ -32,7 +32,7 @@ export default function Scene({
     onNotebookOpen,
     currentPage,
     isPlaying,
-    onMusicToggle,
+    onOpenPlayer,
     onBookshelfClick,
     isBookshelfOpen,
     isOnboarding,
@@ -64,7 +64,7 @@ export default function Scene({
                 isOnboarding={isOnboarding}
             />
             <GlowingStars visible={true} />
-            <VinylPlayer isPlaying={isPlaying} onToggle={onMusicToggle} lampOn={lampOn} isOnboarding={isOnboarding} />
+            <VinylPlayer isPlaying={isPlaying} onOpenPlayer={onOpenPlayer} lampOn={lampOn} isOnboarding={isOnboarding} />
             <Bookshelf lampOn={lampOn} isBookshelfOpen={isBookshelfOpen} onBookshelfClick={onBookshelfClick} isOnboarding={isOnboarding} />
             <Props />
             <OrigamiCrane visible={lampOn && !notebookOpen} />
