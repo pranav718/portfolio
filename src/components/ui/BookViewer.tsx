@@ -1,6 +1,6 @@
 'use client';
 
-import { booksRead, currentlyReading } from '@/data/books';
+import { currentlyReading } from '@/data/books';
 import { useEffect, useState } from 'react';
 
 interface BookViewerProps {
@@ -136,40 +136,6 @@ export default function BookViewer({ isOpen, onClose }: BookViewerProps) {
                         </svg>
                     </button>
 
-                    <div className="relative z-[1] mb-6">
-                        <h3
-                            style={{
-                                fontFamily: "var(--font-dancing), 'Dancing Script', cursive",
-                                color: '#3E2723',
-                                fontSize: '22px',
-                                letterSpacing: '0.02em',
-                                lineHeight: 1.6,
-                                marginBottom: '10px',
-                            }}
-                        >
-                            books i&apos;ve read:
-                        </h3>
-                        <div
-                            style={{
-                                display: 'grid',
-                                gridTemplateColumns: 'repeat(auto-fill, minmax(86px, 1fr))',
-                                gap: '16px',
-                            }}
-                        >
-                            {booksRead.map((book, i) => (
-                                <BookCard key={i} book={book} index={i} delayBase={0.1} />
-                            ))}
-                        </div>
-                    </div>
-
-                    <div
-                        style={{
-                            width: '100%',
-                            height: '1px',
-                            background: 'linear-gradient(90deg, transparent, rgba(0,0,0,0.08), transparent)',
-                            marginBottom: '24px',
-                        }}
-                    />
 
                     <div className="relative z-[1]">
                         <h3
@@ -192,7 +158,7 @@ export default function BookViewer({ isOpen, onClose }: BookViewerProps) {
                             }}
                         >
                             {currentlyReading.map((book, i) => (
-                                <BookCard key={i} book={book} index={i} delayBase={0.3} />
+                                <BookCard key={i} book={book} index={i} delayBase={0.1} />
                             ))}
                         </div>
 
@@ -208,20 +174,7 @@ export default function BookViewer({ isOpen, onClose }: BookViewerProps) {
                                 animation: 'bookFadeIn 0.4s ease-out 0.5s both',
                             }}
                         >
-                            ( i&apos;ve got many more to read, if you&apos;ve got some reccs, dm{' '}
-                            <a
-                                href="https://x.com/knightkun__"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-0.5 transition-colors duration-200"
-                                style={{ color: '#5D4037', textDecoration: 'none' }}
-                                onMouseEnter={(e) => (e.currentTarget.style.color = '#8B4513')}
-                                onMouseLeave={(e) => (e.currentTarget.style.color = '#5D4037')}
-                            >
-                                @knightkun__
-
-                            </a>
-                            )
+                            I&apos;ll be adding the books I&apos;ve read here soon :D
                         </p>
                     </div>
 
