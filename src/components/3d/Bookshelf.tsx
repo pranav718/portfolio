@@ -87,7 +87,7 @@ export default function Bookshelf({ lampOn, isBookshelfOpen, onBookshelfClick, i
                             animation: 'fadeIn 0.2s ease-out forwards',
                         }}
                     >
-                        My Reading List
+                        Reading Nowadays
                     </div>
                 </Html>
             )}

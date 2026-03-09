@@ -171,7 +171,7 @@ export default function OnboardingGuide({ step, onEnterSpace, onHintsDone }: Onb
         const hints = [
             {
                 id: 'bookshelf',
-                label: 'check out the books i\'ve read',
+                label: 'what i\'m reading nowadays',
                 top: '28%',
                 left: '45%',
                 translateX: '-50%',
