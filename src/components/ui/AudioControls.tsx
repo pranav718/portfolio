@@ -4,11 +4,6 @@ import { motion } from 'framer-motion';
 
 interface AudioControlsProps {
     isPlaying: boolean;
-    onToggle: () => void;
-    volume: number;
-    onVolumeChange: (vol: number) => void;
-    isMuted: boolean;
-    onMuteToggle: () => void;
     onOpenPlayer: () => void;
 }
 

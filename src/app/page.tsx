@@ -19,8 +19,6 @@ export default function Home() {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(60);
-  const [isMuted, setIsMuted] = useState(false);
   const [musicPlayerOpen, setMusicPlayerOpen] = useState(false);
 
   const [onboardingStep, setOnboardingStep] = useState<'landing' | 'lamp' | 'hints' | null>('landing');
@@ -136,11 +134,6 @@ export default function Home() {
 
       <AudioControls
         isPlaying={isPlaying}
-        onToggle={handleMusicToggle}
-        volume={volume}
-        onVolumeChange={setVolume}
-        isMuted={isMuted}
-        onMuteToggle={() => setIsMuted(!isMuted)}
         onOpenPlayer={() => setMusicPlayerOpen(true)}
       />
 
@@ -149,10 +142,6 @@ export default function Home() {
         onClose={() => setMusicPlayerOpen(false)}
         isPlaying={isPlaying}
         onTogglePlay={handleMusicToggle}
-        volume={volume}
-        onVolumeChange={setVolume}
-        isMuted={isMuted}
-        onMuteToggle={() => setIsMuted(!isMuted)}
       />
 
       <BookViewer isOpen={bookshelfOpen} onClose={handleBookshelfClose} />

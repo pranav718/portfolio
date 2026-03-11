@@ -76,11 +76,8 @@ export default function MusicPlayer({
                             <div className="flex flex-col items-center gap-6 mt-4 pb-8">
                                 <div className="flex flex-col items-center text-center gap-2">
                                     <h2 className="text-xl font-semibold text-white tracking-tight leading-tight select-none font-sans" style={{ fontFamily: "var(--font-geist-mono), sans-serif" }}>
-                                        I&apos;ll be adding my playlist here soon :D
+                                        i&apos;ll be adding my playlist here soon :D
                                     </h2>
-                                    <p className="text-white/50 text-sm font-medium select-none">
-                                        ( maybe some synthwave? )
-                                    </p>
                                 </div>
 
                                 <motion.button

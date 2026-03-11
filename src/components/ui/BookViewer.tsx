@@ -174,7 +174,7 @@ export default function BookViewer({ isOpen, onClose }: BookViewerProps) {
                                 animation: 'bookFadeIn 0.4s ease-out 0.5s both',
                             }}
                         >
-                            I&apos;ll be adding the books I&apos;ve read here soon :D
+                            i&apos;ll be adding the books i&apos;ve read here soon :D
                         </p>
                     </div>
 
