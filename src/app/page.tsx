@@ -115,7 +115,7 @@ export default function ComingSoon() {
         </p>
 
         <Link
-          href="/portfolio"
+          href="https://portfolio.knightkun.codes"
           className="inline-block no-underline transition-all duration-500 group"
           style={{
             padding: '14px 36px',
