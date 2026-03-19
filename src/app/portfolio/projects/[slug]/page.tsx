@@ -85,7 +85,7 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
     const [isLoaded, setIsLoaded] = useState(false);
     const searchParams = useSearchParams();
     const from = searchParams.get('from');
-    const backLink = from === 'home' ? '/portfolio' : '/portfolio/projects';
+    const backLink = from === 'home' ? '/portfolio#projects' : '/portfolio/projects';
 
     useEffect(() => {
         const timer = setTimeout(() => setIsLoaded(true), 100);
@@ -135,7 +135,7 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                 </nav>
 
                 <div className="max-w-3xl mx-auto px-6 pt-32 pb-20">
-                    <div className="mb-8 flex items-center justify-between">
+                    <div className="mb-8">
                         <Link
                             href={backLink}
                             className="text-theme-primary hover:text-theme-icon-hover transition-colors inline-flex items-center gap-2 group"
@@ -145,7 +145,6 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                             </svg>
                             <span className="text-2xl tracking-wider" style={headingFont}>Projects</span>
                         </Link>
-                        <ThemeToggle />
                     </div>
 
                     <div className="rounded-xl overflow-hidden border border-theme-divider mb-6 bg-theme-card">

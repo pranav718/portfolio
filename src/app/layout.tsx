@@ -18,14 +18,34 @@ const dancingScript = Dancing_Script({
 });
 
 export const metadata: Metadata = {
-  title: "pranav.",
+  title: "knightkun",
   description: "explore my space or visit my portfolio",
   keywords: ["developer", "portfolio", "3D", "interactive", "three.js", "react", "open source"],
   authors: [{ name: "Pranav Ray" }],
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-icon.png",
+  },
   openGraph: {
-    title: "pranav.",
+    title: "knightkun",
     description: "explore my space or visit my portfolio",
     type: "website",
+    url: "https://knightkun.codes",
+    siteName: "knightkun",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "knightkun - personal space",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "knightkun",
+    description: "explore my space or visit my portfolio",
+    images: ["/og-image.png"],
   },
 };
 
