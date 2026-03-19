@@ -22,10 +22,6 @@ export const metadata: Metadata = {
   description: "explore my space or visit my portfolio",
   keywords: ["developer", "portfolio", "3D", "interactive", "three.js", "react", "open source"],
   authors: [{ name: "Pranav Ray" }],
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-icon.png",
-  },
   openGraph: {
     title: "knightkun",
     description: "explore my space or visit my portfolio",
