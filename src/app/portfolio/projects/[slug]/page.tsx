@@ -102,6 +102,29 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
 
     return (
         <div className="min-h-screen text-page-text overflow-y-auto overflow-x-hidden relative z-[2]" style={geistMonoFont}>
+            <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+                <div
+                    className="flex items-center gap-8 px-6 py-3 rounded-xl"
+                    style={{
+                        background: 'var(--theme-nav-bg)',
+                        backdropFilter: 'blur(20px)',
+                        WebkitBackdropFilter: 'blur(20px)',
+                        border: '1px solid var(--theme-nav-border)',
+                        boxShadow: 'var(--theme-nav-shadow)',
+                    }}
+                >
+                    <Link href="/portfolio" className="hover:scale-105 transition-transform">
+                        <img src="/images/avatar.jpg" alt="Avatar" className="w-8 h-8 min-w-[32px] min-h-[32px] rounded-sm object-cover shrink-0" />
+                    </Link>
+                    <Link href="/portfolio/projects" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
+                        projects
+                    </Link>
+                    <Link href="/portfolio/blogs" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
+                        blog
+                    </Link>
+                    <ThemeToggle />
+                </div>
+            </nav>
             <main
                 className="relative transition-all duration-700 ease-out"
                 style={{
@@ -110,29 +133,6 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                     transform: isLoaded ? 'scale(1)' : 'scale(1.02)',
                 }}
             >
-                <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-                    <div
-                        className="flex items-center gap-8 px-6 py-3 rounded-xl"
-                        style={{
-                            background: 'var(--theme-nav-bg)',
-                            backdropFilter: 'blur(20px)',
-                            WebkitBackdropFilter: 'blur(20px)',
-                            border: '1px solid var(--theme-nav-border)',
-                            boxShadow: 'var(--theme-nav-shadow)',
-                        }}
-                    >
-                        <Link href="/portfolio" className="hover:scale-105 transition-transform">
-                            <img src="/images/avatar.jpg" alt="Avatar" className="w-8 h-8 min-w-[32px] min-h-[32px] rounded-sm object-cover shrink-0" />
-                        </Link>
-                        <Link href="/portfolio/projects" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
-                            projects
-                        </Link>
-                        <Link href="/portfolio/blogs" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
-                            blog
-                        </Link>
-                        <ThemeToggle />
-                    </div>
-                </nav>
 
                 <div className="max-w-3xl mx-auto px-6 pt-32 pb-20">
                     <div className="mb-8">
@@ -156,7 +156,7 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                                 muted
                                 loop
                                 playsInline
-                                preload="auto"
+                                preload="metadata"
                                 className="w-full aspect-video object-cover"
                                 poster={project.image}
                             />

@@ -9,6 +9,7 @@ import RotatingTitle from '@/components/RotatingTitle';
 import SkillBadges from '@/components/SkillBadges';
 import SmoothScroll from '@/components/SmoothScroll';
 import ThemeToggle from '@/components/ThemeToggle';
+import VisitorCounter from '@/components/VisitorCounter';
 import { blogs } from '@/data/blogs';
 import { projects } from '@/data/projects';
 import Link from 'next/link';
@@ -108,6 +109,9 @@ export default function PortfolioPage() {
                     <div className="max-w-2xl mx-auto px-6 pt-32 pb-20">
                         <div className="mb-16">
                             <div className="relative mb-8">
+                                <div className="absolute top-0 right-0">
+                                    <VisitorCounter />
+                                </div>
                                 <img
                                     src="/images/avatar.jpg"
                                     alt="Avatar"
