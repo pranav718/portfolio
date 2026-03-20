@@ -155,6 +155,8 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                                 autoPlay
                                 muted
                                 loop
+                                playsInline
+                                preload="auto"
                                 className="w-full aspect-video object-cover"
                                 poster={project.image}
                             />

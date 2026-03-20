@@ -5,7 +5,8 @@ export default function CTAButtons() {
         <div className="flex items-center gap-5 mt-8">
             <a
                 href="/pranav_ray_resume.pdf"
-                download
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group flex items-center gap-2.5 px-5 py-2.5 text-theme-badge-text hover:text-theme-primary transition-all duration-300 border border-theme-card-border hover:border-theme-card-hover-border rounded-xl hover:bg-theme-card"
             >
                 <svg

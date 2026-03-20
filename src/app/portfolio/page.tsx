@@ -56,7 +56,7 @@ export default function PortfolioPage() {
                                         className="w-8 h-8 min-w-[32px] min-h-[32px] rounded-sm object-cover cursor-pointer shrink-0"
                                     />
                                 </Link>
-                                <div className="personal-space-tooltip absolute top-[90%] -translate-y-1/2 right-full z-[100]">
+                                <div className="personal-space-tooltip hidden md:block absolute top-[90%] -translate-y-1/2 right-full z-[100]">
                                     <div className="pr-4">
                                         <Link
                                             href="https://knightkun.codes"
