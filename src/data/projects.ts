@@ -32,7 +32,7 @@ export const projects: Project[] = [
         techStack: ['Next.js', 'TypeScript', 'Tailwind', 'Leaflet'],
         status: 'Live',
         githubUrl: 'https://github.com/pranav718/Atlas',
-        liveUrl: 'https://atlas-uniway.vercel.app',
+        liveUrl: 'https://atlas-9m7h.vercel.app',
         image: '/images/projects/atlas.png',
     },
     {
