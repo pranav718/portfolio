@@ -1,4 +1,5 @@
 import ThemeProvider from "@/components/ThemeProvider";
+import ClientCursorProvider from "@/components/ClientCursorProvider";
 import type { Metadata } from "next";
 import { Dancing_Script, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -60,6 +61,7 @@ export default function RootLayout({
         />
         <ThemeProvider>
           {children}
+          <ClientCursorProvider />
         </ThemeProvider>
       </body>
     </html>

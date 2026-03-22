@@ -17,10 +17,20 @@ import { useEffect, useState } from 'react';
 
 export default function PortfolioPage() {
     const [isLoaded, setIsLoaded] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
         const timer = setTimeout(() => setIsLoaded(true), 100);
-        return () => clearTimeout(timer);
+        
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 20);
+        };
+        window.addEventListener('scroll', handleScroll);
+        
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, []);
 
     const headingFont = { fontFamily: "var(--font-geist-mono), 'Geist Mono', monospace", fontWeight: 600 };
@@ -29,34 +39,34 @@ export default function PortfolioPage() {
     return (
         <SmoothScroll>
             <div className="min-h-screen text-page-text overflow-y-auto overflow-x-hidden relative z-[2]" style={geistMonoFont}>
-                <main
-                    className="relative transition-all duration-700 ease-out"
-                    style={{
-                        filter: isLoaded ? 'blur(0px)' : 'blur(20px)',
-                        opacity: isLoaded ? 1 : 0,
-                        transform: isLoaded ? 'scale(1)' : 'scale(1.02)',
-                    }}
-                >
-
-                    <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-                        <div
-                            className="flex items-center gap-8 px-6 py-3 rounded-xl"
-                            style={{
-                                background: 'var(--theme-nav-bg)',
-                                backdropFilter: 'blur(20px)',
-                                WebkitBackdropFilter: 'blur(20px)',
-                                border: '1px solid var(--theme-nav-border)',
-                                boxShadow: 'var(--theme-nav-shadow)',
-                            }}
-                        >
-                            <div className="relative nav-avatar-wrapper">
-                                <Link href="https://knightkun.codes">
-                                    <img
-                                        src="/images/avatar.jpg"
-                                        alt="Avatar"
-                                        className="w-8 h-8 min-w-[32px] min-h-[32px] rounded-sm object-cover cursor-pointer shrink-0"
-                                    />
-                                </Link>
+                <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ease-out" style={{ filter: isLoaded ? 'none' : 'blur(20px)', opacity: isLoaded ? 1 : 0 }}>
+                    <div
+                        className="flex items-center gap-8 px-6 py-3 rounded-xl"
+                        style={{
+                            background: 'var(--theme-nav-bg)',
+                            backdropFilter: 'blur(32px) saturate(150%)',
+                            WebkitBackdropFilter: 'blur(32px) saturate(150%)',
+                            border: '1px solid var(--theme-nav-border)',
+                            boxShadow: 'var(--theme-nav-shadow)',
+                        }}
+                    >
+                        <div className="relative nav-avatar-wrapper group">
+                            <Link 
+                                href={scrolled ? "#" : "https://knightkun.codes"}
+                                onClick={(e) => {
+                                    if (scrolled) {
+                                        e.preventDefault();
+                                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                                    }
+                                }}
+                            >
+                                <img
+                                    src="/images/avatar.jpg"
+                                    alt="Avatar"
+                                    className="w-8 h-8 min-w-[32px] min-h-[32px] rounded-sm object-cover cursor-pointer shrink-0"
+                                />
+                            </Link>
+                            {!scrolled && (
                                 <div className="personal-space-tooltip hidden md:block absolute top-[90%] -translate-y-1/2 right-full z-[100]">
                                     <div className="pr-4">
                                         <Link
@@ -95,21 +105,31 @@ export default function PortfolioPage() {
                                         </Link>
                                     </div>
                                 </div>
-                            </div>
-                            <Link href="/portfolio/projects" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
-                                projects
-                            </Link>
-                            <Link href="/portfolio/blogs" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
-                                blog
-                            </Link>
-                            <ThemeToggle />
+                            )}
                         </div>
-                    </nav>
+                        <Link href="/portfolio/projects" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
+                            projects
+                        </Link>
+                        <Link href="/portfolio/blogs" className="text-sm text-theme-secondary hover:text-theme-primary transition-colors">
+                            blog
+                        </Link>
+                        <ThemeToggle />
+                    </div>
+                </nav>
+                <main
+                    className="relative transition-all duration-700 ease-out"
+                    style={{
+                        filter: isLoaded ? 'blur(0px)' : 'blur(20px)',
+                        opacity: isLoaded ? 1 : 0,
+                        transform: isLoaded ? 'scale(1)' : 'scale(1.02)',
+                    }}
+                >
+
 
                     <div className="max-w-2xl mx-auto px-6 pt-32 pb-20">
                         <div className="mb-16">
                             <div className="relative mb-8">
-                                <div className="absolute top-0 right-0">
+                                <div className="absolute top-0 right-0 z-10">
                                     <VisitorCounter />
                                 </div>
                                 <img
@@ -119,7 +139,7 @@ export default function PortfolioPage() {
                                     style={{ boxShadow: 'var(--theme-avatar-shadow)' }}
                                 />
                                 <div>
-                                    <h1 className="text-2xl md:text-3xl text-theme-primary tracking-wide mb-1" style={headingFont}>
+                                    <h1 className="text-2xl md:text-3xl text-theme-primary tracking-wide mb-1 pr-14 md:pr-0" style={headingFont}>
                                         Pranav Ray
                                     </h1>
                                     <RotatingTitle />

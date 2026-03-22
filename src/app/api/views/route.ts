@@ -6,7 +6,6 @@ export async function POST() {
         const views = await kv.incr('portfolio_views');
         return NextResponse.json({ views });
     } catch (error) {
-        console.error('Failed to increment views:', error);
         return NextResponse.json(
             { error: 'Failed to increment views', views: 0 }, 
             { status: 500 }
@@ -19,7 +18,6 @@ export async function GET() {
         const views = await kv.get('portfolio_views') || 0;
         return NextResponse.json({ views });
     } catch (error) {
-        console.error('Failed to get views:', error);
         return NextResponse.json(
             { error: 'Failed to get views', views: 0 }, 
             { status: 500 }
