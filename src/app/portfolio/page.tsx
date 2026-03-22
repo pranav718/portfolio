@@ -128,24 +128,23 @@ export default function PortfolioPage() {
 
                     <div className="max-w-2xl mx-auto px-6 pt-32 pb-20">
                         <div className="mb-16">
-                            <div className="relative mb-8">
+                            <div className="relative mb-8 flex gap-4">
                                 <div className="absolute top-0 right-0 z-10">
                                     <VisitorCounter />
                                 </div>
                                 <img
                                     src="/images/avatar.jpg"
                                     alt="Avatar"
-                                    className="w-24 h-24 rounded-sm object-cover float-left mr-4"
+                                    className="w-24 h-24 rounded-sm object-cover shrink-0 mt-1"
                                     style={{ boxShadow: 'var(--theme-avatar-shadow)' }}
                                 />
-                                <div>
+                                <div className="flex flex-col justify-start">
                                     <h1 className="text-2xl md:text-3xl text-theme-primary tracking-wide mb-1 pr-14 md:pr-0" style={headingFont}>
                                         Pranav Ray
                                     </h1>
                                     <RotatingTitle />
                                     <AgeCounter />
                                 </div>
-                                <div className="clear-both"></div>
                             </div>
 
                             <div className="text-theme-secondary text-sm leading-relaxed mb-8">
