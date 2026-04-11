@@ -8,7 +8,7 @@ export const projects: Project[] = [
         techStack: ['Next.js', 'React', 'TypeScript', 'Tailwind', 'Convex', 'Framer Motion'],
         status: 'Live',
         githubUrl: 'https://github.com/pranav718/typingterminal',
-        liveUrl: 'https://typingterminal.vercel.app',
+        liveUrl: 'https://typingterminal.knightkun.codes',
         image: '/images/projects/typingterminal.png',
         postUrl: 'https://x.com/knightkun__/status/1998719321996939438',
         videoUrl: '/videos/projects/typingterminal.mp4',
