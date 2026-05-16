@@ -16,4 +16,12 @@ export const blogs: Blog[] = [
         claps: 151,
         tags: ['Convex', 'Realtime Applications', 'Backend Engineering'],
     },
+    {
+        id: 'udp-hole-punching-tsuna',
+        title: 'UDP Hole Punching from Scratch in Golang: Building Tsuna',
+        url: 'https://medium.com/@knightkun/udp-hole-punching-from-scratch-in-golang-building-tsuna-448ca66a733b',
+        date: 'May 2026',
+        claps: 55,
+        tags: ['Golang', 'Networking', 'Peer To Peer', 'Systems Programming', 'Computer Science'],
+    },
 ];
