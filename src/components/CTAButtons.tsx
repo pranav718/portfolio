@@ -3,11 +3,24 @@
 export default function CTAButtons() {
     return (
         <div className="flex items-center gap-5 mt-8">
-            <a
-                href="/pranav_ray_resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-2.5 px-5 py-2.5 text-theme-badge-text hover:text-theme-primary transition-all duration-300 border border-theme-card-border hover:border-theme-card-hover-border rounded-xl hover:bg-theme-card"
+            <button
+                onClick={async () => {
+                    try {
+                        const res = await fetch('/pranav_ray_resume.pdf');
+                        const blob = await res.blob();
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'pranav_ray_resume.pdf';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                    } catch {
+                        window.open('/pranav_ray_resume.pdf', '_blank');
+                    }
+                }}
+                className="group flex items-center gap-2.5 px-5 py-2.5 text-theme-badge-text hover:text-theme-primary transition-all duration-300 border border-theme-card-border hover:border-theme-card-hover-border rounded-xl hover:bg-theme-card cursor-pointer bg-transparent"
             >
                 <svg
                     className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5"
@@ -23,7 +36,7 @@ export default function CTAButtons() {
                     />
                 </svg>
                 <span className="text-sm font-medium">Resume</span>
-            </a>
+            </button>
 
             <a
                 href="mailto:raypranav718@gmail.com?subject=Let's work together!"

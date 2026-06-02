@@ -2,6 +2,18 @@ import { Project } from '@/components/ProjectCard';
 
 export const projects: Project[] = [
     {
+        id: 'tsuna',
+        title: 'tsuna',
+        description: 'A peer-to-peer synchronized video watching tool. Share a 6-char room code, punch through NAT via STUN + UDP hole punching, and keep two mpv players frame-locked in sync. Features a full-screen TUI dashboard, browser-based web UI with chat & emoji reactions, shared watch queue, and zero accounts required.',
+        techStack: ['Go', 'Cobra', 'Bubbletea', 'Next.js', 'React', 'Gorilla WebSocket'],
+        status: 'Live',
+        githubUrl: 'https://github.com/pranav718/tsuna',
+        liveUrl: 'https://tsuna-production.up.railway.app',
+        postUrl: 'https://x.com/knightkun__/status/2060316669004919097?s=20',
+        image: '/images/projects/tsuna.png',
+        videoUrl: '/videos/projects/tsuna.mp4',
+    },
+    {
         id: 'typingterminal',
         title: 'typingterminal',
         description: 'A retro terminal-themed typing platform with real-time multiplayer races, global leaderboards, and a curated library of classic literature. Features custom book uploads, guest mode, and authentic CRT aesthetics. 150+ users, 2500+ visits.',

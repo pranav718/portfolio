@@ -7,6 +7,7 @@ import { notFound, useSearchParams } from 'next/navigation';
 import React, { use, useEffect, useState } from 'react';
 import {
     SiFramer,
+    SiGo,
     SiGreensock,
     SiLeaflet,
     SiMongodb,
@@ -37,7 +38,20 @@ const ConvexIcon = ({ className }: { className?: string }) => (
     </svg>
 );
 
+const DefaultTechIcon = ({ className }: { className?: string }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="16 18 22 12 16 6" />
+        <polyline points="8 6 2 12 8 18" />
+        <line x1="12" y1="2" x2="12" y2="22" opacity="0.4" />
+    </svg>
+);
+
+
 const techIcons: Record<string, React.ComponentType<{ className?: string }>> = {
+    'Go': SiGo,
+    'Cobra': DefaultTechIcon,
+    'Bubbletea': DefaultTechIcon,
+    'Gorilla WebSocket': DefaultTechIcon,
     'Next.js': SiNextdotjs,
     'React': SiReact,
     'TypeScript': SiTypescript,
