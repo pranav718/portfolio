@@ -6,6 +6,7 @@ import { useFrame } from '@react-three/fiber';
 import gsap from 'gsap';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import ObjectHint from './ObjectHint';
 
 interface NotebookProps {
     isOpen: boolean;
@@ -110,14 +111,7 @@ export default function Notebook({ isOpen, onOpen, lampOn, isOnboarding }: Noteb
 
             {lampOn && !isOpen && hovered && !isOnboarding && (
                 <Html position={[0, 0.25, 0]} center>
-                    <div
-                        className="bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none border border-yellow-400/50 shadow-xl animate-fade-in"
-                        style={{
-                            animation: 'fadeIn 0.2s ease-out forwards',
-                        }}
-                    >
-                        View Portfolio
-                    </div>
+                    <ObjectHint>open journal</ObjectHint>
                 </Html>
             )}
         </group>

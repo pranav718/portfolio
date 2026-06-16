@@ -5,6 +5,7 @@ import { Html, useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import ObjectHint from './ObjectHint';
 
 interface DeskLampProps {
     onPull: () => void;
@@ -93,15 +94,11 @@ export default function DeskLamp({ onPull, lampOn, isOnboarding }: DeskLampProps
                 <meshBasicMaterial transparent opacity={0} />
             </mesh>
 
-            {!isOnboarding && (
+            {!isOnboarding && hovered && (
                 <Html position={[0, 0.4, 0.2]} center>
-                    <div
-                        className={`bg-black/95 text-white px-3 py-1.5 rounded-lg text-xs whitespace-nowrap pointer-events-none transition-all duration-200 border shadow-xl ${hovered ? (lampOn ? 'border-red-400 bg-red-900/70' : 'border-yellow-400 bg-yellow-900/70') + ' scale-110 opacity-100' : 'border-white/10 opacity-0'}`}
-                    >
-                        {hovered
-                            ? (lampOn ? 'Turn Off' : 'Turn On')
-                            : ''}
-                    </div>
+                    <ObjectHint>
+                        {lampOn ? 'dim lamp' : 'pull chain'}
+                    </ObjectHint>
                 </Html>
             )}
         </group>

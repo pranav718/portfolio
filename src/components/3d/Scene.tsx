@@ -9,7 +9,9 @@ import GlowingStars from './GlowingStars';
 import Lighting from './Lighting';
 import Notebook from './Notebook';
 import OrigamiCrane from './OrigamiCrane';
+import PersonalArtifacts from './PersonalArtifacts';
 import Props from './Props';
+import Room from './Room';
 import VinylPlayer from './VinylPlayer';
 
 interface SceneProps {
@@ -45,14 +47,7 @@ export default function Scene({
 
             <Effects lampOn={lampOn} />
 
-            <mesh
-                rotation={[-Math.PI / 2, 0, 0]}
-                position={[0, 0, 0]}
-                receiveShadow
-            >
-                <planeGeometry args={[20, 20]} />
-                <meshStandardMaterial color="#1a1512" />
-            </mesh>
+            <Room />
 
             <Desk />
             <DeskLamp onPull={onLampPull} lampOn={lampOn} isOnboarding={isOnboarding} />
@@ -67,6 +62,7 @@ export default function Scene({
             <VinylPlayer isPlaying={isPlaying} onOpenPlayer={onOpenPlayer} lampOn={lampOn} isOnboarding={isOnboarding} />
             <Bookshelf lampOn={lampOn} isBookshelfOpen={isBookshelfOpen} onBookshelfClick={onBookshelfClick} isOnboarding={isOnboarding} />
             <Props />
+            <PersonalArtifacts />
             <OrigamiCrane visible={lampOn && !notebookOpen} />
         </>
     );

@@ -5,6 +5,7 @@ import { Html, useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import ObjectHint from './ObjectHint';
 
 interface VinylPlayerProps {
     isPlaying: boolean;
@@ -86,14 +87,9 @@ export default function VinylPlayer({ isPlaying, onOpenPlayer, lampOn, isOnboard
 
             {lampOn && hovered && !isOnboarding && (
                 <Html position={[0, 0.70, 0]} center>
-                    <div
-                        className="bg-black/90 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap pointer-events-none border border-yellow-400/50 shadow-xl"
-                        style={{
-                            animation: 'fadeIn 0.2s ease-out forwards',
-                        }}
-                    >
-                        {isPlaying ? '🎵 Open Music Player' : 'Play Music'}
-                    </div>
+                    <ObjectHint>
+                        {isPlaying ? 'open record shelf' : 'play something'}
+                    </ObjectHint>
                 </Html>
             )}
         </group>
