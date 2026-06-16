@@ -1,10 +1,6 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
-import { FiX } from 'react-icons/fi';
-import { IoPauseSharp, IoPlaySharp } from 'react-icons/io5';
-
-
+import { useEffect, useState } from 'react';
 
 interface MusicPlayerProps {
     isOpen: boolean;
@@ -13,86 +9,130 @@ interface MusicPlayerProps {
     onTogglePlay: () => void;
 }
 
-
-
 export default function MusicPlayer({
     isOpen,
     onClose,
-    isPlaying,
-    onTogglePlay,
 }: MusicPlayerProps) {
+    const [visible, setVisible] = useState(false);
 
+    useEffect(() => {
+        if (isOpen) {
+            let secondFrame = 0;
+            const firstFrame = requestAnimationFrame(() => {
+                secondFrame = requestAnimationFrame(() => setVisible(true));
+            });
+
+            return () => {
+                cancelAnimationFrame(firstFrame);
+                cancelAnimationFrame(secondFrame);
+            };
+        }
+
+        const hideTimer = window.setTimeout(() => setVisible(false), 0);
+        return () => window.clearTimeout(hideTimer);
+    }, [isOpen]);
+
+    useEffect(() => {
+        if (!isOpen) return;
+        const handleKey = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') onClose();
+        };
+        window.addEventListener('keydown', handleKey);
+        return () => window.removeEventListener('keydown', handleKey);
+    }, [isOpen, onClose]);
+
+    if (!isOpen) return null;
 
     return (
-        <AnimatePresence>
-            {isOpen && (
-                <>
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={onClose}
-                        className="fixed inset-0 z-[90] bg-black/40 backdrop-blur-sm"
+        <div
+            className="fixed inset-0 z-[60] flex items-center justify-start"
+            onClick={onClose}
+        >
+            <div
+                className="absolute inset-0 transition-opacity duration-500"
+                style={{
+                    background: 'radial-gradient(ellipse at 30% 50%, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.68) 100%)',
+                    opacity: visible ? 1 : 0,
+                }}
+            />
+
+            <div
+                className="relative ml-8 w-[min(360px,calc(100vw-4rem))] transition-all duration-500 ease-out md:ml-16 lg:ml-24"
+                style={{
+                    opacity: visible ? 1 : 0,
+                    transform: visible ? 'translateX(0) scale(1)' : 'translateX(-24px) scale(0.96)',
+                }}
+                onClick={(e) => e.stopPropagation()}
+            >
+                <div
+                    className="relative overflow-hidden rounded-xl px-7 py-6"
+                    style={{
+                        background: 'linear-gradient(145deg, #FFF8E7 0%, #F2E0BD 100%)',
+                        border: '1px solid rgba(139, 94, 52, 0.26)',
+                        boxShadow: `
+                            0 18px 60px rgba(0, 0, 0, 0.38),
+                            0 0 36px rgba(244, 208, 63, 0.10),
+                            inset 0 1px 0 rgba(255, 255, 255, 0.48)
+                        `,
+                    }}
+                >
+                    <div
+                        className="absolute inset-0 pointer-events-none opacity-20"
+                        style={{
+                            backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E")`,
+                        }}
                     />
 
-                    <motion.div
-                        initial={{ y: '100%', opacity: 0, scale: 0.95 }}
-                        animate={{ y: 0, opacity: 1, scale: 1 }}
-                        exit={{ y: '100%', opacity: 0, scale: 0.95 }}
-                        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                        className="fixed bottom-0 md:bottom-8 left-1/2 -translate-x-1/2 z-[100] w-full max-w-[420px] 
-                               bg-[#151515]/90 backdrop-blur-2xl md:rounded-3xl rounded-t-3xl border border-white/10 
-                               shadow-2xl shadow-black/50 overflow-hidden flex flex-col"
+                    <button
+                        onClick={onClose}
+                        aria-label="close music player note"
+                        className="absolute top-4 right-4 z-10 flex h-7 w-7 items-center justify-center rounded-full transition-all duration-150"
+                        style={{ color: '#8B7355' }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.06)';
+                            e.currentTarget.style.color = '#5D4037';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = 'transparent';
+                            e.currentTarget.style.color = '#8B7355';
+                        }}
                     >
-                        <div className="flex justify-between items-center p-5 pb-0">
-                            <div className="w-10" />
-                            <div className="w-12 h-1.5 bg-white/20 rounded-full" />
-                            <button
-                                onClick={onClose}
-                                className="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/15 
-                                         text-white/60 hover:text-white transition-colors"
-                            >
-                                <FiX size={18} />
-                            </button>
-                        </div>
+                        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                            <path d="M2 2L12 12M12 2L2 12" />
+                        </svg>
+                    </button>
 
-                        <div className="p-6 md:p-8 flex flex-col gap-8 h-full">
-                            <div className="relative aspect-square w-full max-w-[280px] mx-auto rounded-2xl overflow-hidden shadow-2xl bg-[#0a0a0a] border border-white/5 flex items-center justify-center group">
-                                <div className="absolute inset-0 bg-gradient-to-br from-[#F4D03F]/20 to-[#8B4513]/40" />
-                                <motion.div
-                                    animate={{ rotate: isPlaying ? 360 : 0 }}
-                                    transition={{ duration: 4, ease: "linear", repeat: Infinity }}
-                                    className="relative w-48 h-48 rounded-full border-[12px] border-[#111] bg-[#1a1a1a] flex items-center justify-center shadow-inner"
-                                >
-                                    <div className="absolute inset-2 rounded-full border border-white/5" />
-                                    <div className="absolute inset-6 rounded-full border border-white/5" />
-                                    <div className="absolute inset-10 rounded-full border border-white/5" />
-                                    <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#F4D03F] to-[#FFB347] flex items-center justify-center shadow-md">
-                                        <div className="w-2 h-2 rounded-full bg-black/80" />
-                                    </div>
-                                </motion.div>
-                            </div>
+                    <div className="relative z-[1] pr-7">
+                        <p
+                            className="mb-3"
+                            style={{
+                                fontFamily: "var(--font-geist-mono), 'Geist Mono', monospace",
+                                color: '#8B7355',
+                                fontSize: '11px',
+                                letterSpacing: '0.12em',
+                                textTransform: 'uppercase',
+                            }}
+                        >
+                            music
+                        </p>
 
-                            <div className="flex flex-col items-center gap-6 mt-4 pb-8">
-                                <div className="flex flex-col items-center text-center gap-2">
-                                    <h2 className="text-xl font-semibold text-white tracking-tight leading-tight select-none font-sans" style={{ fontFamily: "var(--font-geist-mono), sans-serif" }}>
-                                        i&apos;ll be adding my playlist here soon :D
-                                    </h2>
-                                </div>
+                        <h3
+                            style={{
+                                fontFamily: "var(--font-dancing), 'Dancing Script', cursive",
+                                color: '#3E2723',
+                                fontSize: '26px',
+                                letterSpacing: '0.02em',
+                                lineHeight: 1.25,
+                            }}
+                        >
+                            adding my playlist here soon :D
+                        </h3>
+                    </div>
 
-                                <motion.button
-                                    whileTap={{ scale: 0.9 }}
-                                    onClick={onTogglePlay}
-                                    className="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center shadow-xl shadow-white/10 hover:scale-105 transition-all mt-4"
-                                >
-                                    {isPlaying ? <IoPauseSharp size={32} /> : <IoPlaySharp size={32} className="ml-1" />}
-                                </motion.button>
-                            </div>
-
-                        </div>
-                    </motion.div>
-                </>
-            )}
-        </AnimatePresence>
+                    <div className="absolute top-2.5 left-2.5 h-5 w-5 border-t border-l opacity-15" style={{ borderColor: '#8B7355' }} />
+                    <div className="absolute bottom-2.5 right-2.5 h-5 w-5 border-b border-r opacity-15" style={{ borderColor: '#8B7355' }} />
+                </div>
+            </div>
+        </div>
     );
 }
