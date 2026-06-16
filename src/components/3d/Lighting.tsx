@@ -78,8 +78,13 @@ export default function Lighting({ lampOn }: LightingProps) {
 
             <directionalLight
                 position={[-5, 3, -5]}
-                intensity={0.1}
+                intensity={0.15}
                 color={COLORS.softBlue}
+            />
+            <directionalLight
+                position={[0, 3, -4]}
+                intensity={lampOn ? 0.2 : 0.05}
+                color="#FFE0C0"
             />
         </>
     );

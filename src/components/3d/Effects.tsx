@@ -11,8 +11,8 @@ export default function Effects({ lampOn }: EffectsProps) {
         <EffectComposer>
             
             <Bloom
-                intensity={lampOn ? 0.5 : 0}
-                luminanceThreshold={0.8}
+                intensity={lampOn ? 0.3 : 0}
+                luminanceThreshold={0.9}
                 luminanceSmoothing={0.9}
                 mipmapBlur
             />
@@ -20,7 +20,7 @@ export default function Effects({ lampOn }: EffectsProps) {
             
             <Vignette
                 offset={0.5}
-                darkness={lampOn ? 0.4 : 0.7}
+                darkness={lampOn ? 0.3 : 0.7}
             />
         </EffectComposer>
     );
