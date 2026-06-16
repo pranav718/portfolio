@@ -9,6 +9,17 @@ export const SCENE_POSITIONS = {
     pen: [-0.3, 1.0, 0.3] as [number, number, number],
 };
 
+export const ROOM = {
+    backWallZ: -3.5,
+    sideWallX: -3,
+    rightWallX: 3.5,
+    wallHeight: 4,
+    wallWidth: 8,
+    floorSize: 20,
+    windowCenter: [-2.98, 2.0, -1.0] as [number, number, number],
+    windowSize: [1.2, 1.5] as [number, number],
+};
+
 export const CAMERA = {
     initialPosition: [0, 2.5, 3.5] as [number, number, number],
     zoomedPosition: [0, 2.0, 2.5] as [number, number, number],
@@ -39,9 +50,9 @@ export const LIGHTING = {
         spotIntensity: 0,
     },
     lampOn: {
-        ambientIntensity: 0.4,
-        pointIntensity: 2.5,
-        spotIntensity: 1,
+        ambientIntensity: 0.55,
+        pointIntensity: 2.0,
+        spotIntensity: 0.8,
     },
 };
 
