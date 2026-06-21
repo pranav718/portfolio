@@ -4,6 +4,7 @@ import Bookshelf from './Bookshelf';
 import CameraController from './CameraController';
 import Desk from './Desk';
 import DeskLamp from './DeskLamp';
+import DustParticles from './DustParticles';
 import Effects from './Effects';
 import GlowingStars from './GlowingStars';
 import Lighting from './Lighting';
@@ -62,8 +63,9 @@ export default function Scene({
             <VinylPlayer isPlaying={isPlaying} onOpenPlayer={onOpenPlayer} lampOn={lampOn} isOnboarding={isOnboarding} />
             <Bookshelf lampOn={lampOn} isBookshelfOpen={isBookshelfOpen} onBookshelfClick={onBookshelfClick} isOnboarding={isOnboarding} />
             <Props />
-            <PersonalArtifacts />
+            <PersonalArtifacts isJournalOpen={notebookOpen} />
             <OrigamiCrane visible={lampOn && !notebookOpen} />
+            <DustParticles lampOn={lampOn} />
         </>
     );
 }
