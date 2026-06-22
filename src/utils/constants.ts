@@ -5,7 +5,7 @@ export const SCENE_POSITIONS = {
     lamp: [0.70, 1.0, -0.1] as [number, number, number],
     vinylPlayer: [-0.80, 1.0, 0.1] as [number, number, number],
     bookshelf: [0, 0, -2.5] as [number, number, number],
-    coffeeMug: [0.7, 1.1, 0.3] as [number, number, number],
+    coffeeMug: [0.55, 1.13, 0.35] as [number, number, number],
     pen: [-0.3, 1.0, 0.3] as [number, number, number],
 };
 
