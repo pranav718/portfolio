@@ -9,8 +9,9 @@ import MusicPlayer from '@/components/ui/MusicPlayer';
 import OnboardingGuide from '@/components/ui/OnboardingGuide';
 import { CAMERA } from '@/utils/constants';
 import { playLampClick, playPageFlip, playNotebookPageFlip, playCameraWhoosh, playBookOpen } from '@/utils/audio';
+import { useGLTF } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 
 type OnboardingStep = 'landing' | 'lamp' | 'hints' | null;
 
@@ -18,6 +19,20 @@ interface SpaceExperienceProps {
   initialLampOn?: boolean;
   initialOnboardingStep?: OnboardingStep;
   useVisitedState?: boolean;
+}
+
+function ModelPreloader({ onReady }: { onReady: () => void }) {
+  useGLTF('/models/notebook.glb');
+  useGLTF('/models/bookshelf.glb');
+  useGLTF('/models/vinyl_player.glb');
+  const fired = useRef(false);
+  useEffect(() => {
+    if (!fired.current) {
+      fired.current = true;
+      onReady();
+    }
+  }, [onReady]);
+  return null;
 }
 
 export default function SpaceExperience({
@@ -37,6 +52,10 @@ export default function SpaceExperience({
   const [isMobile, setIsMobile] = useState(false);
   const [bookshelfOpen, setBookshelfOpen] = useState(false);
   const [sceneReady, setSceneReady] = useState(false);
+
+  const handleModelsReady = useCallback(() => {
+    setSceneReady(true);
+  }, []);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -128,10 +147,11 @@ export default function SpaceExperience({
         dpr={[1, 2]}
         style={{
           opacity: sceneReady ? 1 : 0,
-          transition: 'opacity 0.6s ease-in',
+          transition: 'opacity 0.7s ease-in',
         }}
       >
         <Suspense fallback={null}>
+          <ModelPreloader onReady={handleModelsReady} />
           <Scene
             lampOn={lampOn}
             onLampPull={handleLampPull}
@@ -147,16 +167,13 @@ export default function SpaceExperience({
         </Suspense>
       </Canvas>
 
-      <LoadingScreen onLoaded={() => setSceneReady(true)} />
+      <LoadingScreen isComplete={sceneReady} />
 
       <OnboardingGuide
         step={onboardingStep}
         onEnterSpace={handleEnterSpace}
         onHintsDone={handleHintsDone}
       />
-
-
-
 
       <MusicPlayer
         isOpen={musicPlayerOpen}

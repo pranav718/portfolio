@@ -4,30 +4,28 @@ import { useProgress } from '@react-three/drei';
 import { useEffect, useState } from 'react';
 
 interface LoadingScreenProps {
-    onLoaded?: () => void;
+    isComplete: boolean;
 }
 
-export default function LoadingScreen({ onLoaded }: LoadingScreenProps) {
-    const { progress, active } = useProgress();
+export default function LoadingScreen({ isComplete }: LoadingScreenProps) {
+    const { progress } = useProgress();
     const [shouldRender, setShouldRender] = useState(true);
     const [fadeOut, setFadeOut] = useState(false);
 
     useEffect(() => {
-        if (!active) {
-            setFadeOut(true);
-            const timer = setTimeout(() => {
-                setShouldRender(false);
-                onLoaded?.();
-            }, 800);
-            return () => clearTimeout(timer);
-        }
-    }, [active, onLoaded]);
+        if (!isComplete) return;
+        setFadeOut(true);
+        const timer = setTimeout(() => {
+            setShouldRender(false);
+        }, 850);
+        return () => clearTimeout(timer);
+    }, [isComplete]);
 
     if (!shouldRender) return null;
 
     return (
-        <div 
-            className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/65 backdrop-blur-lg transition-all duration-[800ms] ease-in-out ${
+        <div
+            className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/65 backdrop-blur-lg transition-all duration-[850ms] ease-in-out ${
                 fadeOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
             }`}
         >
