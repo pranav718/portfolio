@@ -34,14 +34,14 @@ export default function CameraController({ isJournalOpen, isBookshelfOpen }: Cam
 
         if (isJournalOpen) {
             gsap.to(camera.position, {
-                x: SCENE_POSITIONS.notebook[0],
-                y: SCENE_POSITIONS.notebook[1] + 0.65,
-                z: SCENE_POSITIONS.notebook[2] + 0.05,
+                x: 0.1,
+                y: 1.85,
+                z: 0.55,
                 duration: 1.8,
                 ease: 'power3.inOut',
             });
             gsap.to(camera.rotation, {
-                x: -Math.PI / 2,
+                x: -Math.PI / 2.7,
                 y: 0,
                 z: 0,
                 duration: 1.8,

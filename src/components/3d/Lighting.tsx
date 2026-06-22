@@ -1,7 +1,7 @@
 'use client';
 
 import { COLORS, LIGHTING } from '@/utils/constants';
-import { useThree } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import gsap from 'gsap';
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
@@ -27,18 +27,50 @@ export default function Lighting({ lampOn }: LightingProps) {
             ease: 'power2.out',
         });
 
-        gsap.to(pointRef.current, {
-            intensity: targetLighting.pointIntensity,
-            duration: 0.3,
-            ease: 'power2.out',
-        });
+        gsap.killTweensOf(pointRef.current);
+        gsap.killTweensOf(spotRef.current);
 
-        gsap.to(spotRef.current, {
-            intensity: lampOn ? targetLighting.spotIntensity : 0,
-            duration: 0.4,
-            ease: 'power2.out',
-        });
+        if (lampOn) {
+            const tl = gsap.timeline();
+            tl.to(pointRef.current, { intensity: LIGHTING.lampOn.pointIntensity * 0.35, duration: 0.04, ease: 'power1.out' })
+              .to(spotRef.current, { intensity: LIGHTING.lampOn.spotIntensity * 0.35, duration: 0.04, ease: 'power1.out' }, '<')
+              
+              .to(pointRef.current, { intensity: 0.05, duration: 0.03, ease: 'power1.in' })
+              .to(spotRef.current, { intensity: 0, duration: 0.03, ease: 'power1.in' }, '<')
+              
+              .to(pointRef.current, { intensity: LIGHTING.lampOn.pointIntensity * 0.85, duration: 0.08, ease: 'power2.out' })
+              .to(spotRef.current, { intensity: LIGHTING.lampOn.spotIntensity * 0.85, duration: 0.08, ease: 'power2.out' }, '<')
+              
+              .to(pointRef.current, { intensity: LIGHTING.lampOn.pointIntensity * 0.15, duration: 0.04, ease: 'power1.in' })
+              .to(spotRef.current, { intensity: 0.05, duration: 0.04, ease: 'power1.in' }, '<')
+              
+              .to(pointRef.current, { intensity: LIGHTING.lampOn.pointIntensity, duration: 0.15, ease: 'power2.out' })
+              .to(spotRef.current, { intensity: LIGHTING.lampOn.spotIntensity, duration: 0.15, ease: 'power2.out' }, '<');
+        } else {
+            gsap.to(pointRef.current, { intensity: 0, duration: 0.22, ease: 'power2.in' });
+            gsap.to(spotRef.current, { intensity: 0, duration: 0.22, ease: 'power2.in' });
+        }
     }, [lampOn]);
+
+    useFrame(({ clock }) => {
+        if (!lampOn) return;
+
+        const t = clock.elapsedTime;
+        const baseFluctuation = Math.sin(t * 22) * 0.012; 
+        
+        const hasDip = Math.random() < 0.0004;
+        const dip = hasDip ? -0.12 : 0;
+
+        const targetPoint = LIGHTING.lampOn.pointIntensity * (1 + baseFluctuation + dip);
+        const targetSpot = LIGHTING.lampOn.spotIntensity * (1 + baseFluctuation + dip);
+
+        if (pointRef.current) {
+            pointRef.current.intensity = THREE.MathUtils.lerp(pointRef.current.intensity, targetPoint, 0.15);
+        }
+        if (spotRef.current) {
+            spotRef.current.intensity = THREE.MathUtils.lerp(spotRef.current.intensity, targetSpot, 0.15);
+        }
+    });
 
     return (
         <>
@@ -60,7 +92,7 @@ export default function Lighting({ lampOn }: LightingProps) {
                 castShadow
                 shadow-mapSize-width={2048}
                 shadow-mapSize-height={2048}
-                shadow-bias={-0.0001}
+                shadow-bias={-0.0006}
             />
 
 
@@ -73,6 +105,9 @@ export default function Lighting({ lampOn }: LightingProps) {
                 intensity={0}
                 color={COLORS.softOrange}
                 castShadow
+                shadow-mapSize-width={2048}
+                shadow-mapSize-height={2048}
+                shadow-bias={-0.0006}
             />
 
 
