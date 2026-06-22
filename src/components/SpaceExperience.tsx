@@ -8,6 +8,7 @@ import MobileWarning from '@/components/ui/MobileWarning';
 import MusicPlayer from '@/components/ui/MusicPlayer';
 import OnboardingGuide from '@/components/ui/OnboardingGuide';
 import { CAMERA } from '@/utils/constants';
+import { playLampClick, playPageFlip, playNotebookPageFlip, playCameraWhoosh, playBookOpen } from '@/utils/audio';
 import { Canvas } from '@react-three/fiber';
 import { Suspense, useCallback, useEffect, useState } from 'react';
 
@@ -57,6 +58,7 @@ export default function SpaceExperience({
   }, [useVisitedState]);
 
   const handleLampPull = () => {
+    playLampClick();
     setLampOn(!lampOn);
     if (!lampOn) {
       localStorage.setItem('portfolio-visited', 'true');
@@ -65,12 +67,19 @@ export default function SpaceExperience({
       }
     }
     if (lampOn) {
+      if (notebookOpen) {
+        playNotebookPageFlip();
+      }
       setNotebookOpen(false);
       setCurrentPage(0);
     }
   };
 
   const handleNotebookOpen = () => {
+    setTimeout(() => {
+      playBookOpen();
+      playCameraWhoosh();
+    }, 200);
     setNotebookOpen(true);
     setTimeout(() => {
       setIsTransitioning(true);
