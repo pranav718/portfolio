@@ -6,6 +6,7 @@ import { useFrame } from '@react-three/fiber';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import ObjectHint from './ObjectHint';
+import { playVinylScratch } from '@/utils/audio';
 
 interface VinylPlayerProps {
     isPlaying: boolean;
@@ -58,6 +59,7 @@ export default function VinylPlayer({ isPlaying, onOpenPlayer, lampOn, isOnboard
 
     const handleClick = () => {
         if (!lampOn) return;
+        playVinylScratch();
         onOpenPlayer();
     };
 
