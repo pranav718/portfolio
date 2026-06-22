@@ -3,7 +3,11 @@
 import { useProgress } from '@react-three/drei';
 import { useEffect, useState } from 'react';
 
-export default function LoadingScreen() {
+interface LoadingScreenProps {
+    onLoaded?: () => void;
+}
+
+export default function LoadingScreen({ onLoaded }: LoadingScreenProps) {
     const { progress, active } = useProgress();
     const [shouldRender, setShouldRender] = useState(true);
     const [fadeOut, setFadeOut] = useState(false);
@@ -13,10 +17,11 @@ export default function LoadingScreen() {
             setFadeOut(true);
             const timer = setTimeout(() => {
                 setShouldRender(false);
+                onLoaded?.();
             }, 800);
             return () => clearTimeout(timer);
         }
-    }, [active]);
+    }, [active, onLoaded]);
 
     if (!shouldRender) return null;
 
@@ -27,7 +32,6 @@ export default function LoadingScreen() {
             }`}
         >
             <div className="text-center">
-                
                 <div className="mb-8">
                     <svg
                         className="w-16 h-16 mx-auto text-[#F4D03F] animate-pulse"
@@ -39,12 +43,10 @@ export default function LoadingScreen() {
                     </svg>
                 </div>
 
-                
                 <h2 className="text-xl font-serif text-[#FFF8E7] mb-4">
                     Loading my personal space...
                 </h2>
 
-                
                 <div className="w-64 h-1 bg-[#2a2a2a] rounded-full overflow-hidden">
                     <div
                         className="h-full bg-gradient-to-r from-[#F4D03F] to-[#FFB347] transition-all duration-300"
@@ -52,14 +54,11 @@ export default function LoadingScreen() {
                     />
                 </div>
 
-                
                 <p className="mt-3 text-sm text-[#888] font-mono">
                     {Math.round(progress)}%
                 </p>
             </div>
 
-            
-            {/* Audio recommendation */}
             <div className="absolute bottom-8 flex items-center gap-2 text-xs text-[#FFF8E7]/35 font-mono select-none">
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />

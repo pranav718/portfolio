@@ -36,6 +36,7 @@ export default function SpaceExperience({
   const [onboardingStep, setOnboardingStep] = useState<OnboardingStep>(initialOnboardingStep);
   const [isMobile, setIsMobile] = useState(false);
   const [bookshelfOpen, setBookshelfOpen] = useState(false);
+  const [sceneReady, setSceneReady] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -125,6 +126,10 @@ export default function SpaceExperience({
           powerPreference: 'high-performance',
         }}
         dpr={[1, 2]}
+        style={{
+          opacity: sceneReady ? 1 : 0,
+          transition: 'opacity 0.6s ease-in',
+        }}
       >
         <Suspense fallback={null}>
           <Scene
@@ -142,7 +147,7 @@ export default function SpaceExperience({
         </Suspense>
       </Canvas>
 
-      <LoadingScreen />
+      <LoadingScreen onLoaded={() => setSceneReady(true)} />
 
       <OnboardingGuide
         step={onboardingStep}
