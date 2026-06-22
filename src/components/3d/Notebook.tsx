@@ -111,7 +111,7 @@ export default function Notebook({ isOpen, onOpen, lampOn, isOnboarding }: Noteb
 
             {lampOn && !isOpen && hovered && !isOnboarding && (
                 <Html position={[0, 0.25, 0]} center>
-                    <ObjectHint>open journal</ObjectHint>
+                    <ObjectHint>see portfolio</ObjectHint>
                 </Html>
             )}
         </group>
