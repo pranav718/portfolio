@@ -3,10 +3,17 @@
 import { ROOM } from '@/utils/constants';
 import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
+import ObjectHint from './ObjectHint';
+import { playChessKnightKnock } from '@/utils/audio';
+import gsap from 'gsap';
 
-function StickyNote() {
+interface StickyNoteProps {
+    isJournalOpen: boolean;
+}
+
+function StickyNote({ isJournalOpen }: StickyNoteProps) {
     return (
         <group position={[0.35, 1.06, -0.3]} rotation={[0, 0.15, 0]}>
             <mesh rotation={[-Math.PI / 2, 0, 0]} castShadow receiveShadow>
@@ -60,8 +67,56 @@ function StickyNote() {
 
 
 function ChessKnight() {
+    const groupRef = useRef<THREE.Group>(null);
+    const [hovered, setHovered] = useState(false);
+
+    const handleKnightClick = () => {
+        playChessKnightKnock();
+        if (!groupRef.current) return;
+
+        gsap.killTweensOf(groupRef.current.position);
+        gsap.killTweensOf(groupRef.current.rotation);
+        
+        groupRef.current.position.y = 1.05;
+
+        const tl = gsap.timeline();
+        tl.to(groupRef.current.position, {
+            y: 1.16,
+            duration: 0.15,
+            ease: 'power2.out'
+        })
+        .to(groupRef.current.position, {
+            y: 1.05,
+            duration: 0.2,
+            ease: 'bounce.out'
+        });
+
+        gsap.to(groupRef.current.rotation, {
+            y: groupRef.current.rotation.y + Math.PI / 2,
+            duration: 0.35,
+            ease: 'power1.out'
+        });
+    };
+
     return (
-        <group position={[-0.55, 1.05, -0.25]}>
+        <group 
+            ref={groupRef}
+            position={[-0.55, 1.05, -0.25]}
+            onClick={(e) => {
+                e.stopPropagation();
+                handleKnightClick();
+            }}
+            onPointerEnter={(e) => {
+                e.stopPropagation();
+                setHovered(true);
+                document.body.style.cursor = 'pointer';
+            }}
+            onPointerLeave={(e) => {
+                e.stopPropagation();
+                setHovered(false);
+                document.body.style.cursor = 'auto';
+            }}
+        >
             <mesh position={[0, 0.005, 0]} castShadow receiveShadow>
                 <cylinderGeometry args={[0.022, 0.025, 0.01, 16]} />
                 <meshStandardMaterial
@@ -115,6 +170,17 @@ function ChessKnight() {
                     metalness={0.3}
                 />
             </mesh>
+
+            <mesh position={[0, 0.04, 0]}>
+                <boxGeometry args={[0.06, 0.1, 0.06]} />
+                <meshBasicMaterial transparent opacity={0} />
+            </mesh>
+
+            {hovered && (
+                <Html position={[0, 0.16, 0]} center>
+                    <ObjectHint>move knight</ObjectHint>
+                </Html>
+            )}
         </group>
     );
 }
@@ -322,10 +388,14 @@ function WallClock() {
     );
 }
 
-export default function PersonalArtifacts() {
+interface PersonalArtifactsProps {
+    isJournalOpen: boolean;
+}
+
+export default function PersonalArtifacts({ isJournalOpen }: PersonalArtifactsProps) {
     return (
         <group>
-            <StickyNote />
+            <StickyNote isJournalOpen={isJournalOpen} />
             <ChessKnight />
             <WallClock />
         </group>
