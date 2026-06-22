@@ -1,9 +1,12 @@
 'use client';
 
 import { COLORS } from '@/utils/constants';
+import { Html } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
+import ObjectHint from './ObjectHint';
+import { playCraneFlutter } from '@/utils/audio';
 
 function createCraneGeometry() {
     const vertices: number[] = [];
@@ -224,12 +227,12 @@ type FlightMode = 'entry' | 'idle' | 'loop';
 
 export default function OrigamiCrane({ visible }: OrigamiCraneProps) {
     const groupRef = useRef<THREE.Group>(null);
-    const hitboxRef = useRef<THREE.Mesh>(null);
     const leftWingRef = useRef<THREE.Mesh>(null);
     const rightWingRef = useRef<THREE.Mesh>(null);
     const flightTime = useRef(0);
     const flightProgressRef = useRef(0);
     const [mode, setMode] = useState<FlightMode>('entry');
+    const [hovered, setHovered] = useState(false);
     const wasVisible = useRef(false);
 
     const entryCP1 = new THREE.Vector3(-1, 3.5, -1.5);
@@ -248,8 +251,10 @@ export default function OrigamiCrane({ visible }: OrigamiCraneProps) {
 
     const handleClick = () => {
         if (!visible || mode !== 'idle') return;
+        playCraneFlutter();
         flightTime.current = 0;
         flightProgressRef.current = 0;
+        setHovered(false);
         setMode('loop');
     };
 
@@ -335,10 +340,6 @@ export default function OrigamiCrane({ visible }: OrigamiCraneProps) {
             if (leftWingRef.current) leftWingRef.current.rotation.z = breathe;
             if (rightWingRef.current) rightWingRef.current.rotation.z = -breathe;
         }
-
-        if (hitboxRef.current) {
-            hitboxRef.current.position.copy(groupRef.current.position);
-        }
     });
 
     if (!visible) return null;
@@ -355,17 +356,32 @@ export default function OrigamiCrane({ visible }: OrigamiCraneProps) {
                 <mesh ref={rightWingRef} geometry={rightWingGeo} castShadow>
                     <meshStandardMaterial color={COLORS.cream} roughness={0.85} side={THREE.DoubleSide} />
                 </mesh>
-            </group>
 
-            <mesh
-                ref={hitboxRef}
-                onClick={(e) => { e.stopPropagation(); handleClick(); }}
-                onPointerEnter={(e) => { e.stopPropagation(); if (mode === 'idle') document.body.style.cursor = 'pointer'; }}
-                onPointerLeave={(e) => { e.stopPropagation(); document.body.style.cursor = 'auto'; }}
-            >
-                <sphereGeometry args={[0.15, 8, 8]} />
-                <meshBasicMaterial transparent opacity={0} />
-            </mesh>
+                <mesh
+                    onClick={(e) => { e.stopPropagation(); handleClick(); }}
+                    onPointerEnter={(e) => {
+                        e.stopPropagation();
+                        if (mode === 'idle') {
+                            setHovered(true);
+                            document.body.style.cursor = 'pointer';
+                        }
+                    }}
+                    onPointerLeave={(e) => {
+                        e.stopPropagation();
+                        setHovered(false);
+                        document.body.style.cursor = 'auto';
+                    }}
+                >
+                    <sphereGeometry args={[0.5, 8, 8]} />
+                    <meshBasicMaterial transparent opacity={0} />
+                </mesh>
+
+                {visible && mode === 'idle' && hovered && (
+                    <Html position={[0, 0.32, 0]} center>
+                        <ObjectHint>make it fly</ObjectHint>
+                    </Html>
+                )}
+            </group>
 
             <GlitterTrail cranePos={craneWorldPos.current} active={visible && mode !== 'idle'} flightProgress={flightProgressRef.current} />
         </>
