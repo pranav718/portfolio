@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { notFound, useSearchParams } from 'next/navigation';
 import React, { use, useEffect, useState } from 'react';
 import {
+    SiCaddy,
+    SiD3Dotjs,
     SiFramer,
     SiGo,
     SiGreensock,
@@ -13,6 +15,7 @@ import {
     SiMongodb,
     SiNextdotjs,
     SiPrisma,
+    SiRailway,
     SiReact,
     SiTailwindcss,
     SiThreedotjs,
@@ -51,7 +54,6 @@ const techIcons: Record<string, React.ComponentType<{ className?: string }>> = {
     'Go': SiGo,
     'Cobra': DefaultTechIcon,
     'Bubbletea': DefaultTechIcon,
-    'Gorilla WebSocket': DefaultTechIcon,
     'Next.js': SiNextdotjs,
     'React': SiReact,
     'TypeScript': SiTypescript,
@@ -66,6 +68,12 @@ const techIcons: Record<string, React.ComponentType<{ className?: string }>> = {
     'Zustand': ZustandIcon,
     'GSAP': SiGreensock,
     'Motion': SiFramer,
+    'Railway': SiRailway,
+    'Caddy': SiCaddy,
+    'D3.js': SiD3Dotjs,
+    'WebSockets': DefaultTechIcon,
+    'Lipgloss': DefaultTechIcon,
+    'gopsutil': DefaultTechIcon,
 };
 
 interface ProjectDetailPageProps {
@@ -201,7 +209,7 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                                 <span className="animated-underline">Github</span>
                             </a>
                         )}
-                        {project.liveUrl && (
+                        {project.liveUrl ? (
                             <a
                                 href={project.liveUrl}
                                 target="_blank"
@@ -214,6 +222,14 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                                 </svg>
                                 <span className="animated-underline">Website</span>
                             </a>
+                        ) : (
+                            <span className="flex items-center gap-2 text-theme-faint text-sm cursor-not-allowed">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10" strokeWidth={1.5} />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+                                </svg>
+                                Website
+                            </span>
                         )}
                         {project.status === 'Live' && (
                             project.postUrl ? (
@@ -241,16 +257,12 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
 
                     <div className="border-t border-theme-divider mb-8"></div>
 
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="mb-4">
                         <h1 className="text-2xl text-theme-primary" style={headingFont}>{project.title}</h1>
-                        <span className={`text-xs ${statusStyle.textColor} flex items-center gap-1.5`}>
-                            <span className={`w-1.5 h-1.5 ${statusStyle.dotColor} rounded-full ${statusStyle.pulse ? 'animate-pulse' : ''}`}></span>
-                            {statusStyle.text}
-                        </span>
                     </div>
 
                     <div className="text-theme-muted text-sm leading-relaxed mb-12">
-                        <p>{project.description}</p>
+                        <p>{project.longDescription || project.description}</p>
                     </div>
                     <div className="mb-12">
                         <h3 className="text-sm text-theme-muted uppercase tracking-wider mb-4" style={headingFont}>Stack</h3>

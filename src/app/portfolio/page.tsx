@@ -148,7 +148,7 @@ export default function PortfolioPage() {
                             </div>
 
                             <div className="text-theme-secondary text-sm leading-relaxed mb-8">
-                                <p className="mb-3">basically, i just like building things. a lot. currently learning golang and diving deep into backend systems and networking.</p>
+                                <p className="mb-3">basically, i just like building backend systems. a lot. nowadays i'm designing concurrent architectures thus diving deep into peer-to-peer networks and distributed systems.</p>
                                 <p>in my free time, i like to write blogs, read, solve algorithms and pretend to be good at chess.</p>
                             </div>
 
@@ -194,7 +194,7 @@ export default function PortfolioPage() {
                             <h2 className="text-2xl mb-6 tracking-wider" style={headingFont}>Projects</h2>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {projects.slice(0, 2).map((project) => (
+                                {projects.slice(0, 4).map((project) => (
                                     <ProjectCard key={project.id} project={project} />
                                 ))}
                             </div>

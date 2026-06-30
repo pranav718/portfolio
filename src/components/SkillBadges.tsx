@@ -9,6 +9,7 @@ import {
     SiFramer,
     SiGit,
     SiGithub,
+    SiGo,
     SiGreensock,
     SiJavascript,
     SiLeaflet,
@@ -20,6 +21,7 @@ import {
     SiPostman,
     SiPrisma,
     SiPython,
+    SiRailway,
     SiReact,
     SiRedis,
     SiShadcnui,
@@ -63,6 +65,7 @@ const skills = [
     { name: 'GSAP', icon: SiGreensock },
     { name: 'JavaScript', icon: SiJavascript },
     { name: 'TypeScript', icon: SiTypescript },
+    { name: 'Go', icon: SiGo },
     { name: 'Python', icon: SiPython },
     { name: 'Swift', icon: SiSwift },
     { name: 'C/C++', icon: SiCplusplus },
@@ -72,6 +75,7 @@ const skills = [
     { name: 'Figma', icon: SiFigma },
     { name: 'Docker', icon: SiDocker },
     { name: 'Convex', icon: ConvexIcon },
+    { name: 'Railway', icon: SiRailway },
     { name: 'Leaflet', icon: SiLeaflet },
 ];
 

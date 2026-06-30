@@ -12,6 +12,7 @@ export interface Project {
     image?: string;
     videoUrl?: string;
     postUrl?: string;
+    longDescription?: string;
 }
 
 interface ProjectCardProps {
@@ -40,7 +41,7 @@ export default function ProjectCard({ project, compact = false }: ProjectCardPro
     const cardLink = `/portfolio/projects/${project.id}?from=${compact ? 'projects' : 'home'}`;
 
     return (
-        <a href={cardLink} className="group block rounded-xl bg-theme-card border border-theme-card-border overflow-hidden hover:border-theme-card-hover-border hover:bg-theme-card-hover transition-all duration-300 hover:scale-[1.02] cursor-pointer">
+        <a href={cardLink} className="group flex flex-col h-full rounded-xl bg-theme-card border border-theme-card-border overflow-hidden hover:border-theme-card-hover-border hover:bg-theme-card-hover transition-all duration-300 hover:scale-[1.02] cursor-pointer">
             <div className={`relative ${compact ? 'h-36' : 'h-40'} overflow-hidden`}>
                 {project.image ? (
                     <img src={project.image} alt={project.title} className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110" />
@@ -54,12 +55,12 @@ export default function ProjectCard({ project, compact = false }: ProjectCardPro
                     {project.status}
                 </span>
             </div>
-            <div className="p-4">
+            <div className="p-4 flex flex-col flex-grow">
                 <div className="mb-2">
                     <p className="project-title font-medium text-theme-primary group-hover:text-theme-icon-hover">{project.title}</p>
                 </div>
                 <p className="text-sm text-theme-muted mb-3">{project.description}</p>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mt-auto">
                     {project.techStack.map((tech) => (
                         <span key={tech} className="text-xs px-2 py-1 bg-theme-badge-bg text-theme-badge-text rounded border border-theme-divider">{tech}</span>
                     ))}
