@@ -20,7 +20,9 @@ import {
     SiTailwindcss,
     SiThreedotjs,
     SiTypescript,
-    SiYoutube
+    SiYoutube,
+    SiWebgl,
+    SiOpengl
 } from 'react-icons/si';
 import { TbBrandFramerMotion } from 'react-icons/tb';
 
@@ -74,6 +76,10 @@ const techIcons: Record<string, React.ComponentType<{ className?: string }>> = {
     'WebSockets': DefaultTechIcon,
     'Lipgloss': DefaultTechIcon,
     'gopsutil': DefaultTechIcon,
+    'WebGL': SiWebgl,
+    'GLSL': SiOpengl,
+    'React Three Fiber': SiReact,
+    'Drei': SiThreedotjs,
 };
 
 interface ProjectDetailPageProps {
@@ -274,7 +280,7 @@ export default function ProjectDetailPage({ params }: ProjectDetailPageProps) {
                                         key={tech}
                                         className="text-sm px-4 py-2 bg-theme-card text-theme-badge-text rounded-lg border border-theme-divider flex items-center gap-2"
                                     >
-                                        {Icon ? <Icon className="w-4 h-4 text-theme-secondary" /> : <span className="text-theme-muted">⚙</span>}
+                                        {Icon ? <Icon className="w-4 h-4 text-theme-secondary" /> : <DefaultTechIcon className="w-4 h-4 text-theme-secondary" />}
                                         {tech}
                                     </span>
                                 );
