@@ -11,7 +11,8 @@ export default function ClientCursorProvider() {
     useEffect(() => {
         const isPortfolioSubdomain = window.location.hostname.startsWith('portfolio.');
         const isPortfolioPath = pathname?.startsWith('/portfolio');
-        setShouldRender(isPortfolioSubdomain || !!isPortfolioPath);
+        const isResumePath = pathname === '/resume' || pathname === '/portfolio/resume' || pathname?.endsWith('/resume');
+        setShouldRender((isPortfolioSubdomain || !!isPortfolioPath) && !isResumePath);
     }, [pathname]);
 
     if (!shouldRender) {
