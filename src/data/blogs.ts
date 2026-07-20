@@ -24,4 +24,12 @@ export const blogs: Blog[] = [
         claps: 55,
         tags: ['Golang', 'Networking', 'Peer To Peer', 'Systems Programming', 'Computer Science'],
     },
+    {
+        id: 'raft-consensus-go',
+        title: 'Raft Consensus, Explained Simply (Then Built in Go)',
+        url: 'https://medium.com/@knightkun/raft-consensus-explained-simply-then-built-in-go-f642531b6527',
+        date: 'Jul 2026',
+        claps: 10,
+        tags: ['Golang', 'Distributed Systems', 'Raft', 'Backend'],
+    },
 ];
