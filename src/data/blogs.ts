@@ -29,7 +29,7 @@ export const blogs: Blog[] = [
         title: 'Raft Consensus, Explained Simply (Then Built in Go)',
         url: 'https://medium.com/@knightkun/raft-consensus-explained-simply-then-built-in-go-f642531b6527',
         date: 'Jul 2026',
-        claps: 10,
+        claps: 61,
         tags: ['Golang', 'Distributed Systems', 'Raft', 'Backend'],
     },
 ];
